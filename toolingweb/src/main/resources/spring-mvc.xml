@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:mv="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+">
+    <context:component-scan base-package="com.vtest.it.controller"/>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+        p:prefix="/WEB-INF/jsp/"
+         p:suffix=".jsp"
+    />
+    <mvc:annotation-driven/>
+    <mv:resources mapping="/image/**" location="/staticResources/image/"/>
+    <mv:resources mapping="/css/**" location="/staticResources/css/"/>
+    <mv:resources mapping="/js/**" location="/staticResources/js/"/>
+    <mvc:resources mapping="/errorPage/**" location="/errorPage/"/>
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<mvc:exclude-mapping path="/image/**"/>-->
+            <!--<mvc:exclude-mapping path="/css/**"/>-->
+            <!--<mvc:exclude-mapping path="/js/**"/>-->
+            <!--<mvc:exclude-mapping path="/errorPage/**"/>-->
+            <!--<bean class="com.vtest.it.intercepters.LoginIntercepter"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+</beans>
