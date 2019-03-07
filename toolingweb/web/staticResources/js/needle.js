@@ -215,25 +215,7 @@ $(document).ready(function() {
             title:"備註",field:"remarks"
         }];
     $("#submit").on('click',function () {
-        // var date=new Date();
-        // var month=date.getMonth()+1;
-        // var day=date.getDate();
-        // if(month>=1&&month<=9){
-        //     month="0"+month;
-        // }
-        // if(day>=1&&day<=9){
-        //     day="0"+day;
-        // }
-        // var data= $("#needCardModifyForm").serializeArray();
-        // var newDatas=[];
-        // var newData=new Object();
-        // $.each(data,function (i,item) {
-        //     newData[item.name]=item.value;
-        // })
-        //
-        // newData["createTime"]=date.getFullYear()+"-"+month+"-"+day;
-        // newDatas.push(newData);
-        // $('#needleCardTable').bootstrapTable("append",newDatas);
+
         // $.ajax({
         //     type: "get",
         //     url: "js/needleCard.json",
@@ -310,13 +292,27 @@ $(document).ready(function() {
         return this.optional(element)||(positiveInteger.test(value));
     },warning+"请填写正整数");
     jQuery.validator.addMethod("isNumberOrLetter",function (value,element) {
-        var numberOrLetter=/^[a-z||A-Z]{1,6}\-\d{1,6}]*$/;
+        var numberOrLetter=/^[a-zA-Z\u4e00-\u9fa5]+$/;
         return this.optional(element)||(numberOrLetter.test(value));
-    },warning+"格式（CD-1）");
+    },warning+"中文加英文");
+
+    jQuery.validator.addMethod("isNumberAndLetter",function (value,element) {
+        var numberAndLetter=/^[a-zA-Z0-9_\\-]+$/;
+        return this.optional(element)||(numberAndLetter.test(value));
+    },warning+"英文数字-_");
+
     jQuery.validator.addMethod("isOperator",function (value,element) {
         var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
         return this.optional(element)||(operator.test(value));
     },warning+"格式（V900)");
+    jQuery.validator.addMethod("isNumberD",function (value,element) {
+        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
+        return this.optional(element)||(number.test(value));
+    },warning+"数字+-");
+    jQuery.validator.addMethod("isCustomer",function (value,element) {
+        var customer=/^([a-zA-Z]{3}|NA)*$/;
+        return this.optional(element)||(customer.test(value));
+    },warning+"三位字母或NA")
     $("#needCardModifyForm").validate({
         errorPlacement: function(error, element) {
             error.css({width:"30%",float:"right",color:"#DAA520"})
@@ -326,19 +322,19 @@ $(document).ready(function() {
         rules: {
             needleCardNumber: {
                 required: true,
-                isNumberOrLetter:true
+                isNumberAndLetter:true
             },
             customer:{
                 required:true,
-                isNumberOrLetter:true
+                isCustomer:true
             },
             customerCode:{
                 required:true,
-                isNumberOrLetter:true
+                isNumberAndLetter:true
             },
             factoryNumber:{
                 required:true,
-                isNumberOrLetter:true
+                isNumberAndLetter:true
             },
             factory:{
                 required:true,
@@ -346,11 +342,11 @@ $(document).ready(function() {
             },
             applicableMachine:{
                 required:true,
-                isNumberOrLetter:true
+                isNumberAndLetter:true
             },
             counter:{
                 required:true,
-                isNumberOrLetter:true
+                isNumberAndLetter:true
             },
             source:{
                 required:true,
@@ -360,7 +356,7 @@ $(document).ready(function() {
                 required: true,
                 isPositiveInteger:true
             },
-            PMTime:{
+            pmTime:{
                 required: true,
                 isPositiveInteger:true
             },
@@ -376,10 +372,6 @@ $(document).ready(function() {
                 required: true,
                 dateISO:true
             },
-            needleDiameterSpec:{
-                required: true,
-                isNumber:true
-            },
             levelSpec:{
                 required: true,
                 isNumber:true
@@ -388,15 +380,52 @@ $(document).ready(function() {
                 required: true,
                 isNumber:true
             },
-            TDTotal:{
-                required:true,
-                isPositiveInteger:true
-            },
             cardModel:{
+                required:true,
+                isNumberAndLetter:true
+            },
+            needleDiameterSpec:{
+                required:true,
+                isNumberD:true
+            },
+            propertyUnit:{
                 required:true,
                 isNumberOrLetter:true
             }
+        },
+        submitHandler:function (form) {
+            $(form).ajaxSubmit({
+                type:'post',
+                url:'/toolingweb/needleCard/addNewNeedleCard',
+                data:$(form).serialize(),
+                error:function () {
+                    alert("add failed!,please check your information again!")
+                }
+            });
+            var date=new Date();
+            var month=date.getMonth()+1;
+            var day=date.getDate();
+            if(month>=1&&month<=9){
+                month="0"+month;
+            }
+            if(day>=1&&day<=9){
+                day="0"+day;
+            }
+            var data= $(form).serializeArray();
+            var newDatas=[];
+            var newData=new Object();
+            $.each(data,function (i,item) {
+                newData[item.name]=item.value;
+            })
+
+            newData["createTime"]=date.getFullYear()+"-"+month+"-"+day;
+            newDatas.push(newData);
+            $('#needleCardTable').bootstrapTable("append",newDatas);
+            $(form).resetForm();
+            $("#myModal").modal('hide');
+            return false;
         }
+
     });
     $("#incomingDate").prop("readonly",true).datetimepicker({
         minView: "month",

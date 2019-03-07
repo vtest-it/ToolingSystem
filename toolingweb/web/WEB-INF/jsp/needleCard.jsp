@@ -30,6 +30,7 @@
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
+    <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
     <script>
         $("#needCardModifyForm").on("submit",function () {
             dataPost();
@@ -382,11 +383,6 @@
                                 </p>
                             </div>
                             <div class="form-group">
-                                <p class="col-lg-6">
-                                    <label class="col-lg-2">TD Total</label>
-                                    <input class="form-control" name="tdTotal" id="tdTotal" style="width: 45%"
-                                           type="text">
-                                </p>
                                 <p class="col-lg-6" style="display: none">
                                     <label class="col-lg-3">是否release</label>
                                     <select class="form-control" name="isRelease" id="isRelease" style="width: 45%;">
