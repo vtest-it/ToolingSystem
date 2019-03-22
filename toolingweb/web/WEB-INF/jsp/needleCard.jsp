@@ -31,6 +31,14 @@
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
+    <style>
+        .unit{
+            font-weight: 700;
+        }
+        td{
+            white-space: nowrap;
+        }
+    </style>
     <script>
         $("#needCardModifyForm").on("submit",function () {
             dataPost();
@@ -114,7 +122,7 @@
                         <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 进出管制<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">针卡IQC</a>
+                                <a href="needleCardIQC">针卡IQC</a>
                             </li>
                             <li>
                                 <a href="#">针卡借出 </a>
@@ -214,191 +222,185 @@
                     <div class="panel-body">
                         <form role="form" id="needCardModifyForm" method="post" action="<c:url value="/needleCard/addNewNeedleCard"/> ">
                             <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">针卡编号</label>
-                                    <input class="form-control" name="needleCardNumber" id="needleCardNumber"
-                                           style="width: 45%;" type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">客户</label>
-                                    <input class="form-control" name="customer" id="customer" style="width: 45%"
-                                           type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">客户编号</label>
-                                    <input class="form-control" name="customerCode" id="customerCode" style="width: 45%"
-                                           type="text">
+                            <p class="col-lg-4">
+                                <label class="col-lg-3">针卡编号</label>
+                                <input class="form-control" name="proberCardId" id="proberCardId" style="width: 45%;" type="text">
+                            </p>
+                            <p class="col-lg-4">
+                                <label class="col-lg-3">客户</label>
+                                <input class="form-control" name="custName" id="custName" style="width: 45%" type="text">
 
-                                </p>
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">来源日期</label>
-                                    <input class="form-control" name="incomingDate" id="incomingDate" style="width: 45%"
-                                           type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">厂商</label>
-                                    <input class="form-control" name="factory" id="factory" style="width: 45%"
-                                           type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">厂商编号</label>
-                                    <input class="form-control" name="factoryNumber" id="factoryNumber"
-                                           style="width: 45%" type="text">
-                                </p>
+                            </p>
+                            <p class="col-lg-4">
+                                <label class="col-lg-3">客户编号</label>
+                                <input class="form-control" name="custNo" id="custNo" style="width: 45%" type="text">
 
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">适用机台</label>
-                                    <input class="form-control" name="applicableMachine" id="applicableMachine"
-                                           style="width: 45%" type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">Dut 数</label>
-                                    <input class="form-control" name="dutNumber" id="dutNumber" style="width: 45%"
-                                           type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">Pin 数</label>
-                                    <input class="form-control" name="pinNumber" id="pinNumber" style="width: 45%"
-                                           type="text">
-                                </p>
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">柜位</label>
-                                    <input class="form-control" name="counter" id="counter" style="width: 45%"
-                                           type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">來源</label>
-                                    <input class="form-control" name="source" id="source" style="width: 45%"
-                                           type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">PM时机</label>
-                                    <input class="form-control" name="pmTime" id="pmTime" style="width: 45%"
-                                           type="text">
-                                </p>
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">类 型</label>
-                                    <select class="form-control" name="type" id="type" style="width: 45%">
-                                        <option value="CAMTILEVER">CAMTILEVER</option>
-                                        <option value="COBRA">COBRA</option>
-                                        <option value="POGO_PIN">POGO PIN</option>
-                                        <option value="MEMS">MEMS</option>
-                                        <option value="MEMBRAME">MEMBRAME</option>
+                            </p>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">来源日期</label>
+                            <input class="form-control" name="receiptTime" id="receiptTime" style="width: 45%"type="text">
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">厂商</label>
+                            <input class="form-control" name="vendorName" id="vendorName" style="width: 45%"type="text">
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">厂商编号</label>
+                            <input class="form-control" name="vendorNo" id="vendorNo" style="width: 45%"type="text">
+                        </p>
 
-                                    </select>
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">新旧</label>
-                                    <select class="form-control" name="newOld" id="newOld" style="width: 45%">
-                                        <option value="new">新</option>
-                                        <option value="old">旧</option>
-                                    </select>
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">cleanType</label>
-                                    <select class="form-control" name="cleanType" id="cleanType" style="width: 45%">
-                                        <option value="3M_3um">3M 3um</option>
-                                        <option value="MIPOX_GC8000">MIPOX GC8000</option>
-                                        <option value="MIPOX_SI10000">MIPOX SI10000</option>
-                                        <option value="MIPOX_WA6000">MIPOX WA6000</option>
-                                        <option value="ITS PP150">ITS PP150</option>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">适用机台</label>
+                            <input class="form-control" name="useEquipment" id="useEquipment" style="width: 45%" type="text">
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">Dut 数</label>
+                            <input class="form-control" name="dutCount" id="dutCount" style="width: 45%"type="text">
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">Pin 数</label>
+                            <input class="form-control" name="pinCount" id="pinCount" style="width: 45%"type="text">
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">柜位</label>
+                            <input class="form-control" name="cabPosition"  id="cabPosition" style="width: 45%"type="text">
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">來源</label>
+                            <input class="form-control" name="cardSource" id="cardSource" style="width: 45%"type="text">
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">PM时机</label>
+                            <input class="form-control" name="pmTd" id="pmTd" style="width: 45%" type="text">
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">类 型</label>
+                            <select  class="form-control" name="cardType" id="cardType" style="width: 45%">
+                                <option value="CAMTILEVER">CAMTILEVER</option>
+                                <option value="COBRA">COBRA</option>
+                                <option value="POGO_PIN">POGO PIN</option>
+                                <option value="MEMS">MEMS</option>
+                                <option value="MEMBRAME">MEMBRAME</option>
 
-                                    </select>
-                                </p>
+                            </select>
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">新旧</label>
+                            <select  class="form-control" name="newOld" id="newOld" style="width: 45%">
+                                <option value="new">新</option>
+                                <option value="old">旧</option>
+                            </select>
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">cleanType</label>
+                            <select  class="form-control" name="cleanType" id="cleanType" style="width: 45%">
+                                <option value="3M_3um">3M 3um</option>
+                                <option value="MIPOX_GC8000">MIPOX GC8000</option>
+                                <option value="MIPOX_SI10000">MIPOX SI10000</option>
+                                <option value="MIPOX_WA6000">MIPOX WA6000</option>
+                                <option value="ITS_PP150">ITS PP150</option>
 
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-4">针长spec</label>
-                                    <input class="form-control" name="needleLengthSpec" id="needleLengthSpec"
-                                           style="width: 35%" type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-4">针径spec</label>
-                                    <input class="form-control" name="needleDiameterSpec" id="needleDiameterSpec"
-                                           style="width: 35%" type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-4">水平spec</label>
-                                    <input class="form-control" name="levelSpec" id="levelSpec" style="width: 35%"
-                                           type="text">
-                                </p>
+                            </select>
+                        </p>
 
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">状态</label>
-                                    <select class="form-control" name="state" id="state" style="width:45%;">
-                                        <option value="newProject">新品入库</option>
-                                        <option value="remake">重新制作</option>
-                                        <option value="IQC">IQC</option>
-                                        <option value="IQC_pass">IQC pass</option>
-                                        <option value="IQC_fail">IQC fail</option>
-                                        <option value="repairedIQC">维修后IQC</option>
-                                        <option value="repairedIQC_fail">维修后IQC fail</option>
-                                        <option value="testing">测试中</option>
-                                        <option value="Engineering">工程中</option>
-                                        <option value="return">归还</option>
-                                        <option value="usable">堪用</option>
-                                        <option value="maintainingPM">保养中PM</option>
-                                        <option value="repairing">维修中</option>
-                                        <option value="offSiteMaintenance">厂外维修</option>
-                                        <option value="offSiteMaintenanceReturn">厂外维修返回</option>
-                                        <option value="customerLend">客户借出</option>
-                                        <option value="customerLendReturn">客户借出返回</option>
-                                        <option value="disuse">停用</option>
-                                        <option value="waitingPlate">待拆板</option>
-                                    </select>
-                                </p>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-4">
+                            <label class="col-lg-4">针长spec</label>
+                            <input class="form-control" name="pinlenSpec" id="pinlenSpec" style="width: 30%"type="text"><span class="unit">mil</span>
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-4">针径spec</label>
+                            <input class="form-control" name="pindiamSpec" id="pindiamSpec" style="width: 30%"type="text"><span class="unit">mil</span>
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-4">水平spec</label>
+                            <input class="form-control" name="pinlevelSpec"  id="pinlevelSpec" style="width: 30%" type="text"><span class="unit">mil</span>
+                        </p>
 
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">DEPTH</label>
-                                    <input class="form-control" name="depth" id="depth" style="width: 45%" type="text">
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-3">作业人员</label>
-                                    <input class="form-control" name="operator" id="operator" style="width: 45%"
-                                           type="text" disabled>
-                                </p>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">状态</label>
+                            <select  class="form-control" name="state"  id="state" style="width:45%;">
+                                <option value="newProject">新品入库</option>
+                                <option value="remake">重新制作</option>
+                                <option value="IQC">IQC</option>
+                                <option value="IQC_pass">IQC pass</option>
+                                <option value="IQC_fail">IQC fail</option>
+                                <option value="repairedIQC">维修后IQC</option>
+                                <option value="repairedIQC_fail">维修后IQC fail</option>
+                                <option value="testing">测试中</option>
+                                <option value="Engineering">工程中</option>
+                                <option value="return">归还</option>
+                                <option value="usable">堪用</option>
+                                <option value="maintainingPM">保养中PM</option>
+                                <option value="repairing">维修中</option>
+                                <option value="offSiteMaintenance">厂外维修</option>
+                                <option value="offSiteMaintenanceReturn">厂外维修返回</option>
+                                <option value="customerLend">客户借出</option>
+                                <option value="customerLendReturn">客户借出返回</option>
+                                <option value="disuse">停用</option>
+                                <option value="waitingPlate">待拆板</option>
 
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-6">
-                                    <label class="col-lg-2">型号</label>
-                                    <input class="form-control" name="cardModel" id="cardModel" style="width: 45%"
-                                           type="text">
-                                </p>
-                                <p class="col-lg-6">
-                                    <label class="col-lg-3">财产单位</label>
-                                    <input class="form-control" name="propertyUnit" id="propertyUnit" style="width: 45%"
-                                           type="text">
-                                </p>
-                            </div>
-                            <div class="form-group">
-                                <p class="col-lg-6" style="display: none">
-                                    <label class="col-lg-3">是否release</label>
-                                    <select class="form-control" name="isRelease" id="isRelease" style="width: 45%;">
-                                        <option value="Release">Release</option>
-                                        <option value="Unreleased">Unreleased</option>
-                                    </select>
-                                </p>
-                            </div>
-                            <div class="form-group">
+                            </select>
+                        </p>
 
-                                <p class="col-lg-12">
-                                    <label class="col-lg-1">备注</label>
-                                    <textarea class="form-control" name="remarks" id="remarks" style="width: 90%"
-                                              rows="3"></textarea>
-                                </p>
-                            </div>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">DEPTH</label>
+                            <input class="form-control" name="pindepthSpec"  id="pindepthSpec" style="width: 35%" type="text"><span class="unit">mil</span>
+                        </p>
+                        <p class="col-lg-4">
+                            <label class="col-lg-3">作业人员</label>
+                            <input class="form-control" name="operator" id="operator" style="width: 45%" type="text" disabled>
+                        </p>
+
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-6">
+                            <label class="col-lg-3">型号</label>
+                            <input class="form-control" name="cardModel"  id="cardModel" style="width: 45%" type="text">
+                        </p>
+                        <p class="col-lg-6">
+                            <label class="col-lg-3">财产单位</label>
+                            <input class="form-control" name="belongDept" id="belongDept" style="width: 45%"type="text">
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-6">
+                            <label class="col-lg-3">Glass Mask</label>
+                            <input class="form-control" name="glassMask"  id="glassMask" style="width: 45%" type="text">
+                        </p>
+                        <p class="col-lg-6">
+                            <label class="col-lg-3">Mylar Mask</label>
+                            <input class="form-control" name="mylarMask" id="mylarMask" style="width: 45%"type="text">
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <p class="col-lg-12" style="display: none">
+                            <label class="col-lg-3">是否release</label>
+                            <select  class="form-control" name="releaseFlag" id="releaseFlag" style="width: 45%;">
+                                <option value="Release">Release</option>
+                                <option value="Unreleased">Unreleased</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div class="form-group">
+
+                        <p class="col-lg-12">
+                            <label class="col-lg-1">备注</label>
+                            <textarea class="form-control" name="note" id="note" style="width: 90%" rows="3"></textarea>
+                        </p>
+
+                    </div>
                             <input class="button  button-primary button-pill  button-3d pull-right" type="submit"
                                    value="Submit" id="submit">
                         </form>

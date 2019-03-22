@@ -28,6 +28,8 @@ public class ProberCardEntityBean implements Serializable {
     private String tdTotal;
     private String cardModel;
     private boolean releaseFlag;
+    private Integer glassMask;
+    private Integer mylarMask;
     private String note;
 
     public String getProberCardId() {
@@ -212,6 +214,22 @@ public class ProberCardEntityBean implements Serializable {
 
     public void setReleaseFlag(boolean releaseFlag) {
         this.releaseFlag = releaseFlag;
+    }
+
+    public Integer getGlassMask() {
+        return glassMask;
+    }
+
+    public void setGlassMask(Integer glassMask) {
+        this.glassMask = glassMask;
+    }
+
+    public Integer getMylarMask() {
+        return mylarMask;
+    }
+
+    public void setMylarMask(Integer mylarMask) {
+        this.mylarMask = mylarMask;
     }
 
     public String getNote() {

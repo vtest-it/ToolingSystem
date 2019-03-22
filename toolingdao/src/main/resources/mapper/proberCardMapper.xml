@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.vtest.it.dao.ProberCrdMapper">
     <insert id="addNewProberCardInfo" parameterType="com.vtest.it.pojo.ProberCardEntityBean">
-      insert into VTProberCard.Probercard_Info(prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag, note)
-      value (#{proberCardId},#{custName},#{custNo},#{receiptTime},#{vendorName},#{vendorNo},#{belongDept},#{useEquipment},#{dutCount},#{pinCount},#{cabPosition},#{cardSource},#{pmTd},#{cardType},#{newOld},#{cleanType},#{pinlenSpec},#{pindiamSpec},#{pinlevelSpec},#{pindepthSpec},#{tdTotal},#{cardModel},#{releaseFlag},#{note});
+      insert into VTProberCard.Probercard_Info(prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask, note)
+      value (#{proberCardId},#{custName},#{custNo},#{receiptTime},#{vendorName},#{vendorNo},#{belongDept},#{useEquipment},#{dutCount},#{pinCount},#{cabPosition},#{cardSource},#{pmTd},#{cardType},#{newOld},#{cleanType},#{pinlenSpec},#{pindiamSpec},#{pinlevelSpec},#{pindepthSpec},#{tdTotal},#{cardModel},#{releaseFlag},#{glassMask},#{mylarMask},#{note});
     </insert>
     <select id="getAllList" resultType="com.vtest.it.pojo.ProberCardEntityBean">
-        select prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag, note from VTProberCard.Probercard_Info
+        select prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask,note from VTProberCard.Probercard_Info
     </select>
     <delete id="deleteProberCardInfo" parameterType="string">
         delete from VTProberCard.Probercard_Info where prober_card_id=#{cardId};
@@ -14,4 +14,55 @@
     <select id="getCard" resultType="com.vtest.it.pojo.ProberCardEntityBean">
         select * from  VTProberCard.Probercard_Info where  prober_card_id=#{cardId};
     </select>
+    <insert id="proberCardCreateState">
+        insert into VTProberCard.ProberCard_Current_State(prober_card_id,last_process,current_process,update_operator) value (#{proberCardId},#{lastProcess},#{currentProcess},#{op});
+    </insert>
+    <insert id="addNewIqcRecord" parameterType="com.vtest.it.pojo.IqcRecordBean">
+        insert into ProberCard_IQC_Record(prober_card_id, pin_maxlen, pin_minlen, pin_maxdiam, pin_mindiam, pin_level,pin_depth,update_operator,next_station,note) value
+        (#{proberCardId},#{pinMaxlen},#{pinMinlen},#{pinMaxdiam},#{pinMindiam},#{pinLevel},#{pinDepth},#{updateOperator},#{nextStation},#{note});
+    </insert>
+    <select id="getProberCardStatus" resultType="string">
+        select current_process from ProberCard_Current_State where  prober_card_id=#{proberCardId};
+    </select>
+    <update id="updateProberCardState">
+        update VTProberCard.ProberCard_Current_State set last_process =#{odlStatus} ,current_process=#{NewStatus},update_operator=#{operator} where prober_card_id=#{proberCardId} and current_process=#{odlStatus};
+    </update>
+    <insert id="outProberCard" parameterType="com.vtest.it.pojo.OutProberCardBean">
+        insert into ProberCard_Out_Record(prober_card_id,outuse_equipment,out_using,out_operator,next_station,note) value
+         (#{proberCardId},#{outUseEquipment},#{outUsing},#{outOperator},#{nextStation},#{note});
+    </insert>
+    <insert id="addNewBackRecord" parameterType="com.vtest.it.pojo.BackProberCardBean">
+        insert into ProberCard_Back_Record(prober_card_id,backuse_equipment,back_status,back_operator,create_operator,issue_flag,issue_desc,next_station,note)
+        value (#{proberCardId},#{backuseEquipment},#{backStatus},#{backOperator},#{createOperator},#{issueFlag},#{issueDesc},#{nextStation},#{note});
+    </insert>
+    <select id="getReleaseCardInfo" parameterType="string" resultType="com.vtest.it.pojo.ReleaseProberCardBean">
+        select prober_card_id, pte_operator, card_yield, card_operator, pin_marks, release_flag, update_operator, note from ProberCard_Release_Record where prober_card_id=#{proberCardId}
+    </select>
+    <insert id="addnewReleaseProberCard" parameterType="com.vtest.it.pojo.ReleaseProberCardBean">
+      insert into ProberCard_Release_Record(prober_card_id, pte_operator, card_yield, card_operator, pin_marks, release_flag, update_operator, note)
+       value (#{proberCardId},#{pteOperator},#{cardYield},#{cardOperator},#{pinMarks},#{releaseFlag},#{updateOperator},#{note}) on duplicate key update
+        <trim suffix="" suffixOverrides=",">
+            <if test="null !=pteOperator">
+                 pte_operator=#{pteOperator},
+            </if>
+            <if test="null !=cardYield">
+                 card_yield=#{cardYield},
+            </if>
+            <if test="null!=cardOperator">
+                 card_operator=#{cardOperator},
+            </if>
+            <if test="null!=pinMarks">
+                 pin_marks=#{pinMarks},
+            </if>
+            <if test="null!=releaseFlag">
+                 release_flag=#{releaseFlag},
+            </if>
+            <if test="null!=updateOperator">
+                 update_operator=#{updateOperator},
+            </if>
+            <if test="null!=note">
+                 note=#{note},
+            </if>
+        </trim>
+    </insert>
 </mapper>

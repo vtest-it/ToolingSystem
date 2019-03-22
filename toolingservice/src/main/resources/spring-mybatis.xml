@@ -56,4 +56,8 @@
     <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
           p:configLocation="classpath:ehcache.xml"
     />
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+        p:dataSource-ref="vTestProberCardDataSource"
+    />
+    <tx:annotation-driven/>
 </beans>

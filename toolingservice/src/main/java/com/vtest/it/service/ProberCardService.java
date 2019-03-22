@@ -1,13 +1,17 @@
 package com.vtest.it.service;
 
 import com.vtest.it.dao.ProberCrdMapper;
-import com.vtest.it.pojo.ProberCardEntityBean;
+import com.vtest.it.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
 public class ProberCardService {
     private ProberCrdMapper mapper;
 
@@ -16,25 +20,50 @@ public class ProberCardService {
         this.mapper = mapper;
     }
 
-    public String getAllInfo() {
-        List<ProberCardEntityBean> list = mapper.getAllList();
-        StringBuilder builder=new StringBuilder();
-        for (ProberCardEntityBean bean : list) {
-                builder.append(bean.getProberCardId());
-        }
-        return  builder.toString();
-    }
-    public void addNewProberCard(ProberCardEntityBean bean){
+    public void addNewProberCard(ProberCardEntityBean bean) {
         mapper.addNewProberCardInfo(bean);
-    }
-    public List<ProberCardEntityBean> getAllProberCards(){
-        return  mapper.getAllList();
-    }
-    public void deleteProberCard(String cardId){
-        mapper.deleteProberCardInfo(cardId);
-    }
-    public ProberCardEntityBean getProberCard(String cardId){
-        return  null;
+        mapper.proberCardCreateState(bean.getProberCardId(), "New_Prod", "New_IQC", "V149");
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public List<ProberCardEntityBean> getAllProberCards() {
+        return mapper.getAllList();
+    }
+
+    public void deleteProberCard(String cardId) {
+        mapper.deleteProberCardInfo(cardId);
+    }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public ProberCardEntityBean getProberCard(String cardId) {
+        return mapper.getCard(cardId);
+    }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public String getProberCardStatus(String proberCardId) {
+        return mapper.getProberCardStatus(proberCardId);
+    }
+
+    public void addNewIqcRecord(IqcRecordBean bean) {
+        mapper.addNewIqcRecord(bean);
+    }
+
+    public void updateProberCardStatus(String proberCardId, String newStatus, String oldStatus, String operator) {
+        mapper.updateProberCardState(proberCardId, newStatus, oldStatus, operator);
+    }
+
+    public void addNewOutRecord(OutProberCardBean bean) {
+        mapper.outProberCard(bean);
+    }
+
+    public void addNewBackRecord(BackProberCardBean bean) {
+        mapper.addNewBackRecord(bean);
+    }
+    @Transactional(isolation = Isolation.REPEATABLE_READ,readOnly = true)
+    public ReleaseProberCardBean getReleaseCardInfo(String proberCardId) {
+        return mapper.getReleaseCardInfo(proberCardId);
+    }
+    public void updateReleaseProberCard(ReleaseProberCardBean bean){
+        mapper.addnewReleaseProberCard(bean);
+    }
 }

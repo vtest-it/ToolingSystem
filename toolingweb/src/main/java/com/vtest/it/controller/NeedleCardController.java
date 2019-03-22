@@ -1,15 +1,16 @@
 package com.vtest.it.controller;
 
-import com.vtest.it.pojo.ProberCardEntityBean;
+import com.alibaba.fastjson.JSON;
+import com.vtest.it.pojo.*;
 import com.vtest.it.service.ProberCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 @Controller
 @RequestMapping("/needleCard")
@@ -23,41 +24,173 @@ public class NeedleCardController {
 
     @RequestMapping("/addNewNeedleCard")
     @ResponseBody
-    public String addNewNeedleCard(String needleCardNumber, String customer, String customerCode, String incomingDate, String factory, String factoryNumber,
-                                   String applicableMachine, Integer dutNumber, Integer pinNumber, String counter, String source, String pmTime, String type, String newOld, String cleanType,
-                                   String needleLengthSpec, String needleDiameterSpec, String levelSpec, String state, String depth, String operator, String cardModel, String propertyUnit,
-                                   String tdTotal, String isRelease, String remarks) throws ParseException {
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-        ProberCardEntityBean bean=new ProberCardEntityBean();
-        bean.setProberCardId(needleCardNumber);
-        bean.setCustName(customer);
-        bean.setCustNo(customerCode);
-        bean.setReceiptTime(format.parse(incomingDate));
-        bean.setVendorName(factory);
-        bean.setVendorNo(factoryNumber);
-        bean.setBelongDept(propertyUnit);
-        bean.setUseEquipment(applicableMachine);
-        bean.setDutCount(dutNumber);
-        bean.setPinCount(pinNumber);
-        bean.setCabPosition(counter);
-        bean.setCardSource(source);
-        bean.setPmTd(pmTime);
-        bean.setCardType(type);
-        if (newOld.equals("new")){
+    public String addNewNeedleCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
+                                   String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
+                                   String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String operator, String cardModel, String belongDept,
+                                   String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        ProberCardEntityBean bean = new ProberCardEntityBean();
+        bean.setProberCardId(proberCardId);
+        bean.setCustName(custName);
+        bean.setCustNo(custNo);
+        bean.setReceiptTime(format.parse(receiptTime));
+        bean.setVendorName(vendorName);
+        bean.setVendorNo(vendorNo);
+        bean.setBelongDept(belongDept);
+        bean.setUseEquipment(useEquipment);
+        bean.setDutCount(0);
+        if (null != dutCount) {
+            bean.setDutCount(dutCount);
+        }
+        bean.setPinCount(0);
+        if (null != pinCount) {
+            bean.setPinCount(pinCount);
+        }
+        bean.setCabPosition(cabPosition);
+        bean.setCardSource(cardSource);
+        bean.setPmTd(pmTd);
+        bean.setCardType(cardType);
+        if (newOld.equals("new")) {
             bean.setNewOld(true);
-        }else {
+        } else {
             bean.setNewOld(false);
         }
         bean.setCleanType(cleanType);
-        bean.setPindiamSpec(needleDiameterSpec);
-        bean.setPinlevelSpec(levelSpec);
-        bean.setPindepthSpec(depth);
-        bean.setPinlenSpec(needleLengthSpec);
+        bean.setPindiamSpec(pindiamSpec);
+        bean.setPinlevelSpec(pinlevelSpec);
+        bean.setPindepthSpec(pindepthSpec);
+        bean.setPinlenSpec(pinlenSpec);
         bean.setTdTotal(tdTotal);
         bean.setCardModel(cardModel);
         bean.setReleaseFlag(false);
-        bean.setNote(remarks);
+        bean.setGlassMask(glassMask);
+        bean.setMylarMask(mylarMask);
+        bean.setNote(note);
         service.addNewProberCard(bean);
-        return  incomingDate+":"+format.parse(incomingDate);
+        return "success";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllProberCardInfos", produces = "text/html;charset=UTF-8")
+    public String getAllProberCardInfo() {
+        return JSON.toJSONString(service.getAllProberCards());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delProberCards")
+    public String deleteProberCards(@RequestParam("proberCards") String proberCards) {
+        try {
+            String[] list = proberCards.split(",");
+            for (String proberCardId : list) {
+                service.deleteProberCard(proberCardId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+        return "success";
+    }
+
+    @RequestMapping(value = "/getSingletonProberCard", produces = "text/html;charset=UTF-8")
+    @ResponseBody()
+    public String getSingletonProberCard(@RequestParam("proberCardId") String proberCardId) {
+        return JSON.toJSONString(service.getProberCard(proberCardId));
+    }
+
+    @RequestMapping("/getProberCardStatus")
+    @ResponseBody
+    public String getProberCardStatus(@RequestParam("proberCardId") String proberCardId) {
+        return service.getProberCardStatus(proberCardId);
+    }
+    @RequestMapping("/iqcRelease")
+    @ResponseBody
+    public String iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note){
+        try {
+            IqcRecordBean bean=new IqcRecordBean();
+            bean.setProberCardId(proberCardId);
+            bean.setPinMaxlen(pinMaxlen);
+            bean.setPinMinlen(pinMinlen);
+            bean.setPinMaxdiam(pinMaxdiam);
+            bean.setPinMindiam(pinMindiam);
+            bean.setPinLevel(pinLevel);
+            bean.setPinDepth(pinDepth);
+            bean.setUpdateOperator(updateOperator);
+            bean.setNextStation(nextStation);
+            bean.setNote(note);
+            service.updateProberCardStatus(proberCardId,nextStation,"New_IQC",updateOperator);
+            service.addNewIqcRecord(bean);
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  "fail";
+    }
+    @ResponseBody
+    @RequestMapping("/outProberCard")
+    public String outProberCard(String proberCardId,String outuseEquipment,String outUsing,String outOperator,String nextStation,String note,String oldStatus,String operator){
+        try {
+            OutProberCardBean outProberCardBean=new OutProberCardBean();
+            outProberCardBean.setProberCardId(proberCardId);
+            outProberCardBean.setOutUseEquipment(outuseEquipment);
+            outProberCardBean.setOutUsing(outUsing);
+            outProberCardBean.setOutOperator(outOperator);
+            outProberCardBean.setNextStation(nextStation);
+            outProberCardBean.setNote(note);
+            service.addNewOutRecord(outProberCardBean);
+            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,operator);
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  "fail";
+    }
+    @ResponseBody
+    @RequestMapping("/backProberCard")
+    public String backProberCard(String proberCardId,String backuseEquipment,String backStatus,String backOperator,String createOperator,boolean issueFlag,String issueDesc,String nextStation,String note,String oldStatus){
+        try {
+            BackProberCardBean bean=new BackProberCardBean();
+            bean.setProberCardId(proberCardId);
+            bean.setBackuseEquipment(backuseEquipment);
+            bean.setBackStatus(backStatus);
+            bean.setBackOperator(backOperator);
+            bean.setCreateOperator(createOperator);
+            bean.setIssueFlag(issueFlag);
+            bean.setIssueDesc(issueDesc);
+            bean.setNextStation(nextStation);
+            bean.setNote(note);
+            service.addNewBackRecord(bean);
+            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,createOperator);
+            return "success";
+        } catch (Exception e) {
+        }
+        return "fail";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getReleaseProberCardInfo",produces = "text/html;charset=UTF-8")
+    public String getReleaseProberCardInfo(@RequestParam("proberCardId")String proberCardId){
+        return JSON.toJSONString(service.getReleaseCardInfo(proberCardId));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/releaseProbercard")
+    public String ReleaseProberCard(String proberCardId,String pteOperator,double cardYield,String cardOperator,boolean pinMarks,boolean releaseFlag,String updateOperator,String note,String oldStatus,String nextStation){
+        try {
+            ReleaseProberCardBean bean=new ReleaseProberCardBean();
+            bean.setProberCardId(proberCardId);
+            bean.setPteOperator(pteOperator);
+            bean.setCardYield(cardYield);
+            bean.setCardOperator(cardOperator);
+            bean.setPinMarks(pinMarks);
+            bean.setReleaseFlag(releaseFlag);
+            bean.setUpdateOperator(updateOperator);
+            bean.setNote(note);
+            service.updateReleaseProberCard(bean);
+            if (releaseFlag){
+                service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
+            }
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "fail";
     }
 }

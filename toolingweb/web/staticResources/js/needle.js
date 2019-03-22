@@ -1,5 +1,51 @@
 $(document).ready(function() {
-
+    Date.prototype.format = function (format) {
+        var o = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds()
+        }
+        if (/(y+)/.test(format)) {
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+            }
+        }
+        return format;
+    }
+    function getSmpFormatDate(date, isFull) {
+        var pattern = "";
+        if (isFull == true || isFull == undefined) {
+            pattern = "yyyy-MM-dd hh:mm:ss";
+        } else {
+            pattern = "yyyy-MM-dd";
+        }
+        return getFormatDate(date, pattern);
+    }
+    function getSmpFormatNowDate(isFull) {
+        return getSmpFormatDate(new Date(), isFull);
+    }
+    function getSmpFormatDateByLong(l, isFull) {
+        return getSmpFormatDate(new Date(l), isFull);
+    }
+    function getFormatDateByLong(l, pattern) {
+        return getFormatDate(new Date(l), pattern);
+    }
+    function getFormatDate(date, pattern) {
+        if (date == undefined) {
+            date = new Date();
+        }
+        if (pattern == undefined) {
+            pattern = "yyyy-MM-dd hh:mm:ss";
+        }
+        return date.format(pattern);
+    }
     $("#home").on("click",function () {
         $("#homePage").show();
         $("#needleCardSearchPage").hide()
@@ -8,7 +54,6 @@ $(document).ready(function() {
         $("#homePage").hide();
         $("#needleCardSearchPage").show()
     });
-    var needleCardData=[];
     function getTime(){
         var now=new Date();
         var year=now.getFullYear(),
@@ -78,28 +123,24 @@ $(document).ready(function() {
             },events:{
                 "click #btnEdit":function (e,value,row,index) {
                     $("#needCardModifyForm")[0].reset();
-                    $("#addBtn").attr("disabled",true);
-                    $("#editBtn").attr("index",index);
-                    $("#addBtn").hide();
-                    $("#editBtn").attr("disabled",false);
-                    $("#editBtn").show();
+                    $("#formSubmit").attr("index",index);
                     $("#myModalLabel").text("针卡档案修改");
                     $("#myModal").modal('show');
-                    $("#isRelease").parent().show();
-                    $("#isRelease").attr("disabled",false);
+                    $("#releaseFlag").parent().show();
+                    $("#releaseFlag").attr("disabled",false);
                     $("#state").empty();
                     $("#state").append( '<option value="newProject">新品入库</option>'+
                         '<option value="remake">重新制作</option>'+
                         '<option value="IQC">IQC</option>'+
                         '<option value="IQC_pass">IQC pass</option>'+
-                    '<option value="IQC_fail">IQC fail</option>'+
-                    '<option value="repairedIQC">维修后IQC</option>'+
+                        '<option value="IQC_fail">IQC fail</option>'+
+                        '<option value="repairedIQC">维修后IQC</option>'+
                         '<option value="repairedIQC_fail">维修后IQC fail</option>'+
-                    '<option value="testing">测试中</option>'+
+                        '<option value="testing">测试中</option>'+
                         '<option value="Engineering">工程中</option>'+
                         '<option value="return">归还</option>'+
                         '<option value="usable">堪用</option>'+
-                       '<option value="maintainingPM">保养中PM</option>'+
+                        '<option value="maintainingPM">保养中PM</option>'+
                         '<option value="repairing">维修中</option>'+
                         '<option value="offSiteMaintenance">厂外维修</option>'+
                         '<option value="offSiteMaintenanceReturn">厂外维修返回</option>'+
@@ -108,13 +149,22 @@ $(document).ready(function() {
                         '<option value="disuse">停用</option>'+
                         '<option value="waitingPlate">待拆板</option>');
                     var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
+                    $("#submit").hide();
                     for(var k=0;k<rows.length;k++){
                         var rowIndex=rows[k].indexOf(":");
                         var title=rows[k].substring(1,rowIndex-1);
                         var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                        if(title=="cardType"||title=="newOld"||title=="cleanType"||title=="state"||title=="isRelease"){
-                            $('#'+title).find('option:contains('+field+')').attr("selected",true);
-                        }else {
+                        if(title=="cardType"||title=="cleanType"||title=="state"||title=="releaseFlag"){
+                            $('#'+title).find('option[value='+field+']').attr("selected",true);
+                            // $('#'+title).find('option:contains('+field+')').attr("selected",true);
+                        }else if(title=='newOld'){
+                            field=rows[k].substring(rowIndex+1,rows[k].length);
+                            if(field=='true'){
+                                $('#newOld').find('option:contains("新")').attr("selected",true);
+                            }else {
+                                $('#newOld').find('option:contains("旧")').attr("selected",true);
+                            }
+                        } else{
                             $('#'+title).val(field)
                         }
 
@@ -123,29 +173,29 @@ $(document).ready(function() {
                 }
             }
         },{
-            title:"客户",field:"customer"
+            title:"客户",field:"custName"
         },
         {
-            title:"厂商",field:"factory"
+            title:"厂商",field:"vendorName"
         },
         {
             title:"型号",field:"cardModel"
         },
         {
-            title:"编号",field:"needleCardNumber"
+            title:"编号",field:"proberCardId"
         },{
-            title:"通用机台",field:"applicableMachine"
+            title:"通用机台",field:"useEquipment"
         },
         {
             title:"状态",field:"state"
         },
         {
-            title:"是否Release",field:"isRelease"
+            title:"是否Release",field:"releaseFlag"
         },
         {
-            title:"Dut数",field:"dutNumber"
+            title:"Dut数",field:"dutCount"
         },{
-            title:"Pin数",field:"pinNumber"
+            title:"Pin数",field:"pinCount"
         },
         {
             title:"新旧",field:"newOld"
@@ -154,7 +204,7 @@ $(document).ready(function() {
             title:"clean type",field:"cleanType"
         },
         {
-            title:"类型",field:"type"
+            title:"类型",field:"cardType"
         },{
             title:"TD",field:"TD"
         },
@@ -167,21 +217,21 @@ $(document).ready(function() {
         {
             title:"剩餘可測TD",field:"remainingTD"
         },{
-            title:"针长",field:"needleLengthSpec"
+            title:"针长",field:"pinlenSpec"
         },
         {
-            title:"針徑",field:"needleDiameterSpec"
+            title:"針徑",field:"pindiamSpec"
         },
         {
-            title:"水平",field:"levelSpec"
+            title:"水平",field:"pinlevelSpec"
         },
         {
-            title:"柜位",field:"counter"
+            title:"柜位",field:"cabPosition"
         },{
-            title:"财产单位",field:"propertyUnit"
+            title:"财产单位",field:"belongDept"
         },
         {
-            title:"PM时机",field:"pmTime"
+            title:"PM时机",field:"pmTd"
         },
         {
             title:"開始針長",field:"previousNeedleLength"
@@ -192,15 +242,21 @@ $(document).ready(function() {
             title:"開始水平",field:"previousLevel"
         },
         {
-            title:"客戶編號",field:"customerCode"
+            title:"客戶編號",field:"custNo"
         },
         {
-            title:"廠商編號",field:"factoryNumber"
+            title:"廠商編號",field:"vendorNo"
         },
         {
             title:"Rebuild次數",field:"rebuildTime"
+        },
+        {
+            title:"GlassMask",field:"glassMask"
+        },
+        {
+            title:"MylarMask",field:"mylarMask"
         },{
-            title:"建檔日期",field:"createTime"
+            title:"建檔日期",field:"receiptTime"
         },
         {
             title:"建檔人員",field:"operator"
@@ -212,7 +268,7 @@ $(document).ready(function() {
             title:"修改人員",field:"editOperator"
         },
         {
-            title:"備註",field:"remarks"
+            title:"備註",field:"note"
         }];
     $("#submit").on('click',function () {
 
@@ -246,21 +302,37 @@ $(document).ready(function() {
         // })
     })
     $("#btnAdd").on('click',function () {
-        $("#type").find("option:selected").attr("selected",false);
-        $("#type").find('option:contains("...")').attr("selected",true);
+        $("#cardType").find("option:selected").attr("selected",false);
+        $("#cardType").find('option:contains("...")').attr("selected",true);
         $("#newOld").find("option:selected").attr("selected",false);
         $("#newOld").find('option:contains("...")').attr("selected",true);
         $("#cleanType").find("option:selected").attr("selected",false);
         $("#cleanType").find('option:contains("...")').attr("selected",true);
-        $("#isRelease").find("option:selected").attr("selected",false);
-        $("#isRelease").find('option:contains("...")').attr("selected",true);
+        $("#releaseFlag").find("option:selected").attr("selected",false);
+        $("#releaseFlag").find('option:contains("...")').attr("selected",true);
         $("#state").empty();
         $("#state").append(' <option value="newProject">新品入库</option>')
         $("#needCardModifyForm")[0].reset();
         $("#myModalLabel").text("针卡建档");
         $("#myModal").modal('show');
-        $("#isRelease").parent().hide();
+        $("#releaseFlag").parent().hide();
+        $("#submit").show();
+    })
+    var needleCardData=[];
+    $.ajax({
+        type:"get",
+        async: false,
+        dataType:"json",
+        url:"/toolingweb/needleCard/getAllProberCardInfos",
+        success:function (data) {
+            $.each(data,function (i,item) {
+                var time=getSmpFormatDateByLong(item.receiptTime,true);
+                item.receiptTime=time.substring(0,11);
+            })
+            needleCardData=data;
 
+
+        }
     })
 
     $('#needleCardTable').bootstrapTable({
@@ -320,63 +392,61 @@ $(document).ready(function() {
         },
         errorElement:"div",
         rules: {
-            needleCardNumber: {
+            proberCardId: {
                 required: true,
                 isNumberAndLetter:true
             },
-            customer:{
+            custName:{
                 required:true,
                 isCustomer:true
             },
-            customerCode:{
+            custNo:{
                 required:true,
                 isNumberAndLetter:true
             },
-            factoryNumber:{
+            vendorNo:{
                 required:true,
                 isNumberAndLetter:true
             },
-            factory:{
+            vendorName:{
                 required:true,
                 isNumberOrLetter:true
             },
-            applicableMachine:{
+            useEquipment:{
                 required:true,
                 isNumberAndLetter:true
             },
-            counter:{
+            cabPosition:{
                 required:true,
                 isNumberAndLetter:true
             },
-            source:{
+            cardSource:{
                 required:true,
                 isNumberOrLetter:true
             },
-            dutNumber:{
+            dutCount:{
+                isPositiveInteger:true
+            },
+            pmTd:{
                 required: true,
                 isPositiveInteger:true
             },
-            pmTime:{
-                required: true,
+            pinCount:{
                 isPositiveInteger:true
             },
-            pinNumber:{
-                required: true,
-                isPositiveInteger:true
-            },
-            needleLengthSpec:{
+            pinlenSpec:{
                 required: true,
                 isNumber:true
             },
-            incomingDate:{
+            receiptTime:{
                 required: true,
                 dateISO:true
             },
-            levelSpec:{
+            pinlevelSpec:{
                 required: true,
                 isNumber:true
             },
-            depth:{
+            pindepthSpec:{
                 required: true,
                 isNumber:true
             },
@@ -384,13 +454,20 @@ $(document).ready(function() {
                 required:true,
                 isNumberAndLetter:true
             },
-            needleDiameterSpec:{
+            pindiamSpec:{
                 required:true,
                 isNumberD:true
             },
-            propertyUnit:{
+            belongDept:{
                 required:true,
                 isNumberOrLetter:true
+            },glassMask:{
+                required:true,
+                isPositiveInteger:true
+            },
+            mylarMask:{
+                required:true,
+                isPositiveInteger:true
             }
         },
         submitHandler:function (form) {
@@ -399,7 +476,7 @@ $(document).ready(function() {
                 url:'/toolingweb/needleCard/addNewNeedleCard',
                 data:$(form).serialize(),
                 error:function () {
-                    alert("add failed!,please check your information again!")
+                   alert("add failed!,please check your information again!")
                 }
             });
             var date=new Date();
@@ -417,8 +494,6 @@ $(document).ready(function() {
             $.each(data,function (i,item) {
                 newData[item.name]=item.value;
             })
-
-            newData["createTime"]=date.getFullYear()+"-"+month+"-"+day;
             newDatas.push(newData);
             $('#needleCardTable').bootstrapTable("append",newDatas);
             $(form).resetForm();
@@ -427,7 +502,7 @@ $(document).ready(function() {
         }
 
     });
-    $("#incomingDate").prop("readonly",true).datetimepicker({
+    $("#receiptTime").prop("readonly",true).datetimepicker({
         minView: "month",
         todayBtn : "true",
         format: "yyyy-mm-dd",
