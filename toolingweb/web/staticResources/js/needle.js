@@ -46,14 +46,6 @@ $(document).ready(function() {
         }
         return date.format(pattern);
     }
-    $("#home").on("click",function () {
-        $("#homePage").show();
-        $("#needleCardSearchPage").hide()
-    });
-    $("#needleCard").on("click",function () {
-        $("#homePage").hide();
-        $("#needleCardSearchPage").show()
-    });
     function getTime(){
         var now=new Date();
         var year=now.getFullYear(),
@@ -217,13 +209,13 @@ $(document).ready(function() {
         {
             title:"剩餘可測TD",field:"remainingTD"
         },{
-            title:"针长",field:"pinlenSpec"
+            title:"针长",field:"pinlen"
         },
         {
-            title:"針徑",field:"pindiamSpec"
+            title:"針徑",field:"pindiam"
         },
         {
-            title:"水平",field:"pinlevelSpec"
+            title:"水平",field:"pinlevel"
         },
         {
             title:"柜位",field:"cabPosition"
@@ -234,12 +226,12 @@ $(document).ready(function() {
             title:"PM时机",field:"pmTd"
         },
         {
-            title:"開始針長",field:"previousNeedleLength"
+            title:"開始針長",field:"pinlenSpec"
         },
         {
-            title:"開始針徑",field:"previousNeedleDiameter"
+            title:"開始針徑",field:"pindiamSpec"
         },{
-            title:"開始水平",field:"previousLevel"
+            title:"開始水平",field:"pinlevelSpec"
         },
         {
             title:"客戶編號",field:"custNo"

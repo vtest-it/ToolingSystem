@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -24,50 +25,54 @@ public class NeedleCardController {
 
     @RequestMapping("/addNewNeedleCard")
     @ResponseBody
-    public String addNewNeedleCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
+    public boolean addNewNeedleCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
                                    String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
                                    String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String operator, String cardModel, String belongDept,
                                    String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        ProberCardEntityBean bean = new ProberCardEntityBean();
-        bean.setProberCardId(proberCardId);
-        bean.setCustName(custName);
-        bean.setCustNo(custNo);
-        bean.setReceiptTime(format.parse(receiptTime));
-        bean.setVendorName(vendorName);
-        bean.setVendorNo(vendorNo);
-        bean.setBelongDept(belongDept);
-        bean.setUseEquipment(useEquipment);
-        bean.setDutCount(0);
-        if (null != dutCount) {
-            bean.setDutCount(dutCount);
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            ProberCardEntityBean bean = new ProberCardEntityBean();
+            bean.setProberCardId(proberCardId);
+            bean.setCustName(custName);
+            bean.setCustNo(custNo);
+            bean.setReceiptTime(format.parse(receiptTime));
+            bean.setVendorName(vendorName);
+            bean.setVendorNo(vendorNo);
+            bean.setBelongDept(belongDept);
+            bean.setUseEquipment(useEquipment);
+            bean.setDutCount(0);
+            if (null != dutCount) {
+                bean.setDutCount(dutCount);
+            }
+            bean.setPinCount(0);
+            if (null != pinCount) {
+                bean.setPinCount(pinCount);
+            }
+            bean.setCabPosition(cabPosition);
+            bean.setCardSource(cardSource);
+            bean.setPmTd(pmTd);
+            bean.setCardType(cardType);
+            if (newOld.equals("new")) {
+                bean.setNewOld(true);
+            } else {
+                bean.setNewOld(false);
+            }
+            bean.setCleanType(cleanType);
+            bean.setPindiamSpec(pindiamSpec);
+            bean.setPinlevelSpec(pinlevelSpec);
+            bean.setPindepthSpec(pindepthSpec);
+            bean.setPinlenSpec(pinlenSpec);
+            bean.setTdTotal(tdTotal);
+            bean.setCardModel(cardModel);
+            bean.setReleaseFlag(false);
+            bean.setGlassMask(glassMask);
+            bean.setMylarMask(mylarMask);
+            bean.setNote(note);
+            service.addNewProberCard(bean);
+            return true;
+        } catch (ParseException e) {
+            return  false;
         }
-        bean.setPinCount(0);
-        if (null != pinCount) {
-            bean.setPinCount(pinCount);
-        }
-        bean.setCabPosition(cabPosition);
-        bean.setCardSource(cardSource);
-        bean.setPmTd(pmTd);
-        bean.setCardType(cardType);
-        if (newOld.equals("new")) {
-            bean.setNewOld(true);
-        } else {
-            bean.setNewOld(false);
-        }
-        bean.setCleanType(cleanType);
-        bean.setPindiamSpec(pindiamSpec);
-        bean.setPinlevelSpec(pinlevelSpec);
-        bean.setPindepthSpec(pindepthSpec);
-        bean.setPinlenSpec(pinlenSpec);
-        bean.setTdTotal(tdTotal);
-        bean.setCardModel(cardModel);
-        bean.setReleaseFlag(false);
-        bean.setGlassMask(glassMask);
-        bean.setMylarMask(mylarMask);
-        bean.setNote(note);
-        service.addNewProberCard(bean);
-        return "success";
     }
 
     @ResponseBody
@@ -78,17 +83,16 @@ public class NeedleCardController {
 
     @ResponseBody
     @RequestMapping(value = "/delProberCards")
-    public String deleteProberCards(@RequestParam("proberCards") String proberCards) {
+    public boolean deleteProberCards(@RequestParam("proberCards") String proberCards) {
         try {
             String[] list = proberCards.split(",");
             for (String proberCardId : list) {
                 service.deleteProberCard(proberCardId);
             }
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            return "fail";
+            return false;
         }
-        return "success";
     }
 
     @RequestMapping(value = "/getSingletonProberCard", produces = "text/html;charset=UTF-8")
@@ -104,7 +108,7 @@ public class NeedleCardController {
     }
     @RequestMapping("/iqcRelease")
     @ResponseBody
-    public String iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note){
+    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note){
         try {
             IqcRecordBean bean=new IqcRecordBean();
             bean.setProberCardId(proberCardId);
@@ -119,15 +123,14 @@ public class NeedleCardController {
             bean.setNote(note);
             service.updateProberCardStatus(proberCardId,nextStation,"New_IQC",updateOperator);
             service.addNewIqcRecord(bean);
-            return "success";
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            return  false;
         }
-        return  "fail";
     }
     @ResponseBody
     @RequestMapping("/outProberCard")
-    public String outProberCard(String proberCardId,String outuseEquipment,String outUsing,String outOperator,String nextStation,String note,String oldStatus,String operator){
+    public boolean outProberCard(String proberCardId,String outuseEquipment,String outUsing,String outOperator,String nextStation,String note,String oldStatus,String operator){
         try {
             OutProberCardBean outProberCardBean=new OutProberCardBean();
             outProberCardBean.setProberCardId(proberCardId);
@@ -138,15 +141,14 @@ public class NeedleCardController {
             outProberCardBean.setNote(note);
             service.addNewOutRecord(outProberCardBean);
             service.updateProberCardStatus(proberCardId,nextStation,oldStatus,operator);
-            return "success";
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            return  false;
         }
-        return  "fail";
     }
     @ResponseBody
     @RequestMapping("/backProberCard")
-    public String backProberCard(String proberCardId,String backuseEquipment,String backStatus,String backOperator,String createOperator,boolean issueFlag,String issueDesc,String nextStation,String note,String oldStatus){
+    public boolean backProberCard(String proberCardId,String backuseEquipment,String backStatus,String backOperator,String createOperator,boolean issueFlag,String issueDesc,String nextStation,String note,String oldStatus){
         try {
             BackProberCardBean bean=new BackProberCardBean();
             bean.setProberCardId(proberCardId);
@@ -160,10 +162,10 @@ public class NeedleCardController {
             bean.setNote(note);
             service.addNewBackRecord(bean);
             service.updateProberCardStatus(proberCardId,nextStation,oldStatus,createOperator);
-            return "success";
+            return true;
         } catch (Exception e) {
+            return false;
         }
-        return "fail";
     }
     @ResponseBody
     @RequestMapping(value = "/getReleaseProberCardInfo",produces = "text/html;charset=UTF-8")
@@ -172,7 +174,7 @@ public class NeedleCardController {
     }
     @ResponseBody
     @RequestMapping(value = "/releaseProbercard")
-    public String ReleaseProberCard(String proberCardId,String pteOperator,double cardYield,String cardOperator,boolean pinMarks,boolean releaseFlag,String updateOperator,String note,String oldStatus,String nextStation){
+    public boolean ReleaseProberCard(String proberCardId,String pteOperator,double cardYield,String cardOperator,boolean pinMarks,boolean releaseFlag,String updateOperator,String note,String oldStatus,String nextStation){
         try {
             ReleaseProberCardBean bean=new ReleaseProberCardBean();
             bean.setProberCardId(proberCardId);
@@ -187,10 +189,9 @@ public class NeedleCardController {
             if (releaseFlag){
                 service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
             }
-            return "success";
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
-        return "fail";
     }
 }

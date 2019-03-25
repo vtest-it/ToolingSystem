@@ -46,8 +46,6 @@ function getFormatDate(date, pattern) {
     return date.format(pattern);
 }
 var flag=false;
-var reFlag=false;
-var oldState="";
 function formClean(){
     $("#custName").val("");
     $("#custNo").val("");
@@ -60,10 +58,9 @@ function formClean(){
     $("#cabPosition").val("");
     $("#belongDept").val("");
     $("#pmTd").val("");
-    $("#enginnerCheck").val("");
-    $("#yield").val("");
-    $("#markCheck").val("");
-    $("#operator").val("");
+    $("#backuseEquipment").val("");
+    $("#backOperator").val("");
+    $("#createOperator").val("");
     $("#note").val("");
 }
 function selectChange(value){
@@ -74,8 +71,7 @@ function selectChange(value){
         type:'get',
         dataType:"json",
         async: false,
-        // url:"/toolingweb/needleCard/getReleaseProberCardInfo?"+value,
-        url:"js/singleton.json",
+        url:"/toolingweb/needleCard/getSingletonProberCard?proberCardId="+value,
         success:function (data) {
             if(data==null){
                 lendFlag=false;
@@ -89,46 +85,90 @@ function selectChange(value){
 
         }
     })
-    // $.ajax({
-    //     type:'get',
-    //     dataType:"json",
-    //     async: false,
-    //     url:"/toolingweb/needleCard/?"+value,
-    //     success:function (data) {
-    //         state=JSON.stringify(data);
-    //         oldState=JSON.stringify(data);
-    //     }
-    // })
-    state="Card_housing";
-    $.each(lendingData,function (i,item) {
-        var rows=JSON.stringify(item).replace("{","").replace("}","").trim().split(",");
-        var pteOperator=item.pteOperator;
-        var cardYield=item.cardYield;
-        var cardOperator=item.cardOperator;
-        var pinMarks=item.pinMarks;
-        if(pteOperator!=null&&cardYield!=null&&cardOperator!=null&&lendFlag==true&&pinMarks==true){
-            flag=true;
+    $.ajax({
+        type:'get',
+        async: false,
+        url:"/toolingweb/needleCard/getProberCardStatus?proberCardId="+value,
+        success:function (data) {
+            state=data;
         }
-        if(state=="Card_housing"&&lendFlag==true){
+    })
+        var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
+        if(state=="Out_Fixing"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                if(title=="needleMarks"){
-                    $('#'+title).find('option[value='+field+']').attr("selected",true);
-                }else {
-                    $('#'+title).val(field);
-                }
-
+                $('#'+title).val(field);
             }
+            $("#oldstatus").val(state);
             $("#nextStation").html("");
-            $("#nextStation").append('<option value="Production_Verify">测试、验证中</option>');
-          flag=true;
+            $("#nextStation").append('<option value="RE_IQC">维修后IQC</option>');
+            flag=true;
+
+        }else if(state=="RE_IQC"&&lendFlag==true){
+            for(var k=0;k<rows.length;k++){
+                var rowIndex=rows[k].indexOf(":");
+                var title=rows[k].substring(1,rowIndex-1);
+                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                $('#'+title).val(field);
+            }
+            $("#oldstatus").val(state);
+            $("#nextStation").html("");
+            $("#nextStation").append('<option value="New_IQC">NewIQC</option>');
+            flag=true;
+        }else if(state=="Cust_Lenging"&&lendFlag==true){
+            for(var k=0;k<rows.length;k++){
+                var rowIndex=rows[k].indexOf(":");
+                var title=rows[k].substring(1,rowIndex-1);
+                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                $('#'+title).val(field);
+            }
+            $("#oldstatus").val(state);
+            $("#nextStation").html("");
+            $("#nextStation").append('<option value="New_IQC">NewIQC</option>');
+            flag=true;
         }
-        else if(lendFlag==true&&state!="Card_housing"){
+        else if(state=="Production_Verify"&&lendFlag==true){
+            for(var k=0;k<rows.length;k++){
+                var rowIndex=rows[k].indexOf(":");
+                var title=rows[k].substring(1,rowIndex-1);
+                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                $('#'+title).val(field);
+            }
+            $("#oldstatus").val(state);
+            $("#nextStation").html("");
+            $("#nextStation").append('<option value="Out_Fixing">场外维修</option>'+
+                '<option value="Inner_Maintain">维修检验</option>');
+            flag=true;
+        }
+        else if(state=="Inner_Maintain"&&lendFlag==true){
+            for(var k=0;k<rows.length;k++){
+                var rowIndex=rows[k].indexOf(":");
+                var title=rows[k].substring(1,rowIndex-1);
+                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                $('#'+title).val(field);
+            }
+            $("#oldstatus").val(state);
+            $("#nextStation").html("");
+            $("#nextStation").append('<option value="Card_housing">针卡在库</option>');
+            flag=true;
+        }else if(state=="Re_Build"&&lendFlag==true){
+            for(var k=0;k<rows.length;k++){
+                var rowIndex=rows[k].indexOf(":");
+                var title=rows[k].substring(1,rowIndex-1);
+                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                $('#'+title).val(field);
+            }
+            $("#oldstatus").val(state);
+            $("#nextStation").html("");
+            $("#nextStation").append('<option value="New_IQC">NewIQC</option>');
+            flag=true;
+        }
+        else if(lendFlag==true&&state!="Out_Fixing"&&state!="RE_IQC"&&state!="Cust_Lenging"&&state!="Production_Verify"&&state!="Inner_Maintain"&&state!="Re_Build"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在针卡在库这个状态");
+            $("#error").html("存在这个针卡编号，但不在场外维修，维修后IQC,客户借出，测试验证中，维修查验，重新制作这6种状态");
             $("#myModal").modal('show');
            flag=false;
         }
@@ -139,7 +179,6 @@ function selectChange(value){
             $("#myModal").modal('show');
             flag=false;
         }
-    })
 }
 $(document).ready(function () {
     function getTime(){
@@ -214,7 +253,7 @@ $(document).ready(function () {
         var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
         return this.optional(element)||(number.test(value));
     },warning+"数字+-");
-    $("#needleCardReleaseForm").validate({
+    $("#needleCardReturnForm").validate({
         errorPlacement: function(error, element) {
             error.css({width:"30%",float:"right",color:"#DAA520"})
             error.appendTo(element.parent() );
@@ -225,37 +264,45 @@ $(document).ready(function () {
                 required: true,
                 isNumberAndLetter:true
             },
-            operator:{
+            createOperator:{
                 required:true,
                 isOperator:true
             },
-            enginnerCheck:{
+            backuseEquipment:{
+                required:true,
+                isNumberAndLetter:true
+            }
+            ,backOperator:{
                 required:true,
                 isOperator:true
-            },markCheck:{
-                required:true,
-                isOperator:true
-            },yield:{
-                required:true,
-                isPercent: true
             }
         },submitHandler:function (form) {
-            if(flag&&$("#releaseFlag option:selected").val()==true){
-                $(form).ajaxSubmit(
-                    {
-                        type:"post",
-                        dataType:"json",
-                        url:"",
-                        data:$(form).serialize(),
-                        error:function () {
-                            alert("add failed!,please check your information again!")
+            if(flag){
+                var confirmFlag=confirm("请再次确认");
+                if($('#issueFlag option:selected') .val()=="false"){
+                    $('#issueDesc').find('option[value="noAbnormity"]').attr("selected",true);
+                }
+                if(confirmFlag==true){
+                    $(form).ajaxSubmit(
+                        {
+                            type:"post",
+                            url:"/toolingweb/needleCard/backProberCard",
+                            data:$(form).serialize(),
+                            error:function () {
+                                alert("add failed!,please check your information again!")
+                            },
+                            success:function () {
+                                alert("Return success!")
+                                document.getElementById("needleCardReturnForm").reset();
+                            }
                         }
-                    }
 
-                );
+                    );
+                }
+
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或工程验收，良率，针痕验收有空值，针痕为FAIL");
+                $("#error").html("不存在该针卡编号或不在这个针卡编号，但不在场外维修，维修后IQC,客户借出，测试验证中，维修查验，重新制作这6种状态");
                 $("#myModal").modal('show');
             }
 

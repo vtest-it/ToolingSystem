@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019\3\22 0022
-  Time: 17:41
+  Date: 2019\3\25 0025
+  Time: 11:54
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>IQC</title>
+    <title>Title</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
@@ -30,7 +30,7 @@
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
-    <script src="<c:url value="/js/needleIQC.js"/> "></script>
+    <script src="<c:url value="/js/needleRelease.js"/> "></script>
 </head>
 <body>
 <div id="wrapper">
@@ -258,131 +258,133 @@
         </div>
     </div>
     <div id='page-wrapper'>
-        <div class="row" id="needleCardIQCPage">
+        <div class="row" id="needleCardReleasePage">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        针卡IQC
+                        针卡Release
                     </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <form role="form" id="needleCardIQCForm">
-                                <div class="form-group" >
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">针卡编号</label>
-                                        <input class="form-control" name="proberCardId"  id="proberCardId" style="width: 35%;" type="text" onchange="selectChange(this.value)">
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-3">客户</label>
-                                        <input class="form-control" name="custName" id="custName" style="width: 45%" type="text" disabled>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <form role="form" id="needleCardReleaseForm">
+                            <div class="form-group" >
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">针卡编号</label>
+                                    <input class="form-control" name="proberCardId"  id="proberCardId" style="width: 35%;" type="text" onchange="selectChange(this.value)">
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-3">客户</label>
+                                    <input class="form-control" name="custName" id="custName" style="width: 45%" type="text" disabled>
 
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">客户编号</label>
-                                        <input class="form-control" name="custNo" id="custNo" style="width: 45%" type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">客户编号</label>
+                                    <input class="form-control" name="custNo" id="custNo" style="width: 45%" type="text" disabled>
 
-                                    </p>
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">进厂日期</label>
-                                        <input class="form-control" name="receiptTime" id="receiptTime" style="width: 45%"type="text" disabled>
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-3">厂商</label>
-                                        <input class="form-control" name="vendorName" id="vendorName" style="width: 45%"type="text" disabled>
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">厂商编号</label>
-                                        <input class="form-control" name="vendorNo" id="vendorNo" style="width: 45%"type="text" disabled>
-                                    </p>
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">进厂日期</label>
+                                    <input class="form-control" name="receiptTime" id="receiptTime" style="width: 45%"type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-3">厂商</label>
+                                    <input class="form-control" name="vendorName" id="vendorName" style="width: 45%"type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">厂商编号</label>
+                                    <input class="form-control" name="vendorNo" id="vendorNo" style="width: 45%"type="text" disabled>
+                                </p>
 
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">适用机台</label>
-                                        <input class="form-control" name="useEquipment" id="useEquipment" style="width: 45%" type="text" disabled>
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-3">Dut 数</label>
-                                        <input class="form-control" name="dutCount" id="dutCount" style="width: 45%"type="text" disabled>
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">Pin 数</label>
-                                        <input class="form-control" name="pinCount" id="pinCount" style="width: 45%"type="text" disabled>
-                                    </p>
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">柜位</label>
-                                        <input class="form-control" name="cabPosition"  id="cabPosition"  style="width: 45%"type="text" disabled>
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">财产单位</label>
-                                        <input class="form-control" name="belongDept" id="belongDept" style="width: 45%"type="text" disabled>
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">PM时机</label>
-                                        <input class="form-control" name="pmTd" id="pmTd" style="width: 45%" type="text" disabled>
-                                    </p>
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">最长针长</label>
-                                        <input class="form-control" name="pinMaxlen" id="pinMaxlen" style="width: 35%" type="text">
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">最大针径</label>
-                                        <input class="form-control" name="pinMaxdiam" id="pinMaxdiam" style="width: 35%" type="text">
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-3">水平</label>
-                                        <input class="form-control" name="pinLevel" id="pinLevel" style="width: 35%" type="text">
-                                    </p>
+                            </div>
+                            <div class="form-group">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">适用机台</label>
+                                    <input class="form-control" name="useEquipment" id="useEquipment" style="width: 45%" type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-3">Dut 数</label>
+                                    <input class="form-control" name="dutCount" id="dutCount" style="width: 45%"type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">Pin 数</label>
+                                    <input class="form-control" name="pinCount" id="pinCount" style="width: 45%"type="text" disabled>
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">柜位</label>
+                                    <input class="form-control" name="cabPosition"  id="cabPosition"  style="width: 45%"type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">财产单位</label>
+                                    <input class="form-control" name="belongDept" id="belongDept" style="width: 45%"type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">PM时机</label>
+                                    <input class="form-control" name="pmTd" id="pmTd" style="width: 45%" type="text" disabled>
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">工程验收</label>
+                                    <input class="form-control" name="pteOperator" id="pteOperator" style="width: 35%" type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-3">良率</label>
+                                    <input class="form-control" name="cardYield" id="cardYield" style="width: 35%" type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-3">下一站</label>
+                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 35%">
+                                    </select>
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">针痕验收</label>
+                                    <input class="form-control" name="cardOperator" id="cardOperator" style="width: 35%" type="text" disabled>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-3">针痕</label>
+                                    <select  class="form-control" name="pinMarks"  id="pinMarks" style="width: 35%" disabled>
+                                        <option value="true">PASS</option>
+                                        <option value="false">FAIL</option>
+                                    </select>
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">作业人员</label>
+                                    <input class="form-control" name="updateOperator" id="updateOperator" style="width: 35%" type="text">
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-7">客戶是否同意release</label>
+                                    <select  class="form-control" name="releaseFlag"  id="releaseFlag" style="width: 20%">
+                                        <option value="true">是</option>
+                                        <option value="false">否</option>
+                                    </select>
+                                </p>
+                                <p class="col-lg-8">
+                                    <label class="col-lg-2">备注</label>
+                                    <textarea class="form-control" name="note" id="note" style="width: 80%" rows="3"></textarea>
+                                </p>
+                            </div>
+                            <div class="form-group" style="display: none">
+                                <p class="col-lg-12">
+                                    <label class="col-lg-2">上一站</label>
+                                    <input class="form-control" name="oldStatus" id="oldstatus" style="width: 45%" type="text">
+                                </p>
+                            </div>
+                            <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="Submit">
+                        </form>
 
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">最短针长</label>
-                                        <input class="form-control" name="pinMinlen" id="pinMinlen" style="width: 35%"type="text">
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">最小针径</label>
-                                        <input class="form-control" name="pinMindiam" id="pinMindiam" style="width: 35%"type="text">
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-3">DEPTH</label>
-                                        <input class="form-control" name="pinDepth"  id="pinDepth" style="width: 35%" type="text">
-                                    </p>
-
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-6">
-                                        <label class="col-lg-3">作业人员</label>
-                                        <input class="form-control" name="updateOperator" id="updateOperator" style="width: 40%" type="text">
-                                    </p>
-                                    <p class="col-lg-6">
-                                        <label class="col-lg-2">下一站</label>
-                                        <select class="form-control"  name="nextStation" id="nextStation" style="width: 45%">
-                                        </select>
-                                    </p>
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-12">
-                                        <label class="col-lg-2">备注</label>
-                                        <textarea class="form-control" name="note" id="note" style="width: 80%" rows="3"></textarea>
-                                    </p>
-                                </div>
-                                <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="提交">
-                            </form>
-
-                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
 </div>

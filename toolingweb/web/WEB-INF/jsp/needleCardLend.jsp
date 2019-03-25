@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019\3\22 0022
-  Time: 17:41
+  Date: 2019\3\25 0025
+  Time: 10:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>IQC</title>
+    <title>lend</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
@@ -30,7 +30,7 @@
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
-    <script src="<c:url value="/js/needleIQC.js"/> "></script>
+    <script src="<c:url value="/js/needleLend.js"/> "></script>
 </head>
 <body>
 <div id="wrapper">
@@ -258,15 +258,15 @@
         </div>
     </div>
     <div id='page-wrapper'>
-        <div class="row" id="needleCardIQCPage">
+        <div class="row" id="needleCardLendPage">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        针卡IQC
+                        针卡借出
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <form role="form" id="needleCardIQCForm">
+                            <form role="form" id="needleCardLendForm">
                                 <div class="form-group" >
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">针卡编号</label>
@@ -328,52 +328,50 @@
                                 </div>
                                 <div class="form-group">
                                     <p class="col-lg-4">
-                                        <label class="col-lg-4">最长针长</label>
-                                        <input class="form-control" name="pinMaxlen" id="pinMaxlen" style="width: 35%" type="text">
+                                        <label class="col-lg-4">借出机台</label>
+                                        <input class="form-control" name="outuseEquipment" id="outuseEquipment" style="width: 35%" type="text">
                                     </p>
                                     <p class="col-lg-4">
-                                        <label class="col-lg-4">最大针径</label>
-                                        <input class="form-control" name="pinMaxdiam" id="pinMaxdiam" style="width: 35%" type="text">
+                                        <label class="col-lg-4">借出用途</label>
+                                        <select  class="form-control" name="outUsing" id="outUsing" style="width: 35%">
+                                            <option value="testing">测试中</option>
+                                            <option value="engineering">工程中</option>
+                                            <option value="maintaining">保养中</option>
+                                            <option value="repairing">维修中</option>
+                                            <option value="cleaningMeasuring">清针量測中</option>
+                                            <option value="outStock">待出库</option>
+                                        </select>
                                     </p>
                                     <p class="col-lg-4">
-                                        <label class="col-lg-3">水平</label>
-                                        <input class="form-control" name="pinLevel" id="pinLevel" style="width: 35%" type="text">
+                                        <label class="col-lg-4">借出人员</label>
+                                        <input class="form-control" name="outOperator" id="outOperator" style="width: 35%" type="text">
                                     </p>
 
                                 </div>
                                 <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">最短针长</label>
-                                        <input class="form-control" name="pinMinlen" id="pinMinlen" style="width: 35%"type="text">
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">最小针径</label>
-                                        <input class="form-control" name="pinMindiam" id="pinMindiam" style="width: 35%"type="text">
-                                    </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-3">DEPTH</label>
-                                        <input class="form-control" name="pinDepth"  id="pinDepth" style="width: 35%" type="text">
-                                    </p>
-
-                                </div>
-                                <div class="form-group">
-                                    <p class="col-lg-6">
-                                        <label class="col-lg-3">作业人员</label>
-                                        <input class="form-control" name="updateOperator" id="updateOperator" style="width: 40%" type="text">
-                                    </p>
                                     <p class="col-lg-6">
                                         <label class="col-lg-2">下一站</label>
                                         <select class="form-control"  name="nextStation" id="nextStation" style="width: 45%">
                                         </select>
                                     </p>
+                                    <p class="col-lg-6">
+                                        <label class="col-lg-3">作业人员</label>
+                                        <input class="form-control" name="operator" id="operator" style="width: 45%" type="text">
+                                    </p>
                                 </div>
                                 <div class="form-group">
                                     <p class="col-lg-12">
-                                        <label class="col-lg-2">备注</label>
-                                        <textarea class="form-control" name="note" id="note" style="width: 80%" rows="3"></textarea>
+                                        <label class="col-lg-1">备注</label>
+                                        <textarea class="form-control"  name="note" id="note" style="width: 90%" rows="3"></textarea>
                                     </p>
                                 </div>
-                                <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="提交">
+                                <div class="form-group" style="display: none">
+                                    <p class="col-lg-12">
+                                        <label class="col-lg-2">上一站</label>
+                                        <input class="form-control" name="oldStatus" id="oldstatus" style="width: 45%" type="text">
+                                    </p>
+                                </div>
+                                <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="Submit">
                             </form>
 
                         </div>
@@ -382,7 +380,6 @@
             </div>
 
         </div>
-
     </div>
 
 </div>

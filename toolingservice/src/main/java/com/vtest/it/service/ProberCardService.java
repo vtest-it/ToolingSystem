@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @Service
@@ -48,7 +49,7 @@ public class ProberCardService {
         mapper.addNewIqcRecord(bean);
     }
 
-    public void updateProberCardStatus(String proberCardId, String newStatus, String oldStatus, String operator) {
+    public void updateProberCardStatus(String proberCardId, String newStatus, String oldStatus, String operator) throws FileNotFoundException {
         mapper.updateProberCardState(proberCardId, newStatus, oldStatus, operator);
     }
 

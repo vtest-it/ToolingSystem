@@ -39,28 +39,6 @@
             white-space: nowrap;
         }
     </style>
-    <script>
-        $("#needCardModifyForm").on("submit",function () {
-            dataPost();
-            event.preventDefault();
-        })
-        function dataPost() {
-            $.ajax({
-                type:"post",
-                dataType:"json",
-                url:"/toolingweb/needleCard/addNewNeedleCard",
-                data:$("#needCardModifyForm").serialize(),
-                success:function (result) {
-                    if(result.resultCode==200){
-                        alert(result);
-                    }
-                },
-                error:function(){
-                    alert(result);
-                }
-            })
-        }
-    </script>
 </head>
 
 <body>
@@ -73,7 +51,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" id="home" href="javacript:void(0);">TMS管理系统</a>
+            <a class="navbar-brand" id="home" href="needleCard.jsp">TMS管理系统</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -104,7 +82,7 @@
                         <a href="#"><i class="fa fa-book fa-fw"></i>档案管理<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="javacript:void(0);" id="needleCard">针卡档案</a>
+                                <a href="needleCardRecord">针卡档案</a>
                             </li>
                             <li>
                                 <a href="#">tooling档案</a>
@@ -125,16 +103,16 @@
                                 <a href="needleCardIQC">针卡IQC</a>
                             </li>
                             <li>
-                                <a href="#">针卡借出 </a>
+                                <a href="needleCardLend">针卡借出 </a>
                             </li>
                             <li>
-                                <a href="#">针卡归还</a>
+                                <a href="needleCardReturn">针卡归还</a>
                             </li>
                             <li>
-                                <a href="#">針卡Release</a>
+                                <a href="needleCardRelease">針卡Release</a>
                             </li>
                             <li>
-                                <a href="#">tooling借出 </a>
+                                <a href="">tooling借出 </a>
                             </li>
                             <li>
                                 <a href="#">tooling归还</a>
@@ -411,24 +389,6 @@
         </div>
     </div>
     <div id='page-wrapper'>
-        <div class="row" id="needleCardSearchPage" style="display: none;">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        针卡档案搜寻
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div id="toolbar" class="btn-group" style="float: left;">
-                        <button id="btnAdd" type="button" class="btn btn-default">
-                            <span class="fa fa-plus" aria-hidden="true"></span>针卡建档
-                        </button>
-                    </div>
-                    <table id="needleCardTable">
-                    </table>
-                </div>
-            </div>
-        </div>
         <div class="row" id="homePage">
             <div id="ordinaryPage">
                 <img src="<c:url value="/image/logo-font.png"/> " style="width: 90%;">
@@ -458,7 +418,7 @@
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="#">针卡档案</a>
+                                            <a href="needleCardRecord">针卡档案</a>
                                         </li>
                                         <li>
                                             <a href="#">tooling档案</a>
