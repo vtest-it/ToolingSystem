@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    // var link = document.querySelector('link[rel="import"]');
+    // var content = link.import;
+    // var el = content.querySelector('.navbar');
+    // document.getElementById("wrapper").prepend(el.cloneNode(true));
     Date.prototype.format = function (format) {
         var o = {
             "M+": this.getMonth() + 1,
@@ -109,159 +113,6 @@ $(document).ready(function() {
             data:newDatas
         })
     })
-    var columns=[
-        {title:"操作",formatter:function (value,row,index) {
-                return['<button id="btnEdit" type="button" class="btn btn-default"> <span class="fa fa-edit" aria-hidden="true"></span>修改 </button>'].join("");
-            },events:{
-                "click #btnEdit":function (e,value,row,index) {
-                    $("#needCardModifyForm")[0].reset();
-                    $("#formSubmit").attr("index",index);
-                    $("#myModalLabel").text("针卡档案修改");
-                    $("#myModal").modal('show');
-                    $("#releaseFlag").parent().show();
-                    $("#releaseFlag").attr("disabled",false);
-                    $("#state").empty();
-                    $("#state").append( '<option value="newProject">新品入库</option>'+
-                        '<option value="remake">重新制作</option>'+
-                        '<option value="IQC">IQC</option>'+
-                        '<option value="IQC_pass">IQC pass</option>'+
-                        '<option value="IQC_fail">IQC fail</option>'+
-                        '<option value="repairedIQC">维修后IQC</option>'+
-                        '<option value="repairedIQC_fail">维修后IQC fail</option>'+
-                        '<option value="testing">测试中</option>'+
-                        '<option value="Engineering">工程中</option>'+
-                        '<option value="return">归还</option>'+
-                        '<option value="usable">堪用</option>'+
-                        '<option value="maintainingPM">保养中PM</option>'+
-                        '<option value="repairing">维修中</option>'+
-                        '<option value="offSiteMaintenance">厂外维修</option>'+
-                        '<option value="offSiteMaintenanceReturn">厂外维修返回</option>'+
-                        '<option value="customerLend">客户借出</option>'+
-                        '<option value="customerLendReturn">客户借出返回</option>'+
-                        '<option value="disuse">停用</option>'+
-                        '<option value="waitingPlate">待拆板</option>');
-                    var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
-                    $("#submit").hide();
-                    for(var k=0;k<rows.length;k++){
-                        var rowIndex=rows[k].indexOf(":");
-                        var title=rows[k].substring(1,rowIndex-1);
-                        var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                        if(title=="cardType"||title=="cleanType"||title=="state"||title=="releaseFlag"){
-                            $('#'+title).find('option[value='+field+']').attr("selected",true);
-                            // $('#'+title).find('option:contains('+field+')').attr("selected",true);
-                        }else if(title=='newOld'){
-                            field=rows[k].substring(rowIndex+1,rows[k].length);
-                            if(field=='true'){
-                                $('#newOld').find('option:contains("新")').attr("selected",true);
-                            }else {
-                                $('#newOld').find('option:contains("旧")').attr("selected",true);
-                            }
-                        } else{
-                            $('#'+title).val(field)
-                        }
-
-                    }
-
-                }
-            }
-        },{
-            title:"客户",field:"custName"
-        },
-        {
-            title:"厂商",field:"vendorName"
-        },
-        {
-            title:"型号",field:"cardModel"
-        },
-        {
-            title:"编号",field:"proberCardId"
-        },{
-            title:"通用机台",field:"useEquipment"
-        },
-        {
-            title:"状态",field:"state"
-        },
-        {
-            title:"是否Release",field:"releaseFlag"
-        },
-        {
-            title:"Dut数",field:"dutCount"
-        },{
-            title:"Pin数",field:"pinCount"
-        },
-        {
-            title:"新旧",field:"newOld"
-        },
-        {
-            title:"clean type",field:"cleanType"
-        },
-        {
-            title:"类型",field:"cardType"
-        },{
-            title:"TD",field:"TD"
-        },
-        {
-            title:"TD Total",field:"tdTotal"
-        },
-        {
-            title:"距下次PM可測TD",field:"nextTD"
-        },
-        {
-            title:"剩餘可測TD",field:"remainingTD"
-        },{
-            title:"针长",field:"pinlen"
-        },
-        {
-            title:"針徑",field:"pindiam"
-        },
-        {
-            title:"水平",field:"pinlevel"
-        },
-        {
-            title:"柜位",field:"cabPosition"
-        },{
-            title:"财产单位",field:"belongDept"
-        },
-        {
-            title:"PM时机",field:"pmTd"
-        },
-        {
-            title:"開始針長",field:"pinlenSpec"
-        },
-        {
-            title:"開始針徑",field:"pindiamSpec"
-        },{
-            title:"開始水平",field:"pinlevelSpec"
-        },
-        {
-            title:"客戶編號",field:"custNo"
-        },
-        {
-            title:"廠商編號",field:"vendorNo"
-        },
-        {
-            title:"Rebuild次數",field:"rebuildTime"
-        },
-        {
-            title:"GlassMask",field:"glassMask"
-        },
-        {
-            title:"MylarMask",field:"mylarMask"
-        },{
-            title:"建檔日期",field:"receiptTime"
-        },
-        {
-            title:"建檔人員",field:"operator"
-        },
-        {
-            title:"修改日期",field:"editTime"
-        },
-        {
-            title:"修改人員",field:"editOperator"
-        },
-        {
-            title:"備註",field:"note"
-        }];
     $("#submit").on('click',function () {
 
         // $.ajax({
@@ -343,8 +194,170 @@ $(document).ready(function() {
         strictSearch: true,
         minimumCountColumns: 2,             //最少允许的列数
         clickToSelect: true,                //是否启用点击选中行
-        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
-        columns:columns
+        // fixedColumns:true,
+        // fixedNumber:1,
+        columns:[
+            {title:"操作",formatter:function (value,row,index) {
+                    return['<button id="btnEdit" type="button" class="btn btn-default"> <span class="fa fa-edit" aria-hidden="true"></span>修改 </button>'].join("");
+                },events:{
+                    "click #btnEdit":function (e,value,row,index) {
+                        $("#needCardModifyForm")[0].reset();
+                        $("#formSubmit").attr("index",index);
+                        $("#myModalLabel").text("针卡档案修改");
+                        $("#myModal").modal('show');
+                        $("#releaseFlag").parent().show();
+                        $("#releaseFlag").attr("disabled",false);
+                        $("#state").empty();
+                        $("#state").append( '<option value="newProject">新品入库</option>'+
+                            '<option value="remake">重新制作</option>'+
+                            '<option value="IQC">IQC</option>'+
+                            '<option value="IQC_pass">IQC pass</option>'+
+                            '<option value="IQC_fail">IQC fail</option>'+
+                            '<option value="repairedIQC">维修后IQC</option>'+
+                            '<option value="repairedIQC_fail">维修后IQC fail</option>'+
+                            '<option value="testing">测试中</option>'+
+                            '<option value="Engineering">工程中</option>'+
+                            '<option value="return">归还</option>'+
+                            '<option value="usable">堪用</option>'+
+                            '<option value="maintainingPM">保养中PM</option>'+
+                            '<option value="repairing">维修中</option>'+
+                            '<option value="offSiteMaintenance">厂外维修</option>'+
+                            '<option value="offSiteMaintenanceReturn">厂外维修返回</option>'+
+                            '<option value="customerLend">客户借出</option>'+
+                            '<option value="customerLendReturn">客户借出返回</option>'+
+                            '<option value="disuse">停用</option>'+
+                            '<option value="waitingPlate">待拆板</option>');
+                        var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
+                        $("#submit").hide();
+                        for(var k=0;k<rows.length;k++){
+                            var rowIndex=rows[k].indexOf(":");
+                            var title=rows[k].substring(1,rowIndex-1);
+                            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                            if(title=="cardType"||title=="cleanType"||title=="state"||title=="releaseFlag"){
+                                $('#'+title).find('option[value='+field+']').attr("selected",true);
+                                // $('#'+title).find('option:contains('+field+')').attr("selected",true);
+                            }else if(title=='newOld'){
+                                field=rows[k].substring(rowIndex+1,rows[k].length);
+                                if(field=='true'){
+                                    $('#newOld').find('option:contains("新")').attr("selected",true);
+                                }else {
+                                    $('#newOld').find('option:contains("旧")').attr("selected",true);
+                                }
+                            } else{
+                                $('#'+title).val(field)
+                            }
+
+                        }
+
+                    }
+                }
+            },{
+                title:"客户",field:"custName"
+            },
+            {
+                title:"厂商",field:"vendorName"
+            },
+            {
+                title:"型号",field:"cardModel"
+            },
+            {
+                title:"编号",field:"proberCardId"
+            },{
+                title:"通用机台",field:"useEquipment"
+            },
+            {
+                title:"当前状态",field:"state"
+            },
+            {
+                title:"是否Release",field:"releaseFlag"
+            },
+            {
+                title:"Dut数",field:"dutCount"
+            },{
+                title:"Pin数",field:"pinCount"
+            },
+            {
+                title:"新旧",field:"newOld"
+            },
+            {
+                title:"clean type",field:"cleanType"
+            },
+            {
+                title:"类型",field:"cardType"
+            },{
+                title:"TD",field:"TD"
+            },
+            {
+                title:"TD Total",field:"tdTotal"
+            },
+            {
+                title:"距下次PM可測TD",field:"nextTD"
+            },
+            {
+                title:"剩餘可測TD",field:"remainingTD"
+            },{
+                title:"针长",field:"pinlenSpecR"
+            },
+            {
+                title:"針徑",field:"pindiamSpecR"
+            },
+            {
+                title:"水平",field:"pinlevelSpecR"
+            },
+            {
+                title:"柜位",field:"cabPosition"
+            },{
+                title:"财产单位",field:"belongDept"
+            },
+            {
+                title:"PM时机",field:"pmTd"
+            },
+            {
+                title:"開始針長",field:"pinMinlen"
+            },
+            {
+                title:"開始針徑",field:"pinMaxdiam"
+            },{
+                title:"開始水平",field:"pinLevel"
+            },{
+                title:"針長Spec",field:"pinlenSpec"
+            },
+            {
+                title:"針徑Spec",field:"pindiamSpec"
+            },{
+                title:"水平Spec",field:"pinlevelSpec"
+            },
+            {
+                title:"客戶編號",field:"custNo"
+            },
+            {
+                title:"廠商編號",field:"vendorNo"
+            },
+            {
+                title:"Rebuild次數",field:"rebuildTime"
+            },
+            {
+                title:"GlassMask",field:"glassMask"
+            },
+            {
+                title:"MylarMask",field:"mylarMask"
+            },{
+                title:"建檔日期",field:"receiptTime"
+            },
+            {
+                title:"建檔人員",field:"operator"
+            },
+            {
+                title:"修改日期",field:"editTime"
+            },
+            {
+                title:"修改人員",field:"editOperator"
+            },
+            {
+                title:"備註",field:"note"
+            }],
+        // selectItemName: 'parentItem',
+        // height:420
     })
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isNumber",function (value,element) {

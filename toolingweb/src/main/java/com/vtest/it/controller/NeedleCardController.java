@@ -121,7 +121,7 @@ public class NeedleCardController {
             bean.setUpdateOperator(updateOperator);
             bean.setNextStation(nextStation);
             bean.setNote(note);
-            service.updateProberCardStatus(proberCardId,nextStation,"New_IQC",updateOperator);
+            service.updateProberCardStatus(proberCardId,nextStation,"IQC",updateOperator);
             service.addNewIqcRecord(bean);
             return true;
         } catch (Exception e) {

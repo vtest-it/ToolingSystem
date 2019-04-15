@@ -124,7 +124,7 @@ function selectChange(value){
         if(pteOperator!=null&&cardYield!=null&&cardOperator!=null&&lendFlag==true&&pinMarks==true){
             flag=true;
         }
-        if(state=="Card_housing"&&lendFlag==true){
+        if(state=="Card_Release"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -145,15 +145,16 @@ function selectChange(value){
                     $('#'+title).val(field);
                 }
             }
-            $("#oldstatus").val(state);
+            $("#oldStatus").val("");
+            $("#oldStatus").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="Production_Verify">测试、验证中</option>');
           flag=true;
         }
-        else if(lendFlag==true&&state!="Card_housing"){
+        else if(lendFlag==true&&state!="Card_Release"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在针卡在库这个状态");
+            $("#error").html("存在这个针卡编号，但不在针卡Release这个状态");
             $("#myModal").modal('show');
            flag=false;
         }
@@ -274,7 +275,6 @@ $(document).ready(function () {
                 $("#cardYield").attr("disabled",false);
                 $("#cardOperator").attr("disabled",false);
                 $("#pinMarks").attr("disabled",false);
-                alert($(form).serialize())
                 var confirmFlag=confirm("请再次确认");
                 if(confirmFlag){
                     $(form).ajaxSubmit(
@@ -282,8 +282,7 @@ $(document).ready(function () {
                             type:"post",
                             url:"/toolingweb/needleCard/releaseProbercard",
                             data:$(form).serialize(),
-                            error:function (testerStaus) {
-                                alert(JSON.stringify(testerStaus))
+                            error:function () {
                                 alert("add failed!,please check your information again!")
                             },
                             success:function () {

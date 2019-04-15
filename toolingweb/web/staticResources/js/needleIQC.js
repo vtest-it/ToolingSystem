@@ -100,23 +100,24 @@ function selectChange(value){
         }
     })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
-        if(state=="New_IQC"&&lendFlag==true){
+        if(state=="IQC"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
                 $('#'+title).val(field);
             }
+            $("#lastStation").val("");
+            $("#lastStation").val(state);
             $("#nextStation").html("");
-            $("#nextStation").append('<option value="In_Engineering">工程中</option>'+
-            '<option value="Out_Fixing">场外维修</option>'+
-                '<option value="Final">归还客户</option>');
+            $("#nextStation").append('<option value="IQC_PASS">IQC_PASS</option>'+
+            '<option value="IQC_FAIL">IQC_FAIL</option>');
             flag=true;
 
-        }else if(lendFlag==true&&state!="New_IQC"){
+        }else if(lendFlag==true&&state!="IQC"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在NEW_IQC状态");
+            $("#error").html("存在这个针卡编号，但不在IQC状态");
             $("#myModal").modal('show');
             flag=false;
         }
@@ -263,7 +264,7 @@ $(document).ready(function () {
                 }
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在NEW_IQC状态");
+                $("#error").html("不存在该针卡编号或不在IQC状态");
                 $("#myModal").modal('show');
             }
 

@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>needleCard</title>
+    <link rel="import" href="navbar.jsp" >
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
@@ -26,10 +27,10 @@
     <script src="<c:url value="/js/messages_zh.js"/> "></script>
     <script src="<c:url value="/js/bootstrap/bootstrap.min.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-table.js"/> "></script>
+    <script src="<c:url value="/js/bootstrap-table-fixed-columns.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
-    <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
     <style>
         .unit{
             font-weight: 700;
@@ -82,16 +83,16 @@
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
                             </li>
-                            <li>
-                                <a href="#">tooling档案</a>
-                            </li>
-                            <li>
-                                <a href="#">Correlation wafer档案</a>
-                            </li>
+                            <%--<li>--%>
+                                <%--<a href="#">tooling档案</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Correlation wafer档案</a>--%>
+                            <%--</li>--%>
 
-                            <li>
-                                <a href="#">消耗品档案</a>
-                            </li>
+                            <%--<li>--%>
+                                <%--<a href="#">消耗品档案</a>--%>
+                            <%--</li>--%>
                         </ul>
                     </li>
                     <li>
@@ -109,80 +110,80 @@
                             <li>
                                 <a href="needleCardRelease">針卡Release</a>
                             </li>
-                            <li>
-                                <a href="">tooling借出 </a>
-                            </li>
-                            <li>
-                                <a href="#">tooling归还</a>
-                            </li>
-                            <li>
-                                <a href="#">Correlation wafer借出</a>
-                            </li>
-                            <li>
-                                <a href="#">Correlation wafer归还 </a>
-                            </li>
-                            <li>
-                                <a href="#">INK領出</a>
-                            </li>
-                            <li>
-                                <a href="#">INK归还</a>
-                            </li>
+                            <%--<li>--%>
+                                <%--<a href="">tooling借出 </a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">tooling归还</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Correlation wafer借出</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Correlation wafer归还 </a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">INK領出</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">INK归还</a>--%>
+                            <%--</li>--%>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">针卡保养</a>
-                            </li>
-                            <li>
-                                <a href="#">针卡保养纪录</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">针卡借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#">tooling借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#">Correlation wafer借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#">消耗品借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#"> 檔案修改紀錄</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Panels and Wells</a>
-                            </li>
-                            <li>
-                                <a href="#">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="#">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="#">Typography</a>
-                            </li>
-                            <li>
-                                <a href="#"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="#">Grid</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="#">针卡保养</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">针卡保养纪录</a>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="#">针卡借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">tooling借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Correlation wafer借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">消耗品借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#"> 檔案修改紀錄</a>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Panels and Wells</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Buttons</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Notifications</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Typography</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#"> Icons</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Grid</a>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
                 </ul>
             </div>
         </div>

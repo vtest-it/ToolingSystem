@@ -104,25 +104,25 @@ function selectChange(value){
         }
     })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
-        if(state=="Card_housing"&&lendFlag==true){
+         if(state=="Card_Release"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
                 $('#'+title).val(field);
             }
+            $("#lastStation").val("");
+            $("#lastStation").val(state);
+             $("#oldStatus").val("");
+             $("#oldStatus").val(state);
             $("#nextStation").html("");
-            $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+
-                '<option value="Production_Verify">测试、验证中</option>'+
-                '<option value="Final">归还客户</option>'+
-                '<option value="Card_Scarp">报废</option>'+
-                '<option value="Cust_Lending">客户借出</option>');
+            $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
             flag=true;
         }
-        else if(lendFlag==true&&state!="Card_housing"){
+        else if(lendFlag==true&&state!="Card_Release"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在针卡在库这个状态");
+            $("#error").html("存在这个针卡编号，但不在针卡Release这个状态");
             $("#myModal").modal('show');
             flag=false;
 
@@ -256,7 +256,7 @@ $(document).ready(function () {
 
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在这个针卡编号，但不在针卡在库这个状态");
+                $("#error").html("不存在该针卡编号或不在这个针卡编号，但不在针卡Release这个状态");
                 $("#myModal").modal('show');
             }
 

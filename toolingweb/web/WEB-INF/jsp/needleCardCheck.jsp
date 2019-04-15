@@ -89,16 +89,16 @@
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
                             </li>
-                            <li>
-                                <a href="#">tooling档案</a>
-                            </li>
-                            <li>
-                                <a href="#">Correlation wafer档案</a>
-                            </li>
+                            <%--<li>--%>
+                                <%--<a href="#">tooling档案</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Correlation wafer档案</a>--%>
+                            <%--</li>--%>
 
-                            <li>
-                                <a href="#">消耗品档案</a>
-                            </li>
+                            <%--<li>--%>
+                                <%--<a href="#">消耗品档案</a>--%>
+                            <%--</li>--%>
                         </ul>
                     </li>
                     <li>
@@ -119,82 +119,82 @@
                             <li>
                                 <a href="needleCardRelease">針卡Release</a>
                             </li>
-                            <li>
-                                <a href="#">tooling借出 </a>
-                            </li>
-                            <li>
-                                <a href="#">tooling归还</a>
-                            </li>
-                            <li>
-                                <a href="#" >Correlation wafer借出</a>
-                            </li>
-                            <li>
-                                <a href="#">Correlation wafer归还 </a>
-                            </li>
-                            <li>
-                                <a href="#">INK領出</a>
-                            </li>
-                            <li>
-                                <a href="#">INK归还</a>
-                            </li>
+                            <%--<li>--%>
+                                <%--<a href="#">tooling借出 </a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">tooling归还</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#" >Correlation wafer借出</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Correlation wafer归还 </a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">INK領出</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">INK归还</a>--%>
+                            <%--</li>--%>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">针卡保养</a>
-                            </li>
-                            <li>
-                                <a href="#">针卡保养纪录</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">针卡借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#">tooling借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#">Correlation wafer借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#">消耗品借出归还纪录</a>
-                            </li>
-                            <li>
-                                <a href="#"> 檔案修改紀錄</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Panels and Wells</a>
-                            </li>
-                            <li>
-                                <a href="#">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="#">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="#">Typography</a>
-                            </li>
-                            <li>
-                                <a href="#"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="#">Grid</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="#">针卡保养</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">针卡保养纪录</a>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="#">针卡借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">tooling借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Correlation wafer借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">消耗品借出归还纪录</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#"> 檔案修改紀錄</a>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Panels and Wells</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Buttons</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Notifications</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Typography</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#"> Icons</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="#">Grid</a>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                        <%--<!-- /.nav-second-level -->--%>
+                    <%--</li>--%>
                     <!--<li>
                         &lt;!&ndash;<a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -328,13 +328,17 @@
                                 </p>
                             </div>
                             <div class="form-group">
-                                <p class="col-lg-6">
-                                    <label class="col-lg-3">工程验收</label>
-                                    <input class="form-control" name="pteOperator" id="pteOperator" style="width: 45%" type="text">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">上一站</label>
+                                    <input class="form-control" name="lastStation" id="lastStation" style="width: 40%" type="text" disabled>
                                 </p>
-                                <p class="col-lg-6">
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">工程验收</label>
+                                    <input class="form-control" name="pteOperator" id="pteOperator" style="width: 40%" type="text">
+                                </p>
+                                <p class="col-lg-4">
                                     <label class="col-lg-2">良率</label>
-                                    <input class="form-control" name="cardYield" id="cardYield" style="width: 45%" type="text">%
+                                    <input class="form-control" name="cardYield" id="cardYield" style="width: 40%" type="text">%
                                 </p>
                             </div>
                             <div class="form-group">
