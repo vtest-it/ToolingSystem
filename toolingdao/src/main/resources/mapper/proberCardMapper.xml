@@ -5,6 +5,9 @@
       insert into VTProberCard.Probercard_Info(prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask, note)
       value (#{proberCardId},#{custName},#{custNo},#{receiptTime},#{vendorName},#{vendorNo},#{belongDept},#{useEquipment},#{dutCount},#{pinCount},#{cabPosition},#{cardSource},#{pmTd},#{cardType},#{newOld},#{cleanType},#{pinlenSpec},#{pindiamSpec},#{pinlevelSpec},#{pindepthSpec},#{tdTotal},#{cardModel},#{releaseFlag},#{glassMask},#{mylarMask},#{note});
     </insert>
+    <select id="getAllProberCardStatus" resultType="com.vtest.it.pojo.ProberCardStatusBean">
+        SELECT prober_card_id,last_process,current_process,update_operator FROM VTProberCard.ProberCard_Current_State ;
+    </select>
     <select id="getAllList" resultType="com.vtest.it.pojo.ProberCardEntityBean">
         select prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask,note from VTProberCard.Probercard_Info
     </select>
@@ -39,29 +42,32 @@
         select prober_card_id, pte_operator, card_yield, card_operator, pin_marks, release_flag, update_operator, note from ProberCard_Release_Record where prober_card_id=#{proberCardId}
     </select>
     <insert id="addnewReleaseProberCard" parameterType="com.vtest.it.pojo.ReleaseProberCardBean">
-      insert into ProberCard_Release_Record(prober_card_id, pte_operator, card_yield, card_operator, pin_marks, release_flag, update_operator, note)
-       value (#{proberCardId},#{pteOperator},#{cardYield},#{cardOperator},#{pinMarks},#{releaseFlag},#{updateOperator},#{note}) on duplicate key update
+        insert into ProberCard_Release_Record(prober_card_id, pte_operator, card_yield, card_operator, pin_marks,
+        release_flag, update_operator, note)
+        value
+        (#{proberCardId},#{pteOperator},#{cardYield},#{cardOperator},#{pinMarks},#{releaseFlag},#{updateOperator},#{note})
+        on duplicate key update
         <trim suffix="" suffixOverrides=",">
             <if test="null !=pteOperator">
-                 pte_operator=#{pteOperator},
+                pte_operator=#{pteOperator},
             </if>
             <if test="null !=cardYield">
-                 card_yield=#{cardYield},
+                card_yield=#{cardYield},
             </if>
             <if test="null!=cardOperator">
-                 card_operator=#{cardOperator},
+                card_operator=#{cardOperator},
             </if>
             <if test="null!=pinMarks">
-                 pin_marks=#{pinMarks},
+                pin_marks=#{pinMarks},
             </if>
             <if test="null!=releaseFlag">
-                 release_flag=#{releaseFlag},
+                release_flag=#{releaseFlag},
             </if>
             <if test="null!=updateOperator">
-                 update_operator=#{updateOperator},
+                update_operator=#{updateOperator},
             </if>
             <if test="null!=note">
-                 note=#{note},
+                note=#{note},
             </if>
         </trim>
     </insert>

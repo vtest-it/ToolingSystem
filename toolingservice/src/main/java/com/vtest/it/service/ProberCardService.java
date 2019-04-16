@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,11 +61,17 @@ public class ProberCardService {
     public void addNewBackRecord(BackProberCardBean bean) {
         mapper.addNewBackRecord(bean);
     }
-    @Transactional(isolation = Isolation.REPEATABLE_READ,readOnly = true)
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
     public ReleaseProberCardBean getReleaseCardInfo(String proberCardId) {
         return mapper.getReleaseCardInfo(proberCardId);
     }
-    public void updateReleaseProberCard(ReleaseProberCardBean bean){
+
+    public void updateReleaseProberCard(ReleaseProberCardBean bean) {
         mapper.addnewReleaseProberCard(bean);
+    }
+
+    public ArrayList<ProberCardStatusBean> getAllProberCardStatus() {
+        return mapper.getAllProberCardStatus();
     }
 }
