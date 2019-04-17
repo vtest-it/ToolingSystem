@@ -199,9 +199,4 @@ public class NeedleCardController {
     public String getAllProberCardStatus(){
         return  JSON.toJSONString(service.getAllProberCardStatus());
     }
-    @ResponseBody
-    @RequestMapping("/getAllProberCardStatus")
-    public String getAllProberCardStatus2(){
-        return  JSON.toJSONString(service.getAllProberCardStatus());
-    }
 }
