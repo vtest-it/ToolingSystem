@@ -10,7 +10,6 @@
 <html>
 <head>
     <title>needleCard</title>
-    <link rel="import" href="navbar.jsp" >
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
@@ -20,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/objects.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap-datetimepicker.min.css"/> "/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap-table-fixed-columns.css"/> "/>
     <script src="<c:url value="/js/jquery.min.js"/> "></script>
     <script src="<c:url value="/js/sb-admin-2.js"/> "></script>
     <script src="<c:url value="/js/metisMenu.min.js"/> "></script>
@@ -130,17 +130,17 @@
                             <%--</li>--%>
                         </ul>
                     </li>
-                    <%--<li>--%>
-                        <%--<a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>--%>
-                        <%--<ul class="nav nav-second-level">--%>
-                            <%--<li>--%>
-                                <%--<a href="#">针卡保养</a>--%>
-                            <%--</li>--%>
+                    <li>
+                        <a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="needleCardMaintain">针卡保养</a>
+                            </li>
                             <%--<li>--%>
                                 <%--<a href="#">针卡保养纪录</a>--%>
                             <%--</li>--%>
-                        <%--</ul>--%>
-                    <%--</li>--%>
+                        </ul>
+                    </li>
                     <%--<li>--%>
                         <%--<a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>--%>
                         <%--<ul class="nav nav-second-level">--%>

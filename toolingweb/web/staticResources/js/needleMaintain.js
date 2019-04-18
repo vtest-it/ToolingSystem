@@ -45,6 +45,7 @@ function getFormatDate(date, pattern) {
     }
     return date.format(pattern);
 }
+
 var flag=false;
 function formClean(){
     $("#custName").val("");
@@ -58,14 +59,18 @@ function formClean(){
     $("#cabPosition").val("");
     $("#belongDept").val("");
     $("#pmTd").val("");
-    $("#outuseEquipment").val("");
-    $("#outOperator").val("");
-    $("#operator").val("");
+    $("#pinMaxlen").val("");
+    $("#pinMaxdiam").val("");
+    $("#pinLevel").val("");
+    $("#pinMinlen").val("");
+    $("#pinMindiam").val("");
+    $("#pinDepth").val("");
+    $("#updateOperator").val("");
     $("#note").val("");
 }
 function selectChange(value){
     var lendingData=[]
-    var lendFlag=true;
+    var lendFlag=false;
     var state="";
     $.ajax({
         type:'get',
@@ -76,6 +81,7 @@ function selectChange(value){
             if(data==null){
                 lendFlag=false;
             }else {
+                lendFlag=true;
                 $.each(data,function (i,item) {
                     var time=getSmpFormatDateByLong(item.receiptTime,true);
                     item.receiptTime=time.substring(0,11);
@@ -94,55 +100,7 @@ function selectChange(value){
         }
     })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
-        if(state=="In_Engineering"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
-            }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Out_Fixing">场外维修</option>'+
-                '<option value="Inner_Repair">维修清针</option>'+
-                '<option value="Card_Release">针卡Release</option>');
-            flag=true;
-
-        }
-        else if(state=="Inner_Back"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
-            }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Inner_Repair">维修中/清针中</option>'+
-                '<option value="Out_Fixing">厂外维修 </option>'+
-                '<option value="IQC_PASS">IQC PASS</option>'+
-                '<option value="Card_PM">保养中</option>');
-            flag=true;
-        }
-        else if(state=="Out_Fixing"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
-            }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Back_Fixing">厂外维修返回</option>');
-            flag=true;
-        }
-        else if(state=="Inner_Repair"&&lendFlag==true){
+        if(state=="Card_PM"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -156,53 +114,10 @@ function selectChange(value){
             $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
             flag=true;
         }
-
-        else if(state=="Production_Verify"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
-            }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Inner_Back">内部归还</option>');
-            flag=true;
-        }
-        else if(state=="Cust_Lending"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
-            }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Cust_Back">客户借出返回</option>');
-            flag=true;
-        }
-        else if(state=="Re_Build"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
-            }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="ReBuild_Back">重新制作返回</option>');
-            flag=true;
-        }
-        else if(lendFlag==true&&state!="In_Engineering"&&state!="Inner_Back"&&state!="Out_Fixing"&&state!="Inner_Repair"&&state!="Production_Verify"&&state!="Cust_Lending"&&state!="Re_Build"){
+        else if(lendFlag==true&&state!="Card_PM"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在厂外维修，内部归还,工程中,维修清针,测试/验证中,归还客户,客户借出和重新制作这九种状态");
+            $("#error").html("存在这个针卡编号，但不在保养中状态");
             $("#myModal").modal('show');
             flag=false;
         }
@@ -287,7 +202,7 @@ $(document).ready(function () {
         var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
         return this.optional(element)||(number.test(value));
     },warning+"数字+-");
-    $("#needleCardLendForm").validate({
+    $("#needleCardMaintain").validate({
         errorPlacement: function(error, element) {
             error.css({width:"30%",float:"right",color:"#DAA520"})
             error.appendTo(element.parent() );
@@ -298,17 +213,33 @@ $(document).ready(function () {
                 required: true,
                 isNumberAndLetter:true
             },
-            outuseEquipment:{
-                required:true,
+            before_pinlen:{
+                required: true,
+                isNumber:true
+            },
+            before_pindiam:{
+                required: true,
+                isNumberD:true
+            },
+            before_pinlevel:{
+                required: true,
+                isNumber:true
+            },
+            after_pinlen:{
+                required: true,
+                isNumber:true
+            },
+            after_pindiam:{
+                required: true,
+                isNumberD:true
+            },
+            after_pinlevel:{
+                required: true,
+                isNumber:true
+            },
+            testerID:{
+                required: true,
                 isNumberAndLetter:true
-            },
-            outOperator:{
-                required:true,
-                isOperator:true
-            },
-            operator:{
-                required:true,
-                isOperator:true
             }
 
         },submitHandler:function (form) {
@@ -318,23 +249,22 @@ $(document).ready(function () {
                     $(form).ajaxSubmit(
                         {
                             type:"post",
-                            url:"/toolingweb/needleCard/outProberCard",
+                            url:"",
                             data:$(form).serialize(),
                             error:function () {
                                 alert("add failed!,please check your information again!")
                             },
                             success:function () {
-                                alert("Lend success!")
-                                document.getElementById("needleCardLendForm").reset();
+                                alert("IQC Release success!")
+                                document.getElementById("needleCardMaintain").reset();
                             }
                         }
 
                     );
                 }
-
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在厂外维修，内部归还,工程中,维修清针,测试/验证中,归还客户,客户借出和重新制作这九种状态");
+                $("#error").html("不存在该针卡编号或不在保养中状态");
                 $("#myModal").modal('show');
             }
 

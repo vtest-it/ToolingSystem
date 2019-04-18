@@ -140,17 +140,17 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-                    <%--<li>--%>
-                        <%--<a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>--%>
-                        <%--<ul class="nav nav-second-level">--%>
-                            <%--<li>--%>
-                                <%--<a href="#">针卡保养</a>--%>
-                            <%--</li>--%>
-                            <%--<li>--%>
+                    <li>
+                        <a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="needleCardMaintain">针卡保养</a>
+                            </li>
+                            <li>
                                 <%--<a href="#">针卡保养纪录</a>--%>
-                            <%--</li>--%>
-                        <%--</ul>--%>
-                    <%--</li>--%>
+                            </li>
+                        </ul>
+                    </li>
                     <%--<li>--%>
                         <%--<a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>--%>
                         <%--<ul class="nav nav-second-level">--%>

@@ -162,6 +162,16 @@ $(document).ready(function() {
         $("#submit").show();
     })
     var needleCardData=[];
+    var proberCardStatus=[];
+    $.ajax({
+        type:"get",
+        async: false,
+        dataType:"json",
+        url:"/toolingweb/needleCard/getAllProberCardStatus",
+        success:function (data) {
+            proberCardStatus=data;
+        }
+    })
     $.ajax({
         type:"get",
         async: false,
@@ -171,13 +181,17 @@ $(document).ready(function() {
             $.each(data,function (i,item) {
                 var time=getSmpFormatDateByLong(item.receiptTime,true);
                 item.receiptTime=time.substring(0,11);
+                $.each(proberCardStatus,function (j,issure) {
+                    if(issure.proberCardId==item.proberCardId){
+                        item.state=issure.currentProcess;
+                    }
+                })
             })
             needleCardData=data;
 
 
         }
     })
-
     $('#needleCardTable').bootstrapTable({
         data:needleCardData,
         toolbar: '.scroll',                //工具按钮用哪个容器
@@ -196,6 +210,8 @@ $(document).ready(function() {
         clickToSelect: true,                //是否启用点击选中行
         // fixedColumns:true,
         // fixedNumber:1,
+        // height:420,
+        uniqueId: "proberCardId",
         columns:[
             {title:"操作",formatter:function (value,row,index) {
                     return['<button id="btnEdit" type="button" class="btn btn-default"> <span class="fa fa-edit" aria-hidden="true"></span>修改 </button>'].join("");
@@ -296,13 +312,13 @@ $(document).ready(function() {
             {
                 title:"剩餘可測TD",field:"remainingTD"
             },{
-                title:"针长",field:"pinlenSpecR"
+                title:"针长",field:"after_pinlen"
             },
             {
-                title:"針徑",field:"pindiamSpecR"
+                title:"針徑",field:"after_pindiam"
             },
             {
-                title:"水平",field:"pinlevelSpecR"
+                title:"水平",field:"after_pinlevel"
             },
             {
                 title:"柜位",field:"cabPosition"
@@ -356,8 +372,7 @@ $(document).ready(function() {
             {
                 title:"備註",field:"note"
             }],
-        // selectItemName: 'parentItem',
-        // height:420
+        // selectItemName: 'parentItem'
     })
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isNumber",function (value,element) {

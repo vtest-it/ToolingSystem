@@ -11,7 +11,6 @@
 <head>
     <meta charset="UTF-8">
     <title>TMS</title>
-    <link rel="import" href="navbar.jsp" >
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
@@ -132,17 +131,17 @@
                             <%--</li>--%>
                         </ul>
                     </li>
-                    <%--<li>--%>
-                        <%--<a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>--%>
-                        <%--<ul class="nav nav-second-level">--%>
-                            <%--<li>--%>
-                                <%--<a href="#">针卡保养</a>--%>
-                            <%--</li>--%>
+                    <li>
+                        <a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="needleCardMaintain">针卡保养</a>
+                            </li>
                             <%--<li>--%>
                                 <%--<a href="#">针卡保养纪录</a>--%>
                             <%--</li>--%>
-                        <%--</ul>--%>
-                    <%--</li>--%>
+                        </ul>
+                    </li>
                     <%--<li>--%>
                         <%--<a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>--%>
                         <%--<ul class="nav nav-second-level">--%>

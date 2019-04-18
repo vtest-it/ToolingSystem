@@ -1,139 +1,232 @@
-(function ($) {
-    'use strict';
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define([], factory);
+  } else if (typeof exports !== "undefined") {
+    factory();
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory();
+    global.bootstrapTableFixedColumns = mod.exports;
+  }
+})(this, function () {
+  'use strict';
 
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  var _get = function get(object, property, receiver) {
+    if (object === null) object = Function.prototype;
+    var desc = Object.getOwnPropertyDescriptor(object, property);
+
+    if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);
+
+      if (parent === null) {
+        return undefined;
+      } else {
+        return get(parent, property, receiver);
+      }
+    } else if ("value" in desc) {
+      return desc.value;
+    } else {
+      var getter = desc.get;
+
+      if (getter === undefined) {
+        return undefined;
+      }
+
+      return getter.call(receiver);
+    }
+  };
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  /**
+   * @author zhixin wen <wenzhixin2010@gmail.com>
+   */
+
+  (function ($) {
     $.extend($.fn.bootstrapTable.defaults, {
-        fixedColumns: false,
-        fixedNumber: 1
+      fixedColumns: false,
+      fixedNumber: 1
     });
 
-    var BootstrapTable = $.fn.bootstrapTable.Constructor,
-        _initHeader = BootstrapTable.prototype.initHeader,
-        _initBody = BootstrapTable.prototype.initBody,
-        _resetView = BootstrapTable.prototype.resetView;
+    $.BootstrapTable = function (_$$BootstrapTable) {
+      _inherits(_class, _$$BootstrapTable);
 
-    BootstrapTable.prototype.initFixedColumns = function () {
-        this.$fixedBody = $([
-            '<div class="fixed-table-column" style="position: absolute; background-color: #fff; border-right:1px solid #ddd;"><table><thead></thead><tbody></tbody></table></div>'].join(''));
+      function _class() {
+        _classCallCheck(this, _class);
 
-        this.timeoutHeaderColumns_ = 0;
-        this.timeoutBodyColumns_ = 0;
-        this.$fixedBody.find('table').attr('class', this.$el.attr('class'));
-        this.$fixedHeaderColumns = this.$fixedBody.find('thead');
-        this.$fixedBodyColumns = this.$fixedBody.find('tbody');
-        this.$tableBody.before(this.$fixedBody);
-    };
+        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+      }
 
-    BootstrapTable.prototype.initHeader = function () {
-        _initHeader.apply(this, Array.prototype.slice.apply(arguments));
+      _createClass(_class, [{
+        key: 'fitHeader',
+        value: function fitHeader() {
+          var _get2;
 
-        if (!this.options.fixedColumns) {
+          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+
+          (_get2 = _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'fitHeader', this)).call.apply(_get2, [this].concat(args));
+
+          if (!this.options.fixedColumns) {
             return;
-        }
+          }
 
-        this.initFixedColumns();
-
-        var $tr = this.$header.find('tr:eq(0)').clone(),
-            $ths = $tr.clone().find('th');
-
-        $tr.html('');
-        for (var i = 0; i < this.options.fixedNumber; i++) {
-            $tr.append($ths.eq(i).clone());
-        }
-        this.$fixedHeaderColumns.html('').append($tr);
-    };
-
-    BootstrapTable.prototype.initBody = function () {
-        _initBody.apply(this, Array.prototype.slice.apply(arguments));
-
-        if (!this.options.fixedColumns) {
+          if (this.$el.is(':hidden')) {
             return;
+          }
+
+          this.$container.find('.fixed-table-header-columns').remove();
+          this.$fixedHeader = $('<div class="fixed-table-header-columns"></div>');
+          this.$fixedHeader.append(this.$tableHeader.find('>table').clone(true));
+          this.$tableHeader.after(this.$fixedHeader);
+
+          var width = this.getFixedColumnsWidth();
+
+          this.$fixedHeader.css({
+            top: 0,
+            width: width,
+            height: this.$tableHeader.outerHeight(true)
+          });
+
+          this.initFixedColumnsBody();
+
+          this.$fixedBody.css({
+            top: this.$tableHeader.outerHeight(true),
+            width: width,
+            height: this.$tableBody.outerHeight(true) - 1
+          });
+
+          this.initFixedColumnsEvents();
         }
+      }, {
+        key: 'initBody',
+        value: function initBody() {
+          var _get3;
 
-        var that = this;
+          for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+          }
 
-        this.$fixedBodyColumns.html('');
-        this.$body.find('> tr[data-index]').each(function () {
-            var $tr = $(this).clone(),
-                $tds = $tr.clone().find('td');
+          (_get3 = _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'initBody', this)).call.apply(_get3, [this].concat(args));
 
-            $tr.html('');
-            for (var i = 0; i < that.options.fixedNumber; i++) {
-                $tr.append($tds.eq(i).clone());
-            }
-            that.$fixedBodyColumns.append($tr);
-        });
-    };
-
-    BootstrapTable.prototype.resetView = function () {
-        _resetView.apply(this, Array.prototype.slice.apply(arguments));
-
-        if (!this.options.fixedColumns) {
+          if (!this.options.fixedColumns) {
             return;
-        }
+          }
 
-        clearTimeout(this.timeoutHeaderColumns_);
-        this.timeoutHeaderColumns_ = setTimeout($.proxy(this.fitHeaderColumns, this), this.$el.is(':hidden') ? 100 : 0);
-
-        clearTimeout(this.timeoutBodyColumns_);
-        this.timeoutBodyColumns_ = setTimeout($.proxy(this.fitBodyColumns, this), this.$el.is(':hidden') ? 100 : 0);
-    };
-
-    BootstrapTable.prototype.fitHeaderColumns = function () {
-        var that = this,
-            visibleFields = this.getVisibleFields(),
-            headerWidth = 0;
-
-        this.$body.find('tr:first-child:not(.no-records-found) > *').each(function (i) {
-            var $this = $(this),
-                index = i;
-
-            if (i >= that.options.fixedNumber) {
-                return false;
-            }
-
-            if (that.options.detailView && !that.options.cardView) {
-                index = i - 1;
-            }
-
-            that.$fixedBody.find('thead th[data-field="' + visibleFields[index] + '"]')
-                .find('.fht-cell').width($this.innerWidth() - 1);
-            headerWidth += $this.outerWidth();
-        });
-        this.$fixedBody.width(headerWidth - 1).show();
-    };
-
-    BootstrapTable.prototype.fitBodyColumns = function () {
-        var that = this,
-            top = -(parseInt(this.$el.css('margin-top')) - 2),
-            height = this.$tableBody.height() - 2;
-
-        if (!this.$body.find('> tr[data-index]').length) {
-            this.$fixedBody.hide();
+          if (this.options.showHeader && this.options.height) {
             return;
+          }
+
+          this.initFixedColumnsBody();
+
+          this.$fixedBody.css({
+            top: 0,
+            width: this.getFixedColumnsWidth(),
+            height: this.$tableHeader.outerHeight(true) + this.$tableBody.outerHeight(true)
+          });
+
+          this.initFixedColumnsEvents();
         }
+      }, {
+        key: 'initFixedColumnsBody',
+        value: function initFixedColumnsBody() {
+          this.$container.find('.fixed-table-body-columns').remove();
+          this.$fixedBody = $('<div class="fixed-table-body-columns"></div>');
+          this.$fixedBody.append(this.$tableBody.find('>table').clone(true));
+          this.$tableBody.after(this.$fixedBody);
+        }
+      }, {
+        key: 'getFixedColumnsWidth',
+        value: function getFixedColumnsWidth() {
+          var visibleFields = this.getVisibleFields();
+          var width = 0;
 
-        this.$body.find('> tr').each(function (i) {
-            that.$fixedBody.find('tbody tr:eq(' + i + ')').height($(this).height() - 1);
-        });
+          for (var i = 0; i < this.options.fixedNumber; i++) {
+            width += this.$header.find('th[data-field="' + visibleFields[i] + '"]').outerWidth(true);
+          }
 
-        //// events
-        this.$tableBody.on('scroll', function () {
-            that.$fixedBody.find('table').css('top', -$(this).scrollTop());
-        });
-        this.$body.find('> tr[data-index]').off('hover').hover(function () {
-            var index = $(this).data('index');
-            that.$fixedBody.find('tr[data-index="' + index + '"]').addClass('hover');
-        }, function () {
-            var index = $(this).data('index');
-            that.$fixedBody.find('tr[data-index="' + index + '"]').removeClass('hover');
-        });
-        this.$fixedBody.find('tr[data-index]').off('hover').hover(function () {
-            var index = $(this).data('index');
-            that.$body.find('tr[data-index="' + index + '"]').addClass('hover');
-        }, function () {
-            var index = $(this).data('index');
-            that.$body.find('> tr[data-index="' + index + '"]').removeClass('hover');
-        });
-    };
+          return width + 1;
+        }
+      }, {
+        key: 'initFixedColumnsEvents',
+        value: function initFixedColumnsEvents() {
+          var _this2 = this;
 
-})(jQuery);
+          // events
+          this.$tableBody.off('scroll.fixed-columns').on('scroll.fixed-columns', function (e) {
+            _this2.$fixedBody.find('table').css('top', -$(e.currentTarget).scrollTop());
+          });
+
+          this.$body.find('> tr[data-index]').off('hover').hover(function (e) {
+            var index = $(e.currentTarget).data('index');
+            _this2.$fixedBody.find('tr[data-index="' + index + '"]').css('background-color', $(e.currentTarget).css('background-color'));
+          }, function (e) {
+            var index = $(e.currentTarget).data('index');
+            var $tr = _this2.$fixedBody.find('tr[data-index="' + index + '"]');
+            $tr.attr('style', $tr.attr('style').replace(/background-color:.*;/, ''));
+          });
+
+          this.$fixedBody.find('tr[data-index]').off('hover').hover(function (e) {
+            var index = $(e.currentTarget).data('index');
+            _this2.$body.find('tr[data-index="' + index + '"]').css('background-color', $(e.currentTarget).css('background-color'));
+          }, function (e) {
+            var index = $(e.currentTarget).data('index');
+            var $tr = _this2.$body.find('> tr[data-index="' + index + '"]');
+            $tr.attr('style', $tr.attr('style').replace(/background-color:.*;/, ''));
+          });
+        }
+      }]);
+
+      return _class;
+    }($.BootstrapTable);
+  })(jQuery);
+});
