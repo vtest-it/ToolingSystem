@@ -380,6 +380,8 @@
                             </div>
                             <input class="button  button-primary button-pill  button-3d pull-right" type="submit"
                                    value="Submit" id="submit">
+                            <input class="button  button-primary button-pill  button-3d pull-right" type="submit"
+                                   value="Submit" id="editBtn" style="display: none;">
                         </form>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ public class ProberCardService {
 
     public void addNewProberCard(ProberCardEntityBean bean) {
         mapper.addNewProberCardInfo(bean);
-        mapper.proberCardCreateState(bean.getProberCardId(), "New_Prod", "New_IQC", "V149");
+        mapper.proberCardCreateState(bean.getProberCardId(), "New_Prod", "IQC", "V149");
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
@@ -74,4 +74,9 @@ public class ProberCardService {
     public ArrayList<ProberCardStatusBean> getAllProberCardStatus() {
         return mapper.getAllProberCardStatus();
     }
+
+    public void addNewMaintainRecord(ProberCardMaintainBean bean){
+        mapper.addNewMaintainRecord(bean);
+    }
+
 }

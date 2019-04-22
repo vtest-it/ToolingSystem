@@ -109,7 +109,7 @@ $(document).ready(function() {
         $('#needleCardTable').bootstrapTable("updateRow",{index:index,row:newData});
         $.ajax({
             type:"post",
-            url:"",
+            url:"/toolingweb/needleCard/updateProberCard",
             data:newDatas
         })
     })
@@ -160,6 +160,8 @@ $(document).ready(function() {
         $("#myModal").modal('show');
         $("#releaseFlag").parent().hide();
         $("#submit").show();
+        $("#editBtn").hide();
+
     })
     var needleCardData=[];
     var proberCardStatus=[];
@@ -217,6 +219,8 @@ $(document).ready(function() {
                     return['<button id="btnEdit" type="button" class="btn btn-default"> <span class="fa fa-edit" aria-hidden="true"></span>修改 </button>'].join("");
                 },events:{
                     "click #btnEdit":function (e,value,row,index) {
+                        $("#submit").hide();
+                        $("#editBtn").show();
                         $("#needCardModifyForm")[0].reset();
                         $("#formSubmit").attr("index",index);
                         $("#myModalLabel").text("针卡档案修改");
@@ -244,7 +248,6 @@ $(document).ready(function() {
                             '<option value="disuse">停用</option>'+
                             '<option value="waitingPlate">待拆板</option>');
                         var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
-                        $("#submit").hide();
                         for(var k=0;k<rows.length;k++){
                             var rowIndex=rows[k].indexOf(":");
                             var title=rows[k].substring(1,rowIndex-1);
@@ -491,33 +494,37 @@ $(document).ready(function() {
             }
         },
         submitHandler:function (form) {
-            $(form).ajaxSubmit({
-                type:'post',
-                url:'/toolingweb/needleCard/addNewNeedleCard',
-                data:$(form).serialize(),
-                error:function () {
-                   alert("add failed!,please check your information again!")
+            var confirmFlag=confirm("请再次确认");
+            if(confirmFlag==true) {
+                $(form).ajaxSubmit({
+                    type:'post',
+                    url:'/toolingweb/needleCard/addNewNeedleCard',
+                    data:$(form).serialize(),
+                    error:function () {
+                        alert("add failed!,please check your information again!")
+                    }
+                });
+                var date=new Date();
+                var month=date.getMonth()+1;
+                var day=date.getDate();
+                if(month>=1&&month<=9){
+                    month="0"+month;
                 }
-            });
-            var date=new Date();
-            var month=date.getMonth()+1;
-            var day=date.getDate();
-            if(month>=1&&month<=9){
-                month="0"+month;
+                if(day>=1&&day<=9){
+                    day="0"+day;
+                }
+                var data= $(form).serializeArray();
+                var newDatas=[];
+                var newData=new Object();
+                $.each(data,function (i,item) {
+                    newData[item.name]=item.value;
+                })
+                newDatas.push(newData);
+                $('#needleCardTable').bootstrapTable("append",newDatas);
+                $(form).resetForm();
+                $("#myModal").modal('hide');
+
             }
-            if(day>=1&&day<=9){
-                day="0"+day;
-            }
-            var data= $(form).serializeArray();
-            var newDatas=[];
-            var newData=new Object();
-            $.each(data,function (i,item) {
-                newData[item.name]=item.value;
-            })
-            newDatas.push(newData);
-            $('#needleCardTable').bootstrapTable("append",newDatas);
-            $(form).resetForm();
-            $("#myModal").modal('hide');
             return false;
         }
 

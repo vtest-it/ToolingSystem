@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 
 @Controller
 @RequestMapping("/needleCard")
@@ -198,5 +198,43 @@ public class NeedleCardController {
     @RequestMapping("/getAllProberCardStatus")
     public String getAllProberCardStatus(){
         return  JSON.toJSONString(service.getAllProberCardStatus());
+    }
+    @ResponseBody
+    @RequestMapping("/ProberCardMaintain")
+    public boolean ProberCardMaintain(String proberCardId,double beforePinlen,double beforePindiam,double beforePinlevel,double afterPinlen,double afterPindiam,double afterPinlevel,boolean cleanFlag,boolean grindingFlag,boolean corrosionFlag,boolean adjustmentFlag,boolean bakeFlag,boolean handgrindFlag,boolean checksolderFlag,boolean maintsolderFlag,
+                                      boolean checkpartsFlag,boolean changepartsFlag,boolean jumperFlag,String nextStation,String testerID,String updateOperator,String note,String oldStatus,double rebuildCount){
+        try {
+            ProberCardMaintainBean bean =new ProberCardMaintainBean();
+            bean.setProberCardId(proberCardId);
+            bean.setBeforePinlen(beforePinlen);
+            bean.setBeforePindiam(beforePindiam);
+            bean.setBeforePinlevel(beforePinlevel);
+            bean.setAfterPinlen(afterPinlen);
+            bean.setAfterPindiam(afterPindiam);
+            bean.setAfterPinlevel(afterPinlevel);
+            bean.setAdjustmentFlag(adjustmentFlag);
+            bean.setBakeFlag(bakeFlag);
+            bean.setChangepartsFlag(changepartsFlag);
+            bean.setCheckpartsFlag(checkpartsFlag);
+            bean.setCleanFlag(cleanFlag);
+            bean.setChecksolderFlag(checksolderFlag);
+            bean.setCorrosionFlag(corrosionFlag);
+            bean.setGrindingFlag(grindingFlag);
+            bean.setHandgrindFlag(handgrindFlag);
+            bean.setJumperFlag(jumperFlag);
+            bean.setMaintsolderFlag(maintsolderFlag);
+            bean.setUpdateOperator(updateOperator);
+            bean.setNote(note);
+            bean.setTesterID(testerID);
+            bean.setNextStation(nextStation);
+            bean.setRebuildCount(rebuildCount);
+            service.addNewMaintainRecord(bean);
+            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
+            return  true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

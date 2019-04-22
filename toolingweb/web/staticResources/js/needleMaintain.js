@@ -56,15 +56,19 @@ function formClean(){
     $("#useEquipment").val("");
     $("#dutCount").val("");
     $("#pinCount").val("");
-    $("#cabPosition").val("");
-    $("#belongDept").val("");
+    $("#TD").val("");
+    $("#TDTotal").val("");
     $("#pmTd").val("");
-    $("#pinMaxlen").val("");
-    $("#pinMaxdiam").val("");
-    $("#pinLevel").val("");
-    $("#pinMinlen").val("");
-    $("#pinMindiam").val("");
-    $("#pinDepth").val("");
+    $("#pinlenSpec").val("");
+    $("#pindiamSpec").val("");
+    $("#pinlevelSpec").val("");
+    $("#beforePinlen").val("");
+    $("#beforePindiam").val("");
+    $("#beforePinlevel").val("");
+    $("#afterPinlen").val("");
+    $("#afterPindiam").val("");
+    $("#afterPinlevel").val("");
+    $("#testerID").val("");
     $("#updateOperator").val("");
     $("#note").val("");
 }
@@ -107,8 +111,10 @@ function selectChange(value){
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
                 $('#'+title).val(field);
             }
+            $("#rebuildCount").val(1);
             $("#lastStation").val("");
             $("#lastStation").val(state);
+            $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
@@ -213,27 +219,27 @@ $(document).ready(function () {
                 required: true,
                 isNumberAndLetter:true
             },
-            before_pinlen:{
+            beforePinlen:{
                 required: true,
                 isNumber:true
             },
-            before_pindiam:{
+            beforePindiam:{
                 required: true,
                 isNumberD:true
             },
-            before_pinlevel:{
+            beforePinlevel:{
                 required: true,
                 isNumber:true
             },
-            after_pinlen:{
+            afterPinlen:{
                 required: true,
                 isNumber:true
             },
-            after_pindiam:{
+            afterPindiam:{
                 required: true,
                 isNumberD:true
             },
-            after_pinlevel:{
+            afterPinlevel:{
                 required: true,
                 isNumber:true
             },
@@ -249,13 +255,13 @@ $(document).ready(function () {
                     $(form).ajaxSubmit(
                         {
                             type:"post",
-                            url:"",
+                            url:"/toolingweb/needleCard/ProberCardMaintain",
                             data:$(form).serialize(),
                             error:function () {
                                 alert("add failed!,please check your information again!")
                             },
                             success:function () {
-                                alert("IQC Release success!")
+                                alert("Maintain success!")
                                 document.getElementById("needleCardMaintain").reset();
                             }
                         }

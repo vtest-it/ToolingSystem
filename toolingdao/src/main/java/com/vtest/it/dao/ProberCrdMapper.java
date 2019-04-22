@@ -32,4 +32,7 @@ public interface ProberCrdMapper {
     public void addnewReleaseProberCard(ReleaseProberCardBean bean);
 
     public ArrayList<ProberCardStatusBean> getAllProberCardStatus();
+
+    public void addNewMaintainRecord(ProberCardMaintainBean bean);
+
 }

@@ -28,7 +28,6 @@
     <script src="<c:url value="/js/bootstrap-table.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
-    <script src="<c:url value="/js/needle.js"/> "></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
     <script src="<c:url value="/js/needleLend.js"/> "></script>
 </head>

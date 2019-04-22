@@ -28,9 +28,8 @@
     <script src="<c:url value="/js/bootstrap-table.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
-    <script src="<c:url value="/js/needle.js"/> "></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
-    <script src="<c:url value="/js/needleIQC.js"/> "></script>
+    <script src="<c:url value="/js/needleMaintain.js"/> "></script>
 </head>
 <body>
 <div id="wrapper">
@@ -315,15 +314,15 @@
                                 <div class="form-group">
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">TD</label>
-                                        <input class="form-control" name="TD" style="width: 45%"type="text" disabled>
+                                        <input class="form-control" name="TD" id="TD" style="width: 45%"type="text" disabled>
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">TD Total</label>
-                                        <input class="form-control" name="TDTotal" style="width: 45%"type="text" disabled>
+                                        <input class="form-control" name="TDTotal" id="TDTotal" style="width: 45%"type="text" disabled>
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">PM时机</label>
-                                        <input class="form-control" name="pmTd"  id="pmTd" style="width: 45%" type="text" disabled>
+                                        <input class="form-control" name="pmTd" id="pmTd"   id="pmTd" style="width: 45%" type="text" disabled>
                                     </p>
                                 </div>
                                 <div class="form-group">
@@ -344,65 +343,65 @@
                                 <div class="form-group">
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">维修前针长</label>
-                                        <input class="form-control" name="before_pinlen"  id="before_pinlen"  style="width: 45%" type="text">
+                                        <input class="form-control" name="beforePinlen"  id="beforePinlen"  style="width: 45%" type="text">
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">维修前针径</label>
-                                        <input class="form-control" name="before_pindiam"  id="before_pindiam" style="width: 45%" type="text">
+                                        <input class="form-control" name="beforePindiam"  id="beforePindiam" style="width: 45%" type="text">
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">维修前水平</label>
-                                        <input class="form-control" name="before_pinlevel" id="before_pinlevel" style="width: 45%" type="text">
+                                        <input class="form-control" name="beforePinlevel" id="beforePinlevel" style="width: 45%" type="text">
                                     </p>
 
                                 </div>
                                 <div class="form-group">
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">维修后针长</label>
-                                        <input class="form-control" name="after_pinlen" id="after_pinlen" style="width: 45%"type="text">
+                                        <input class="form-control" name="afterPinlen" id="afterPinlen" style="width: 45%"type="text">
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">维修后针径</label>
-                                        <input class="form-control" name="after_pindiam" id="after_pindiam" style="width: 45%"type="text">
+                                        <input class="form-control" name="afterPindiam" id="afterPindiam" style="width: 45%"type="text">
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">维修后水平</label>
-                                        <input class="form-control" name="after_pinlevel" id="after_pinlevel" style="width: 45%" type="text">
+                                        <input class="form-control" name="afterPinlevel" id="afterPinlevel" style="width: 45%" type="text">
                                     </p>
 
                                 </div>
                                 <div class="form-group">
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">清针量测</label>
-                                        <select class="form-control" name="clean_flag" id="clean_flag" style="width: 20%">
+                                        <select class="form-control" name="cleanFlag" id="cleanFlag" style="width: 20%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">磨针</label>
-                                        <select class="form-control" name="grinding_flag" id="grinding_flag" style="width: 45%">
+                                        <select class="form-control" name="grindingFlag" id="grindingFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">腐蚀</label>
-                                        <select class="form-control" name="corrosion_flag"  id="corrosion_flag" style="width: 45%">
+                                        <select class="form-control" name="corrosionFlag"  id="corrosionFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">调针</label>
-                                        <select class="form-control" name="adjustment_flag"  id="adjustment_flag" style="width: 45%">
+                                        <select class="form-control" name="adjustmentFlag"  id="adjustmentFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">烘烤</label>
-                                        <select class="form-control" name="bake_flag" id="bake_flag" style="width: 45%">
+                                        <select class="form-control" name="bakeFlag" id="bakeFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
@@ -411,42 +410,42 @@
                                 <div class="form-group">
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">手磨针径</label>
-                                        <select class="form-control" name="handgrind_flag" id="handgrind_flag" style="width: 45%">
+                                        <select class="form-control" name="handgrindFlag" id="handgrindFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">检查焊点</label>
-                                        <select class="form-control" name="checksolder_flag" id="checksolder_flag" style="width: 45%">
+                                        <select class="form-control" name="checksolderFlag" id="checksolderFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">整理焊点</label>
-                                        <select class="form-control" name="maintsolder_flag" id="maintsolder_flag" style="width: 45%">
+                                        <select class="form-control" name="maintsolderFlag" id="maintsolderFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">检查零件</label>
-                                        <select class="form-control" name="checkparts_flag" id="checkparts_flag" style="width: 45%">
+                                        <select class="form-control" name="checkpartsFlag" id="checkpartsFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">零件更换</label>
-                                        <select class="form-control" name="changeparts_flag"  id="changeparts_flag" style="width: 45%">
+                                        <select class="form-control" name="changepartsFlag"  id="changepartsFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">跳线</label>
-                                        <select class="form-control" name="jumper_flag" id="jumper_flag" style="width: 45%">
+                                        <select class="form-control" name="jumperFlag" id="jumperFlag" style="width: 45%">
                                             <option value="true">是</option>
                                             <option value="false">否</option>
                                         </select>
@@ -455,7 +454,7 @@
                                 <div class="form-group">
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">作业人员</label>
-                                        <input class="form-control" name="update_operator" id="update_operator" style="width: 40%" type="text" disabled>
+                                        <input class="form-control" name="updateOperator" id="updateOperator" style="width: 40%" type="text">
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">上一站</label>
@@ -475,6 +474,18 @@
                                     <p class="col-lg-8">
                                         <label class="col-lg-2">备注</label>
                                         <textarea class="form-control" name="note"  id="note"  style="width: 80%" rows="3"></textarea>
+                                    </p>
+                                </div>
+                                <div class="form-group" style="display: none">
+                                    <p class="col-lg-12">
+                                        <label class="col-lg-2">上一站</label>
+                                        <input class="form-control" name="oldStatus" id="oldStatus" style="width: 45%" type="text">
+                                    </p>
+                                </div>
+                                <div class="form-group" style="display: none">
+                                    <p class="col-lg-12">
+                                        <label class="col-lg-2">rebuildCount</label>
+                                        <input class="form-control" name="rebuildCount" id="rebuildCount" style="width: 45%" type="text">
                                     </p>
                                 </div>
                                 <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="Submit">

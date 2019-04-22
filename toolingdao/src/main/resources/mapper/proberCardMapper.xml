@@ -71,4 +71,12 @@
             </if>
         </trim>
     </insert>
+    <insert id="addNewMaintainRecord" parameterType="com.vtest.it.pojo.ProberCardMaintainBean">
+        insert into ProberCard_Maintain_Record(prober_card_id,before_pinlen,after_pinlen,before_pindiam,after_pindiam,before_pinlevel,after_pinlevel,clean_flag,grinding_flag,corrosion_flag,adjustment_flag,bake_flag,handgrind_flag,checksolder_flag,maintsolder_flag,checkparts_flag,changeparts_flag,jumper_flag,update_operator,next_station,note,rebuild_count)
+        value (#{proberCardId},#{beforePinlen},#{afterPinlen},#{beforePindiam},#{afterPindiam},#{beforePinlevel},#{afterPinlevel},#{cleanFlag},#{grindingFlag},#{corrosionFlag},#{adjustmentFlag},#{bakeFlag},#{handgrindFlag},#{checksolderFlag},#{maintsolderFlag},#{checkpartsFlag},#{changepartsFlag},#{jumperFlag},#{updateOperator},#{nextStation},#{note},#{rebuildCount});
+    </insert>
+    <update id="updateProberCard">
+        update VTProberCard.Probercard_Info set cust_name =#{custName} ,cust_no=#{custNo},receipt_time=#{receiptTime} vendor_name =#{vendorName} ,vendor_no=#{vendorNo},belong_dept=#{belongDept},use_equipment =#{useEquipment} ,dut_count=#{dutCount},pin_count=#{pinCount},cab_position =#{cabPosition} ,card_source=#{cardSource},pm_td=#{pmTd},
+        card_type =#{cardType} ,new_old=#{newOld},clean_type=#{cleanType},pinlen_spec =#{pinlenSpec} ,pindiam_spec=#{pindiamSpec},pinlevel_spec=#{pinlevelSpec},pindepth_spec =#{pindepthSpec} ,td_total=#{tdTotal},card_model=#{cardModel},release_flag =#{releaseFlag} ,glass_mask=#{glassMask},mylar_mask=#{mylarMask},note=#{note} where prober_card_id=#{proberCardId};
+    </update>
 </mapper>
