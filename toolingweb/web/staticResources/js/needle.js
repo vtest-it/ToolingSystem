@@ -87,63 +87,6 @@ $(document).ready(function() {
     }
     getTime();
     setInterval(getTime,1000);
-    $("#editBtn").on('click',function () {
-        var date=new Date();
-        var month=date.getMonth()+1;
-        var day=date.getDate();
-        if(month>=1&&month<=9){
-            month="0"+month;
-        }
-        if(day>=1&&day<=9){
-            day="0"+day;
-        }
-        var data= $("#needCardModifyForm").serializeArray();
-        var index=$("#editBtn").attr("index");
-        var newDatas=[];
-        var newData=new Object();
-        $.each(data,function (i,item) {
-            newData[item.name]=item.value;
-        })
-        newData["editTime"]=date.getFullYear()+"-"+month+"-"+day;
-        newDatas.push(newData);
-        $('#needleCardTable').bootstrapTable("updateRow",{index:index,row:newData});
-        $.ajax({
-            type:"post",
-            url:"/toolingweb/needleCard/updateProberCard",
-            data:newDatas
-        })
-    })
-    $("#submit").on('click',function () {
-
-        // $.ajax({
-        //     type: "get",
-        //     url: "js/needleCard.json",
-        //     async: false,
-        //     dataType: 'json',
-        //     success: function(data) {
-        //         $.each(data,function (i,item) {
-        //                 needleCardData.push(item);
-        //                 var needleCard=JSON.stringify(item).replace("{","").replace("}","").trim().split(",");
-        //                 for(var k=0;k<needleCard.length;k++){
-        //                     var column=new Object();
-        //                     var index=needleCard[k].indexOf(":")
-        //                     column.field=needleCard[k].substring(1,index-1);
-        //
-        //                     columns.push(column);
-        //                 }
-        //
-        //
-        //         })
-        //     }
-        // });
-        // $.each(columns,function (i,item) {
-        //     $.each(name,function (k,issue) {
-        //         if(i==k+1){
-        //             item.title=issue;
-        //         }
-        //     })
-        // })
-    })
     $("#btnAdd").on('click',function () {
         $("#cardType").find("option:selected").attr("selected",false);
         $("#cardType").find('option:contains("...")').attr("selected",true);
@@ -219,10 +162,9 @@ $(document).ready(function() {
                     return['<button id="btnEdit" type="button" class="btn btn-default"> <span class="fa fa-edit" aria-hidden="true"></span>修改 </button>'].join("");
                 },events:{
                     "click #btnEdit":function (e,value,row,index) {
-                        $("#submit").hide();
-                        $("#editBtn").show();
+                        $("#submit").attr('value','修改');
                         $("#needCardModifyForm")[0].reset();
-                        $("#formSubmit").attr("index",index);
+                        $("#submit").attr("proberCardID",row.proberCardId);
                         $("#myModalLabel").text("针卡档案修改");
                         $("#myModal").modal('show');
                         $("#releaseFlag").parent().show();
@@ -383,9 +325,9 @@ $(document).ready(function() {
         return this.optional(element)||(number.test(value));
     },warning+"请填写正数");
     jQuery.validator.addMethod("isPositiveInteger",function (value,element) {
-        var positiveInteger=/^[1-9]\d*$/;
+        var positiveInteger=/^[0-9]\d*$/;
         return this.optional(element)||(positiveInteger.test(value));
-    },warning+"请填写正整数");
+    },warning+"正整数或零");
     jQuery.validator.addMethod("isNumberOrLetter",function (value,element) {
         var numberOrLetter=/^[a-zA-Z\u4e00-\u9fa5]+$/;
         return this.optional(element)||(numberOrLetter.test(value));
@@ -496,33 +438,57 @@ $(document).ready(function() {
         submitHandler:function (form) {
             var confirmFlag=confirm("请再次确认");
             if(confirmFlag==true) {
-                $(form).ajaxSubmit({
-                    type:'post',
-                    url:'/toolingweb/needleCard/addNewNeedleCard',
-                    data:$(form).serialize(),
-                    error:function () {
-                        alert("add failed!,please check your information again!")
+                if($("#submit").attr("value")=="提交"){
+                    $(form).ajaxSubmit({
+                        type:'post',
+                        url:'/toolingweb/needleCard/addNewNeedleCard',
+                        data:$(form).serialize(),
+                        error:function () {
+                            alert("add failed!,please check your information again!")
+                        }
+                    });
+                    var date=new Date();
+                    var month=date.getMonth()+1;
+                    var day=date.getDate();
+                    if(month>=1&&month<=9){
+                        month="0"+month;
                     }
-                });
-                var date=new Date();
-                var month=date.getMonth()+1;
-                var day=date.getDate();
-                if(month>=1&&month<=9){
-                    month="0"+month;
+                    if(day>=1&&day<=9){
+                        day="0"+day;
+                    }
+                    var data= $(form).serializeArray();
+                    var newDatas=[];
+                    var newData=new Object();
+                    $.each(data,function (i,item) {
+                        newData[item.name]=item.value;
+                    })
+                    newDatas.push(newData);
+                    $('#needleCardTable').bootstrapTable("append",newDatas);
+                    $(form).resetForm();
+                    $("#myModal").modal('hide');
+                }else {
+                    $(form).ajaxSubmit({
+                        type:'post',
+                        url:'/toolingweb/needleCard/updateProberCard',
+                        data:$(form).serialize(),
+                        error:function () {
+                            alert("add failed!,please check your information again!")
+                        },
+                        success:function () {
+                            alert("Update Success!")
+                        }
+                    });
+                    $("#needleCardTable").bootstrapTable('refresh')
+                    var data= $(form).serializeArray();
+                    var id=$("#submit").attr("proberCardID");
+                    var newData=new Object();
+                    $.each(data,function (i,item) {
+                        newData[item.name]=item.value;
+                    })
+                    $("#needleCardTable").bootstrapTable("updateByUniqueId",{id:id,row:newData});
+                    $(form).resetForm();
+                    $("#myModal").modal('hide');
                 }
-                if(day>=1&&day<=9){
-                    day="0"+day;
-                }
-                var data= $(form).serializeArray();
-                var newDatas=[];
-                var newData=new Object();
-                $.each(data,function (i,item) {
-                    newData[item.name]=item.value;
-                })
-                newDatas.push(newData);
-                $('#needleCardTable').bootstrapTable("append",newDatas);
-                $(form).resetForm();
-                $("#myModal").modal('hide');
 
             }
             return false;

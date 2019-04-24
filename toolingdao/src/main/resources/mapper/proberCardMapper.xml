@@ -76,7 +76,7 @@
         value (#{proberCardId},#{beforePinlen},#{afterPinlen},#{beforePindiam},#{afterPindiam},#{beforePinlevel},#{afterPinlevel},#{cleanFlag},#{grindingFlag},#{corrosionFlag},#{adjustmentFlag},#{bakeFlag},#{handgrindFlag},#{checksolderFlag},#{maintsolderFlag},#{checkpartsFlag},#{changepartsFlag},#{jumperFlag},#{updateOperator},#{nextStation},#{note},#{rebuildCount});
     </insert>
     <update id="updateProberCard">
-        update VTProberCard.Probercard_Info set cust_name =#{custName} ,cust_no=#{custNo},receipt_time=#{receiptTime} vendor_name =#{vendorName} ,vendor_no=#{vendorNo},belong_dept=#{belongDept},use_equipment =#{useEquipment} ,dut_count=#{dutCount},pin_count=#{pinCount},cab_position =#{cabPosition} ,card_source=#{cardSource},pm_td=#{pmTd},
+        update VTProberCard.Probercard_Info set cust_name =#{custName} ,cust_no=#{custNo},receipt_time=#{receiptTime},vendor_name =#{vendorName} ,vendor_no=#{vendorNo},belong_dept=#{belongDept},use_equipment =#{useEquipment} ,dut_count=#{dutCount},pin_count=#{pinCount},cab_position =#{cabPosition} ,card_source=#{cardSource},pm_td=#{pmTd},
         card_type =#{cardType} ,new_old=#{newOld},clean_type=#{cleanType},pinlen_spec =#{pinlenSpec} ,pindiam_spec=#{pindiamSpec},pinlevel_spec=#{pinlevelSpec},pindepth_spec =#{pindepthSpec} ,td_total=#{tdTotal},card_model=#{cardModel},release_flag =#{releaseFlag} ,glass_mask=#{glassMask},mylar_mask=#{mylarMask},note=#{note} where prober_card_id=#{proberCardId};
     </update>
 </mapper>

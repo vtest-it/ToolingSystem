@@ -30,6 +30,7 @@
     <script src="<c:url value="/js/bootstrap-table-fixed-columns.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
+    <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <style>
         .unit{
@@ -197,7 +198,7 @@
                         <h4 class="modal-title" id="myModalLabel">针卡建档</h4>
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="needCardModifyForm" method="post" action="<c:url value="/needleCard/addNewNeedleCard"/> ">
+                        <form role="form" id="needCardModifyForm">
                             <div class="form-group">
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">针卡编号</label>
@@ -379,9 +380,7 @@
 
                             </div>
                             <input class="button  button-primary button-pill  button-3d pull-right" type="submit"
-                                   value="Submit" id="submit">
-                            <input class="button  button-primary button-pill  button-3d pull-right" type="submit"
-                                   value="Submit" id="editBtn" style="display: none;">
+                                   value="提交" id="submit">
                         </form>
                     </div>
                 </div>

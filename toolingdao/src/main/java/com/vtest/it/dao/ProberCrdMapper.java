@@ -4,6 +4,7 @@ import com.vtest.it.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public interface ProberCrdMapper {
@@ -34,5 +35,7 @@ public interface ProberCrdMapper {
     public ArrayList<ProberCardStatusBean> getAllProberCardStatus();
 
     public void addNewMaintainRecord(ProberCardMaintainBean bean);
+
+    public void updateProberCard(ProberCardEntityBean bean);
 
 }

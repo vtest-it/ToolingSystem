@@ -237,4 +237,61 @@ public class NeedleCardController {
         }
 
     }
+    @RequestMapping("/updateProberCard")
+    @ResponseBody
+    public boolean updateProberCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
+                                    String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
+                                    String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String operator, String cardModel, String belongDept,
+                                    String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            ProberCardEntityBean bean= new ProberCardEntityBean();
+            bean.setProberCardId(proberCardId);
+            bean.setCustName(custName);
+            bean.setCustNo(custNo);
+            bean.setReceiptTime(format.parse(receiptTime));
+            bean.setVendorName(vendorName);
+            bean.setVendorNo(vendorNo);
+            bean.setBelongDept(belongDept);
+            bean.setUseEquipment(useEquipment);
+            bean.setDutCount(0);
+            if (null != dutCount) {
+                bean.setDutCount(dutCount);
+            }
+            bean.setPinCount(0);
+            if (null != pinCount) {
+                bean.setPinCount(pinCount);
+            }
+            bean.setCabPosition(cabPosition);
+            bean.setCardSource(cardSource);
+            bean.setPmTd(pmTd);
+            bean.setCardType(cardType);
+            if (newOld.equals("new")) {
+                bean.setNewOld(true);
+            } else {
+                bean.setNewOld(false);
+            }
+            bean.setCleanType(cleanType);
+            bean.setPindiamSpec(pindiamSpec);
+            bean.setPinlevelSpec(pinlevelSpec);
+            bean.setPindepthSpec(pindepthSpec);
+            bean.setPinlenSpec(pinlenSpec);
+            bean.setTdTotal(tdTotal);
+            bean.setCardModel(cardModel);
+            if(releaseFlag.equals("Release")){
+                bean.setReleaseFlag(true);
+            }else {
+                bean.setReleaseFlag(false);
+            }
+            bean.setGlassMask(glassMask);
+            bean.setMylarMask(mylarMask);
+            bean.setNote(note);
+            service.updateProberCard(bean);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  false;
+
+        }
+    }
 }

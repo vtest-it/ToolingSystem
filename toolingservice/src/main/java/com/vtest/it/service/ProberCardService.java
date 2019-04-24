@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -79,4 +80,8 @@ public class ProberCardService {
         mapper.addNewMaintainRecord(bean);
     }
 
+    public void updateProberCard(ProberCardEntityBean bean){
+        mapper.updateProberCard(bean);
+
+    }
 }
