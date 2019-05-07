@@ -262,7 +262,7 @@
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">类 型</label>
                                     <select  class="form-control" name="cardType" id="cardType" style="width: 45%">
-                                        <option value="CAMTILEVER">CAMTILEVER</option>
+                                        <option value="CANTILEVER">CANTILEVER</option>
                                         <option value="COBRA">COBRA</option>
                                         <option value="POGO_PIN">POGO PIN</option>
                                         <option value="MEMS">MEMS</option>
@@ -364,7 +364,7 @@
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-12" style="display: none">
-                                    <label class="col-lg-3">是否release</label>
+                                    <label class="col-lg-3">Release/Unrelease</label>
                                     <select  class="form-control" name="releaseFlag" id="releaseFlag" style="width: 45%;">
                                         <option value="Release">Release</option>
                                         <option value="Unreleased">Unreleased</option>

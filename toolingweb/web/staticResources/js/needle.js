@@ -153,9 +153,9 @@ $(document).ready(function() {
         strictSearch: true,
         minimumCountColumns: 2,             //最少允许的列数
         clickToSelect: true,                //是否启用点击选中行
-        // fixedColumns:true,
-        // fixedNumber:1,
-        // height:420,
+        fixedColumns:true,
+        fixedNumber:1,
+        height:420,
         uniqueId: "proberCardId",
         columns:[
             {title:"操作",formatter:function (value,row,index) {
