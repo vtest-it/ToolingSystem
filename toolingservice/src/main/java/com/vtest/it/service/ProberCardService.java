@@ -82,6 +82,18 @@ public class ProberCardService {
 
     public void updateProberCard(ProberCardEntityBean bean){
         mapper.updateProberCard(bean);
-
     }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public boolean getProberCardReleaseFlag(String proberCardId){
+        return mapper.getProberCardReleaseFlag(proberCardId);
+    }
+    public boolean updateProberCardReleaseFlag(String proberCardId,boolean releaseFlag){
+        return mapper.updateProberCardReleaseFlag(proberCardId,releaseFlag);
+    }
+    public boolean updateSingleState(String proberCardId,String currentProcess){
+        return mapper.updateSingleState(proberCardId,currentProcess);
+    }
+    public ArrayList<IqcRecordBean> getAllIQCRecord(){  return  mapper.getAllIQCRecord();}
+
+    public ArrayList<ProberCardMaintainBean> getAllMaintainRecord(){  return  mapper.getAllMaintainRecord();}
 }

@@ -76,6 +76,7 @@ function selectChange(value){
     var lendingData=[]
     var lendFlag=false;
     var state="";
+    var releaseFlag=false;
     $.ajax({
         type:'get',
         dataType:"json",
@@ -103,12 +104,23 @@ function selectChange(value){
             state=data;
         }
     })
+    $.ajax({
+        type:'get',
+        async: false,
+        url:"/toolingweb/needleCard/getProberCardReleaseFlag?proberCardId="+value,
+        success:function (data) {
+            releaseFlag=data;
+        }
+    })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
         if(state=="Card_PM"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                if(title=="dutCount"||title=="pinCount"){
+                    field=rows[k].substring(rowIndex+1,rows[k].length);
+                }
                 $('#'+title).val(field);
             }
             $("#rebuildCount").val(1);
@@ -117,8 +129,11 @@ function selectChange(value){
             $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
-            $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
-            flag=true;
+            if(flag){
+                $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
+                flag=true;
+            }
+
         }
         else if(lendFlag==true&&state!="Card_PM"){
             formClean();
@@ -183,13 +198,14 @@ $(document).ready(function () {
         return this.optional(element)||(percent.test(value));
     },warning+"格式（90%)");
     jQuery.validator.addMethod("isNumber",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        //var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        var number=/^^\d+(\.\d+)?$/;
         return this.optional(element)||(number.test(value));
-    },warning+"请填写正数");
+    },warning+"非负数");
     jQuery.validator.addMethod("isPositiveInteger",function (value,element) {
-        var positiveInteger=/^[1-9]\d*$/;
+        var positiveInteger=/^[0-9]\d*$/;
         return this.optional(element)||(positiveInteger.test(value));
-    },warning+"请填写正整数");
+    },warning+"非负整数");
     jQuery.validator.addMethod("isNumberOrLetter",function (value,element) {
         var numberOrLetter=/^[a-zA-Z\u4e00-\u9fa5]+$/;
         return this.optional(element)||(numberOrLetter.test(value));
@@ -199,13 +215,8 @@ $(document).ready(function () {
         var numberAndLetter=/^[a-zA-Z0-9_\\-]+$/;
         return this.optional(element)||(numberAndLetter.test(value));
     },warning+"英文数字-_");
-
-    jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
-        return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
     jQuery.validator.addMethod("isNumberD",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
+        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*|0$/;
         return this.optional(element)||(number.test(value));
     },warning+"数字+-");
     $("#needleCardMaintain").validate({

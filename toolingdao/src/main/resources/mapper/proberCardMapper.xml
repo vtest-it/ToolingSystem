@@ -79,4 +79,19 @@
         update VTProberCard.Probercard_Info set cust_name =#{custName} ,cust_no=#{custNo},receipt_time=#{receiptTime},vendor_name =#{vendorName} ,vendor_no=#{vendorNo},belong_dept=#{belongDept},use_equipment =#{useEquipment} ,dut_count=#{dutCount},pin_count=#{pinCount},cab_position =#{cabPosition} ,card_source=#{cardSource},pm_td=#{pmTd},
         card_type =#{cardType} ,new_old=#{newOld},clean_type=#{cleanType},pinlen_spec =#{pinlenSpec} ,pindiam_spec=#{pindiamSpec},pinlevel_spec=#{pinlevelSpec},pindepth_spec =#{pindepthSpec} ,td_total=#{tdTotal},card_model=#{cardModel},release_flag =#{releaseFlag} ,glass_mask=#{glassMask},mylar_mask=#{mylarMask},note=#{note} where prober_card_id=#{proberCardId};
     </update>
+    <select id="getProberCardReleaseFlag" resultType="boolean">
+        select release_flag from VTProberCard.ProberCard_Release_Record where  prober_card_id=#{proberCardId};
+    </select>
+    <update id="updateProberCardReleaseFlag">
+        update VTProberCard.ProberCard_Release_Record  set  release_flag=#{ releaseFlag }  where  prober_card_id=#{proberCardId};
+    </update>
+    <update id="updateSingleState">
+        update VTProberCard.ProberCard_Current_State set  current_process=#{ currentProcess }  where  prober_card_id=#{proberCardId};
+    </update>
+    <select id="getAllIQCRecord" resultType="com.vtest.it.pojo.IqcRecordBean">
+        SELECT prober_card_id,pin_maxlen,pin_minlen,pin_maxdiam,pin_mindiam,pin_level,pin_depth,update_operator,note,next_station FROM VTProberCard.ProberCard_IQC_Record ;
+    </select>
+    <select id="getAllMaintainRecord" resultType="com.vtest.it.pojo.ProberCardMaintainBean">
+        SELECT prober_card_id,before_pinlen,after_pinlen,before_pindiam,after_pindiam,before_pinlevel,after_pinlevel,clean_flag,grinding_flag,corrosion_flag,adjustment_flag,adjustment_flag,bake_flag,handgrind_flag,checksolder_flag,maintsolder_flag,checkparts_flag,changeparts_flag,jumper_flag,update_operator,note,next_station,rebuild_count FROM VTProberCard.ProberCard_Maintain_Record ;
+    </select>
 </mapper>

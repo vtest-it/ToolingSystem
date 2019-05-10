@@ -86,10 +86,6 @@ function selectChange(value){
             if(data==null){
                 lendFlag=false;
             }else {
-                $.each(data,function (i,item) {
-                    var time=getSmpFormatDateByLong(item.receiptTime,true);
-                    item.receiptTime=time.substring(0,11);
-                })
                 lendingData=data;
             }
 
@@ -104,11 +100,17 @@ function selectChange(value){
         }
     })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
-         if(state=="Card_Release"&&lendFlag==true){
+         if(state=="Card_Check"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                if(title=="dutCount"||title=="pinCount"){
+                    field=rows[k].substring(rowIndex+1,rows[k].length);
+                }
+                if(title=="receiptTime"){
+                    field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+                }
                 $('#'+title).val(field);
             }
             $("#lastStation").val("");
@@ -116,13 +118,14 @@ function selectChange(value){
              $("#oldStatus").val("");
              $("#oldStatus").val(state);
             $("#nextStation").html("");
-            $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
+            $("#nextStation").append('<option value="Card_Release">针卡Release </option>'+
+                '<option value="Out_Fixing">厂外维修 </option>');
             flag=true;
         }
-        else if(lendFlag==true&&state!="Card_Release"){
+        else if(lendFlag==true&&state!="Card_Check"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在针卡Release这个状态");
+            $("#error").html("存在这个针卡编号，但不在针卡验收这个状态");
             $("#myModal").modal('show');
             flag=false;
 
@@ -183,13 +186,14 @@ $(document).ready(function () {
         return this.optional(element)||(percent.test(value));
     },warning+"格式（90.15)");
     jQuery.validator.addMethod("isNumber",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        //var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        var number=/^^\d+(\.\d+)?$/;
         return this.optional(element)||(number.test(value));
-    },warning+"请填写正数");
+    },warning+"非负数");
     jQuery.validator.addMethod("isPositiveInteger",function (value,element) {
-        var positiveInteger=/^[1-9]\d*$/;
+        var positiveInteger=/^[0-9]\d*$/;
         return this.optional(element)||(positiveInteger.test(value));
-    },warning+"请填写正整数");
+    },warning+"非负整数");
     jQuery.validator.addMethod("isNumberOrLetter",function (value,element) {
         var numberOrLetter=/^[a-zA-Z\u4e00-\u9fa5]+$/;
         return this.optional(element)||(numberOrLetter.test(value));
@@ -199,13 +203,8 @@ $(document).ready(function () {
         var numberAndLetter=/^[a-zA-Z0-9_\\-]+$/;
         return this.optional(element)||(numberAndLetter.test(value));
     },warning+"英文数字-_");
-
-    jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
-        return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
     jQuery.validator.addMethod("isNumberD",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
+        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*|0$/;
         return this.optional(element)||(number.test(value));
     },warning+"数字+-");
     $("#needleCardCheckForm").validate({
@@ -240,7 +239,7 @@ $(document).ready(function () {
                     $(form).ajaxSubmit(
                         {
                             type:"post",
-                            url:"/toolingweb/needleCard/releaseProbercard",
+                            url:"/toolingweb/needleCard/checkProbercard",
                             data:$(form).serialize(),
                             error:function () {
                                 alert("add failed!,please check your information again!")
@@ -256,7 +255,7 @@ $(document).ready(function () {
 
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在这个针卡编号，但不在针卡Release这个状态");
+                $("#error").html("不存在该针卡编号或不在针卡验收这个状态");
                 $("#myModal").modal('show');
             }
 

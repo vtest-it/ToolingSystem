@@ -67,6 +67,7 @@ function selectChange(value){
     var lendingData=[]
     var lendFlag=true;
     var state="";
+    var releaseFlag=false;
     $.ajax({
         type:'get',
         dataType:"json",
@@ -76,10 +77,6 @@ function selectChange(value){
             if(data==null){
                 lendFlag=false;
             }else {
-                $.each(data,function (i,item) {
-                    var time=getSmpFormatDateByLong(item.receiptTime,true);
-                    item.receiptTime=time.substring(0,11);
-                })
                 lendingData=data;
             }
 
@@ -93,114 +90,150 @@ function selectChange(value){
             state=data;
         }
     })
+    $.ajax({
+        type:'get',
+        async: false,
+        url:"/toolingweb/needleCard/getProberCardReleaseFlag?proberCardId="+value,
+        success:function (data) {
+            releaseFlag=data;
+        }
+    })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
-        if(state=="IQC_PASS"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
+    if(state=="In_Engineering"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
             }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="In_Engineering">工程中</option>');
-            flag=true;
-
-        }
-        else if(state=="IQC_FAIL"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
             }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+'<option value="Final">归还客户</option>');
-            flag=true;
+            $('#'+title).val(field);
         }
-        else if(state=="Back_Fixing"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#oldStatus").val(state);
+        $("#nextStation").html("");
+        $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+
+            '<option value="Inner_Back">内部归还</option>'+
+            '<option value="Card_Check">针卡验收</option>');
+        flag=true;
+    }
+    else if(state=="Out_Fixing"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
             }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="IQC">IQC</option>');
-            flag=true;
-        }
-        else if(state=="Card_Idle"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
             }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Out_Fixing">场外维修</option>'+
-                '<option value="Production_Verify">测试/验证中</option>'+
-                '<option value="Final">归还客户</option>'+
-                '<option value="Scrap">报废</option>'+
-                '<option value="Cust_Lending">客户借出</option>');
-            flag=true;
+            $('#'+title).val(field);
         }
-        else if(state=="Cust_Back"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#oldStatus").val(state);
+        $("#nextStation").html("");
+        $("#nextStation").append('<option value="Back_Fixing">厂外维修返回</option>');
+        flag=true;
+    }
+    else if(state=="Inner_Repair"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
             }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="IQC">IQC</option>');
-            flag=true;
-        }
-        else if(state=="Scrap"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
             }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="Final">归还客户</option>'+'<option value="Re_Build">重新制作</option>');
-            flag=true;
+            $('#'+title).val(field);
         }
-        else if(state=="ReBuild_Back"&&lendFlag==true){
-            for(var k=0;k<rows.length;k++){
-                var rowIndex=rows[k].indexOf(":");
-                var title=rows[k].substring(1,rowIndex-1);
-                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                $('#'+title).val(field);
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#oldStatus").val(state);
+        $("#nextStation").html("");
+        if(releaseFlag){
+            $("#nextStation").append('<option value="Card_Idle">针卡待料</option>'+
+                '<option value="ReIQC_PASS">维修后IQC PASS</option>'+
+                '<option value="IQC_PASS">IQC PASS</option>');
+        }else {
+            $("#nextStation").append('<option value="ReIQC_PASS">维修后IQC PASS</option>'+
+                '<option value="IQC_PASS">IQC PASS</option>');
+        }
+        flag=true;
+    }
+    else if(state=="Production_Verify"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
             }
-            $("#lastStation").val("");
-            $("#lastStation").val(state);
-            $("#oldStatus").val(state);
-            $("#nextStation").html("");
-            $("#nextStation").append('<option value="IQC">IQC</option>');
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+            }
+            $('#'+title).val(field);
+        }
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#oldStatus").val(state);
+        $("#nextStation").html("");
+        $("#nextStation").append('<option value="Inner_Back">内部归还</option>');
+        flag=true;
+    }
+    else if(state=="Cust_Lending"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
+            }
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+            }
+            $('#'+title).val(field);
+        }
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#oldStatus").val(state);
+        $("#nextStation").html("");
+        $("#nextStation").append('<option value="Cust_Back">客户借出返回</option>');
+        flag=true;
+    }
+    else if(state=="RE_Build"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
+            }
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+            }
+            $('#'+title).val(field);
+        }
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#oldStatus").val(state);
+        $("#nextStation").html("");
+        if(releaseFlag){
+            $("#nextStation").append('<option value="ReBuild_Back">重新制作返回</option>');
             flag=true;
         }
-        else if(lendFlag==true&&state!="IQC_PASS"&&state!="IQC_FAIL"&&state!="Back_Fixing"&&state!="Card_Idle"&&state!="Cust_Back"&&state!="Scrap"&&state!="ReBuild_Back"){
+    }
+        else if(lendFlag==true&&state!="In_Engineering"&&state!="Out_Fixing"&&state!="Inner_Repair"&&state!="Production_Verify"&&state!="Cust_Lending"&&state!="RE_Build"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在IQC_PASS，IQC_FAIL，厂外维修返回，针卡待料 ，客户借出返回，报废，重新制作返回这七种状态");
+            $("#error").html("存在这个针卡编号，但不在厂外维修，工程中,维修清针,测试/验证中,归还客户,客户借出和重新制作这七种状态");
             $("#myModal").modal('show');
            flag=false;
         }
@@ -260,13 +293,14 @@ $(document).ready(function () {
         return this.optional(element)||(percent.test(value));
     },warning+"格式（90%)");
     jQuery.validator.addMethod("isNumber",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        var number=/^^\d+(\.\d+)?$/;
+        //var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
         return this.optional(element)||(number.test(value));
-    },warning+"请填写正数");
+    },warning+"非负数");
     jQuery.validator.addMethod("isPositiveInteger",function (value,element) {
-        var positiveInteger=/^[1-9]\d*$/;
+        var positiveInteger=/^[0-9]\d*$/;
         return this.optional(element)||(positiveInteger.test(value));
-    },warning+"请填写正整数");
+    },warning+"非负整数");
     jQuery.validator.addMethod("isNumberOrLetter",function (value,element) {
         var numberOrLetter=/^[a-zA-Z\u4e00-\u9fa5]+$/;
         return this.optional(element)||(numberOrLetter.test(value));
@@ -276,13 +310,8 @@ $(document).ready(function () {
         var numberAndLetter=/^[a-zA-Z0-9_\\-]+$/;
         return this.optional(element)||(numberAndLetter.test(value));
     },warning+"英文数字-_");
-
-    jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
-        return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
     jQuery.validator.addMethod("isNumberD",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
+        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*|0$/;
         return this.optional(element)||(number.test(value));
     },warning+"数字+-");
     $("#needleCardReturnForm").validate({
@@ -324,8 +353,12 @@ $(document).ready(function () {
                                 alert("add failed!,please check your information again!")
                             },
                             success:function () {
-                                alert("Return success!")
+                                $.ajax({
+                                    type:'post',
+                                    url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+$("#proberCardId").val()+"&releaseFlag=false",
+                                })
                                 document.getElementById("needleCardReturnForm").reset();
+                                alert("Return success!");
                             }
                         }
 
@@ -334,7 +367,7 @@ $(document).ready(function () {
 
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在IQC_PASS，IQC_FAIL，厂外维修返回，针卡待料 ，客户借出返回，报废，重新制作返回这七种状态");
+                $("#error").html("不存在该针卡编号或不在厂外维修，工程中,维修清针,测试/验证中,归还客户,客户借出和重新制作这七种状态");
                 $("#myModal").modal('show');
             }
 

@@ -97,7 +97,7 @@ $(document).ready(function() {
         $("#releaseFlag").find("option:selected").attr("selected",false);
         $("#releaseFlag").find('option:contains("...")').attr("selected",true);
         $("#state").empty();
-        $("#state").append(' <option value="newProject">新品入库</option>')
+        $("#state").append(' <option value="New_Prod">新品入库</option>')
         $("#needCardModifyForm")[0].reset();
         $("#myModalLabel").text("针卡建档");
         $("#myModal").modal('show');
@@ -108,6 +108,8 @@ $(document).ready(function() {
     })
     var needleCardData=[];
     var proberCardStatus=[];
+    var IQCRecord=[];
+    var maintainRecord=[];
     $.ajax({
         type:"get",
         async: false,
@@ -121,14 +123,46 @@ $(document).ready(function() {
         type:"get",
         async: false,
         dataType:"json",
+        url:"/toolingweb/needleCard/getAllIQCRecord",
+        success:function (data) {
+            IQCRecord=data;
+        }
+    })
+    $.ajax({
+        type:"get",
+        async: false,
+        dataType:"json",
+        url:"/toolingweb/needleCard/getAllMaintainRecord",
+        success:function (data) {
+            maintainRecord=data;
+        }
+    })
+    $.ajax({
+        type:"get",
+        async: false,
+        dataType:"json",
         url:"/toolingweb/needleCard/getAllProberCardInfos",
         success:function (data) {
             $.each(data,function (i,item) {
                 var time=getSmpFormatDateByLong(item.receiptTime,true);
-                item.receiptTime=time.substring(0,11);
+                item.receiptTime=time;
                 $.each(proberCardStatus,function (j,issure) {
                     if(issure.proberCardId==item.proberCardId){
                         item.state=issure.currentProcess;
+                    }
+                })
+                $.each(IQCRecord,function (k,m) {
+                    if(m.proberCardId==item.proberCardId){
+                        item.pinMinlen=m.pinMinlen;
+                        item.pinMaxdiam=m.pinMaxdiam;
+                        item.pinLevel=m.pinLevel;
+                    }
+                })
+                $.each(maintainRecord,function (t,d) {
+                    if(d.proberCardId==item.proberCardId){
+                        item.afterPinlen=d.afterPinlen;
+                        item.afterPindiam=d.afterPindiam;
+                        item.afterPinlevel=d.afterPinlevel;
                     }
                 })
             })
@@ -170,31 +204,38 @@ $(document).ready(function() {
                         $("#releaseFlag").parent().show();
                         $("#releaseFlag").attr("disabled",false);
                         $("#state").empty();
-                        $("#state").append( '<option value="newProject">新品入库</option>'+
-                            '<option value="remake">重新制作</option>'+
+                        $("#state").append( '<option value="New_Prod">新品入库</option>'+
                             '<option value="IQC">IQC</option>'+
-                            '<option value="IQC_pass">IQC pass</option>'+
-                            '<option value="IQC_fail">IQC fail</option>'+
-                            '<option value="repairedIQC">维修后IQC</option>'+
-                            '<option value="repairedIQC_fail">维修后IQC fail</option>'+
-                            '<option value="testing">测试中</option>'+
-                            '<option value="Engineering">工程中</option>'+
-                            '<option value="return">归还</option>'+
-                            '<option value="usable">堪用</option>'+
-                            '<option value="maintainingPM">保养中PM</option>'+
-                            '<option value="repairing">维修中</option>'+
-                            '<option value="offSiteMaintenance">厂外维修</option>'+
-                            '<option value="offSiteMaintenanceReturn">厂外维修返回</option>'+
-                            '<option value="customerLend">客户借出</option>'+
-                            '<option value="customerLendReturn">客户借出返回</option>'+
-                            '<option value="disuse">停用</option>'+
-                            '<option value="waitingPlate">待拆板</option>');
+                            '<option value="IQC_PASS">IQC PASS</option>'+
+                            '<option value="IQC_FAIL">IQC FAIL</option>'+
+                            '<option value="Re_IQC">维修后IQC</option>'+
+                            '<option value="ReIQC_PASS">维修后IQC PASS</option>'+
+                            '<option value="ReIQC_FAIL">维修后IQC FAIL</option>'+
+                            '<option value="Production_Verify">测试/验证中</option>'+
+                            '<option value="In_Engineering">工程中</option>'+
+                            '<option value="Inner_Back">内部归还</option>'+
+                            '<option value="Final">归还客户</option>'+
+                            '<option value="Card_PM">保养中 PM</option>'+
+                            '<option value="Inner_Repair">维修清针</option>'+
+                            '<option value="Out_Fixing">厂外维修</option>'+
+                            '<option value="Back_Fixing">厂外维修返回</option>'+
+                            '<option value="Cust_Lending">客户借出</option>'+
+                            '<option value="Cust_Lending">客户借出返回</option>'+
+                            '<option value="Card_Idle">针卡待料 </option>'+
+                            '<option value="Un_Sealed">待拆版</option>'+
+                            '<option value="Re_Build">重新制作</option>'+
+                            '<option value="ReBuild_Back">重新制作返回</option>'+
+                            '<option value="Card_Check">针卡验收</option>'+
+                            '<option value="Card_Release">针卡Release</option>');
                         var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
                         for(var k=0;k<rows.length;k++){
                             var rowIndex=rows[k].indexOf(":");
                             var title=rows[k].substring(1,rowIndex-1);
                             var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                            if(title=="cardType"||title=="cleanType"||title=="state"||title=="releaseFlag"){
+                            if(title=="dutCount"||title=="glassMask"||title=="mylarMask"||title=="pinCount"){
+                                field=rows[k].substring(rowIndex+1,rows[k].length);
+                            }
+                            if(title=="cardType"||title=="cleanType"||title=="state"){
                                 $('#'+title).find('option[value='+field+']').attr("selected",true);
                                 // $('#'+title).find('option:contains('+field+')').attr("selected",true);
                             }else if(title=='newOld'){
@@ -204,7 +245,14 @@ $(document).ready(function() {
                                 }else {
                                     $('#newOld').find('option:contains("旧")').attr("selected",true);
                                 }
-                            } else{
+                            } else if(title=="releaseFlag"){
+                                field=rows[k].substring(rowIndex+1,rows[k].length);
+                                if(field=='true'){
+                                    $('#releaseFlag').find('option:contains("Release")').attr("selected",true);
+                                }else {
+                                    $('#releaseFlag').find('option:contains("Unreleased")').attr("selected",true);
+                                }
+                            }else{
                                 $('#'+title).val(field)
                             }
 
@@ -257,13 +305,13 @@ $(document).ready(function() {
             {
                 title:"剩餘可測TD",field:"remainingTD"
             },{
-                title:"针长",field:"after_pinlen"
+                title:"针长",field:"afterPinlen"
             },
             {
-                title:"針徑",field:"after_pindiam"
+                title:"針徑",field:"afterPindiam"
             },
             {
-                title:"水平",field:"after_pinlevel"
+                title:"水平",field:"afterPinlevel"
             },
             {
                 title:"柜位",field:"cabPosition"
@@ -321,13 +369,14 @@ $(document).ready(function() {
     })
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isNumber",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        //var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        var number=/^^\d+(\.\d+)?$/;
         return this.optional(element)||(number.test(value));
-    },warning+"请填写正数");
+    },warning+"非负数");
     jQuery.validator.addMethod("isPositiveInteger",function (value,element) {
         var positiveInteger=/^[0-9]\d*$/;
         return this.optional(element)||(positiveInteger.test(value));
-    },warning+"正整数或零");
+    },warning+"非负整数");
     jQuery.validator.addMethod("isNumberOrLetter",function (value,element) {
         var numberOrLetter=/^[a-zA-Z\u4e00-\u9fa5]+$/;
         return this.optional(element)||(numberOrLetter.test(value));
@@ -343,7 +392,7 @@ $(document).ready(function() {
         return this.optional(element)||(operator.test(value));
     },warning+"格式（V900)");
     jQuery.validator.addMethod("isNumberD",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
+        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*|0$/;
         return this.optional(element)||(number.test(value));
     },warning+"数字+-");
     jQuery.validator.addMethod("isCustomer",function (value,element) {
@@ -404,8 +453,7 @@ $(document).ready(function() {
                 isNumber:true
             },
             receiptTime:{
-                required: true,
-                dateISO:true
+                required: true
             },
             pinlevelSpec:{
                 required: true,
@@ -438,6 +486,21 @@ $(document).ready(function() {
         submitHandler:function (form) {
             var confirmFlag=confirm("请再次确认");
             if(confirmFlag==true) {
+                var proberCardId;
+                var state;
+                var isReleaseFlag;
+                var data= $(form).serializeArray();
+                $.each(data,function (i,item) {
+                    if(item.name=="proberCardId"){
+                        proberCardId=item.value;
+                    }
+                    if(item.name=="state"){
+                        state=item.value;
+                    }
+                    if(item.name=="releaseFlag"){
+                        isReleaseFlag=item.value;
+                    }
+                })
                 if($("#submit").attr("value")=="提交"){
                     $(form).ajaxSubmit({
                         type:'post',
@@ -475,6 +538,22 @@ $(document).ready(function() {
                             alert("add failed!,please check your information again!")
                         },
                         success:function () {
+                            $.ajax({
+                                type:'post',
+                                url:"/toolingweb/needleCard/updateSingleState?proberCardId="+proberCardId+"&currentProcess="+state
+                            })
+                            if(isReleaseFlag=="Release"){
+
+                                $.ajax({
+                                    type:'post',
+                                    url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+proberCardId+"&releaseFlag=true"
+                                })
+                            }else {
+                                $.ajax({
+                                    type:'post',
+                                    url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+proberCardId+"&releaseFlag=false"
+                                })
+                            }
                             alert("Update Success!")
                         }
                     });
@@ -482,8 +561,10 @@ $(document).ready(function() {
                     var data= $(form).serializeArray();
                     var id=$("#submit").attr("proberCardID");
                     var newData=new Object();
+                    var editTime=new Date().format("yyyy-MM-dd hh:mm:ss");
                     $.each(data,function (i,item) {
                         newData[item.name]=item.value;
+                        newData['editTime']=editTime;
                     })
                     $("#needleCardTable").bootstrapTable("updateByUniqueId",{id:id,row:newData});
                     $(form).resetForm();
@@ -496,9 +577,9 @@ $(document).ready(function() {
 
     });
     $("#receiptTime").prop("readonly",true).datetimepicker({
-        minView: "month",
+        minView: "hour",
         todayBtn : "true",
-        format: "yyyy-mm-dd",
+        format: "yyyy-mm-dd hh:ii:ss",
         language: 'zh-CN',
         autoclose : true,
         startDate:new Date(new Date()-2000 * 60 * 60 * 24* 365),

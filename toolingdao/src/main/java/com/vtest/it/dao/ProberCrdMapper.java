@@ -4,7 +4,6 @@ import com.vtest.it.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public interface ProberCrdMapper {
@@ -37,5 +36,15 @@ public interface ProberCrdMapper {
     public void addNewMaintainRecord(ProberCardMaintainBean bean);
 
     public void updateProberCard(ProberCardEntityBean bean);
+
+    public boolean getProberCardReleaseFlag(@Param("proberCardId") String proberCardId);
+
+    public boolean updateProberCardReleaseFlag(@Param("proberCardId") String proberCardId,@Param("releaseFlag")boolean releaseFlag);
+
+    public boolean updateSingleState(@Param("proberCardId") String proberCardId,@Param("currentProcess")String currentProcess);
+
+    public ArrayList<IqcRecordBean> getAllIQCRecord();
+
+    public ArrayList<ProberCardMaintainBean> getAllMaintainRecord();
 
 }

@@ -309,26 +309,7 @@
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">状态</label>
                                     <select  class="form-control" name="state"  id="state" style="width:45%;">
-                                        <option value="newProject">新品入库</option>
-                                        <option value="remake">重新制作</option>
-                                        <option value="IQC">IQC</option>
-                                        <option value="IQC_pass">IQC pass</option>
-                                        <option value="IQC_fail">IQC fail</option>
-                                        <option value="repairedIQC">维修后IQC</option>
-                                        <option value="repairedIQC_fail">维修后IQC fail</option>
-                                        <option value="testing">测试中</option>
-                                        <option value="Engineering">工程中</option>
-                                        <option value="return">归还</option>
-                                        <option value="usable">堪用</option>
-                                        <option value="maintainingPM">保养中PM</option>
-                                        <option value="repairing">维修中</option>
-                                        <option value="offSiteMaintenance">厂外维修</option>
-                                        <option value="offSiteMaintenanceReturn">厂外维修返回</option>
-                                        <option value="customerLend">客户借出</option>
-                                        <option value="customerLendReturn">客户借出返回</option>
-                                        <option value="disuse">停用</option>
-                                        <option value="waitingPlate">待拆板</option>
-
+                                        <option value="New_Prod">新品入库</option>
                                     </select>
                                 </p>
 

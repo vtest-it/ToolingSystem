@@ -45,7 +45,12 @@ function getFormatDate(date, pattern) {
     }
     return date.format(pattern);
 }
-
+var setCookie=function (name,value,day) {
+    var expires=day*24*60*60*1000;
+    var exp=new Date();
+    exp.setTime(exp.getTime()+expires);
+    document.cookie=name+"="+value+";expires="+exp.toUTCString();
+}
 var flag=false;
 function formClean(){
     $("#custName").val("");
@@ -82,10 +87,6 @@ function selectChange(value){
                 lendFlag=false;
             }else {
                 lendFlag=true;
-                $.each(data,function (i,item) {
-                    var time=getSmpFormatDateByLong(item.receiptTime,true);
-                    item.receiptTime=time.substring(0,11);
-                })
                 lendingData=data;
             }
 
@@ -105,6 +106,12 @@ function selectChange(value){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                if(title=="dutCount"||title=="pinCount"){
+                    field=rows[k].substring(rowIndex+1,rows[k].length);
+                }
+                if(title=="receiptTime"){
+                    field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+                }
                 $('#'+title).val(field);
             }
             $("#lastStation").val("");
@@ -114,10 +121,52 @@ function selectChange(value){
             '<option value="IQC_FAIL">IQC_FAIL</option>');
             flag=true;
 
-        }else if(lendFlag==true&&state!="IQC"){
+        }
+        else if(state=="Re_IQC"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
+            }
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+            }
+            $('#'+title).val(field);
+        }
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#nextStation").html("");
+        $("#nextStation").append('<option value="ReIQC_PASS">维修后IQC PASS</option>'+
+            '<option value="ReIQC_FAIL">维修后IQC FAIL</option>');
+        flag=true;
+
+    }
+        else if(state=="ReBuild_Back"&&lendFlag==true){
+            for(var k=0;k<rows.length;k++){
+                var rowIndex=rows[k].indexOf(":");
+                var title=rows[k].substring(1,rowIndex-1);
+                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                if(title=="dutCount"||title=="pinCount"){
+                    field=rows[k].substring(rowIndex+1,rows[k].length);
+                }
+                if(title=="receiptTime"){
+                    field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+                }
+                $('#'+title).val(field);
+            }
+            $("#lastStation").val("");
+            $("#lastStation").val(state);
+            $("#nextStation").html("");
+            $("#nextStation").append('<option value="IQC">IQC</option>');
+            flag=true;
+
+        }
+        else if(lendFlag==true&&state!="IQC"&&state!="Re_IQC"&&state!="ReBuild_Back"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在IQC状态");
+            $("#error").html("存在这个针卡编号，但不在IQC,维修后IQC,重新制作返回这三种状态");
             $("#myModal").modal('show');
             flag=false;
         }
@@ -177,9 +226,10 @@ $(document).ready(function () {
         return this.optional(element)||(percent.test(value));
     },warning+"格式（90%)");
     jQuery.validator.addMethod("isNumber",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        //var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
+        var number=/^^\d+(\.\d+)?$/;
         return this.optional(element)||(number.test(value));
-    },warning+"请填写正数");
+    },warning+"非负数");
     jQuery.validator.addMethod("isPositiveInteger",function (value,element) {
         var positiveInteger=/^[1-9]\d*$/;
         return this.optional(element)||(positiveInteger.test(value));
@@ -193,13 +243,8 @@ $(document).ready(function () {
         var numberAndLetter=/^[a-zA-Z0-9_\\-]+$/;
         return this.optional(element)||(numberAndLetter.test(value));
     },warning+"英文数字-_");
-
-    jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
-        return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
     jQuery.validator.addMethod("isNumberD",function (value,element) {
-        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*$/;
+        var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*|0$/;
         return this.optional(element)||(number.test(value));
     },warning+"数字+-");
     $("#needleCardIQCForm").validate({
@@ -264,7 +309,7 @@ $(document).ready(function () {
                 }
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在IQC状态");
+                $("#error").html("不存在该针卡编号或不在IQC,维修后IQC,重新制作返回这三种状态");
                 $("#myModal").modal('show');
             }
 

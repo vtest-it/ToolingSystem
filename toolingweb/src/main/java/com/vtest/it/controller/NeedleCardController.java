@@ -294,4 +294,59 @@ public class NeedleCardController {
 
         }
     }
+    @RequestMapping("/getProberCardReleaseFlag")
+    @ResponseBody
+    public boolean getProberCardReleaseFlag(String proberCardId ){
+        return  service.getProberCardReleaseFlag(proberCardId);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/checkProbercard")
+    public boolean checkProberCard(String proberCardId,String pteOperator,double cardYield,String cardOperator,boolean pinMarks,boolean releaseFlag,String updateOperator,String note,String oldStatus,String nextStation){
+        try {
+            ReleaseProberCardBean bean=new ReleaseProberCardBean();
+            bean.setProberCardId(proberCardId);
+            bean.setPteOperator(pteOperator);
+            bean.setCardYield(cardYield);
+            bean.setCardOperator(cardOperator);
+            bean.setPinMarks(pinMarks);
+            bean.setReleaseFlag(releaseFlag);
+            bean.setUpdateOperator(updateOperator);
+            bean.setNote(note);
+            service.updateReleaseProberCard(bean);
+            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateProberCardReleaseFlag")
+    public boolean updateProberCardReleaseFlag(String proberCardId,boolean releaseFlag){
+        try {
+            service.updateProberCardReleaseFlag(proberCardId,releaseFlag);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateSingleState")
+    public boolean updateSingleState(String proberCardId,String currentProcess){
+        try {
+            service.updateSingleState(proberCardId,currentProcess);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
+    @RequestMapping("/getAllIQCRecord")
+    public String getAllIQCRecord(){
+        return  JSON.toJSONString(service.getAllIQCRecord());
+    }
+    @ResponseBody
+    @RequestMapping("/getAllMaintainRecord")
+    public String getAllMaintainRecord(){
+        return  JSON.toJSONString(service.getAllMaintainRecord());
+    }
 }

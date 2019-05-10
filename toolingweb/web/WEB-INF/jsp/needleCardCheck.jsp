@@ -286,7 +286,7 @@
                             <div class="form-group">
                                 <p class="col-lg-4">
                                     <label class="col-lg-4">进厂日期</label>
-                                    <input class="form-control" name="receiptTime" id="receiptTime" style="width: 45%"type="text" disabled>
+                                    <input class="form-control" name="receiptTime" id="receiptTime" style="width: 50%"type="text" disabled>
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">厂商</label>
@@ -358,9 +358,20 @@
                                 </p>
                             </div>
                             <div class="form-group">
-                                <p>
-                                    <label class="col-lg-1">备注</label>
-                                    <textarea class="form-control" name="note" id="note" style="width: 90%" rows="3"></textarea>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-4">下一站</label>
+                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 45%">
+                                    </select>
+                                </p>
+                                <p class="col-lg-8">
+                                    <label class="col-lg-2">备注</label>
+                                    <textarea class="form-control" name="note" id="note" style="width: 80%" rows="3"></textarea>
+                                </p>
+                            </div>
+                            <div class="form-group" style="display: none">
+                                <p class="col-lg-12">
+                                    <label class="col-lg-2">上一站</label>
+                                    <input class="form-control" name="oldStatus" id="oldStatus" style="width: 45%" type="text">
                                 </p>
                             </div>
                             <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="Submit">

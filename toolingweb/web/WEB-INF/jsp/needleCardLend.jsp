@@ -285,7 +285,7 @@
                                 <div class="form-group">
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">进厂日期</label>
-                                        <input class="form-control" name="receiptTime" id="receiptTime" style="width: 45%"type="text" disabled>
+                                        <input class="form-control" name="receiptTime" id="receiptTime" style="width: 50%"type="text" disabled>
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-3">厂商</label>
