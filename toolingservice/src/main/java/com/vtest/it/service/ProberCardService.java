@@ -90,6 +90,9 @@ public class ProberCardService {
     public boolean updateProberCardReleaseFlag(String proberCardId,boolean releaseFlag){
         return mapper.updateProberCardReleaseFlag(proberCardId,releaseFlag);
     }
+    public boolean updateProberCardInfoReleaseFlag(String proberCardId,boolean releaseFlag){
+        return mapper.updateProberCardInfoReleaseFlag(proberCardId,releaseFlag);
+    }
     public boolean updateSingleState(String proberCardId,String currentProcess){
         return mapper.updateSingleState(proberCardId,currentProcess);
     }

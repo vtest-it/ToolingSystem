@@ -137,10 +137,19 @@ function selectChange(value){
             $("#lastStation").val(state);
             $("#oldStatus").val(state);
             $("#nextStation").html("");
-            $("#nextStation").append('<option value="Inner_Repair">维修中/清针中</option>'+
-                '<option value="Out_Fixing">厂外维修 </option>'+
-                '<option value="Final">归还客户</option>'+
-                '<option value="Card_PM">保养中</option>');
+            if(releaseFlag) {
+                $("#nextStation").append('<option value="Inner_Repair">维修中/清针中</option>' +
+                    '<option value="Out_Fixing">厂外维修 </option>' +
+                    '<option value="Final">归还客户</option>' +
+                    '<option value="Card_PM">保养中</option>' +
+                    '<option value="Production_Verify">测试/验证中</option>');
+            }else{
+                $("#nextStation").append('<option value="Inner_Repair">维修中/清针中</option>' +
+                    '<option value="Out_Fixing">厂外维修 </option>' +
+                    '<option value="Final">归还客户</option>' +
+                    '<option value="Card_PM">保养中</option>');
+                alert("此卡尚未release");
+            }
             flag=true;
         }
         else if(state=="IQC_PASS"&&lendFlag==true){
@@ -214,6 +223,7 @@ function selectChange(value){
                 $("#nextStation").append('<option value="Out_Fixing">场外维修</option>'+
                     '<option value="Final">归还客户</option>'+
                     '<option value="Cust_Lending">客户借出</option>');
+                alert("此卡尚未release");
             }
             flag=true;
         }
@@ -258,6 +268,7 @@ function selectChange(value){
                 $("#nextStation").append('<option value="Final">归还客户</option>'+'<option value="RE_Build">重新制作</option>');
             }else {
                 $("#nextStation").append('<option value="Final">归还客户</option>');
+                alert("此卡尚未release");
             }
             flag=true;
         }

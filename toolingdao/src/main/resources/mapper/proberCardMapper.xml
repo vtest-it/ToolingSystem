@@ -85,6 +85,9 @@
     <update id="updateProberCardReleaseFlag">
         update VTProberCard.ProberCard_Release_Record  set  release_flag=#{ releaseFlag }  where  prober_card_id=#{proberCardId};
     </update>
+    <update id="updateProberCardInfoReleaseFlag">
+        update VTProberCard.Probercard_Info set  release_flag=#{ releaseFlag }  where  prober_card_id=#{proberCardId};
+    </update>
     <update id="updateSingleState">
         update VTProberCard.ProberCard_Current_State set  current_process=#{ currentProcess }  where  prober_card_id=#{proberCardId};
     </update>

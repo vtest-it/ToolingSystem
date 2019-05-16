@@ -330,6 +330,16 @@ public class NeedleCardController {
         }
     }
     @ResponseBody
+    @RequestMapping(value = "/updateProberCardInfoReleaseFlag")
+    public boolean updateProberCardInfoReleaseFlag(String proberCardId,boolean releaseFlag){
+        try {
+            service.updateProberCardInfoReleaseFlag(proberCardId,releaseFlag);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
     @RequestMapping(value = "/updateSingleState")
     public boolean updateSingleState(String proberCardId,String currentProcess){
         try {

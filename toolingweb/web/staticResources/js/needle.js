@@ -415,11 +415,9 @@ $(document).ready(function() {
                 isCustomer:true
             },
             custNo:{
-                required:true,
                 isNumberAndLetter:true
             },
             vendorNo:{
-                required:true,
                 isNumberAndLetter:true
             },
             vendorName:{
@@ -431,14 +429,13 @@ $(document).ready(function() {
                 isNumberAndLetter:true
             },
             cabPosition:{
-                required:true,
                 isNumberAndLetter:true
             },
             cardSource:{
-                required:true,
                 isNumberOrLetter:true
             },
             dutCount:{
+                required:true,
                 isPositiveInteger:true
             },
             pmTd:{
@@ -449,18 +446,16 @@ $(document).ready(function() {
                 isPositiveInteger:true
             },
             pinlenSpec:{
-                required: true,
                 isNumber:true
             },
             receiptTime:{
                 required: true
             },
             pinlevelSpec:{
-                required: true,
                 isNumber:true
             },
             pindepthSpec:{
-                required: true,
+                required:true,
                 isNumber:true
             },
             cardModel:{
@@ -468,7 +463,6 @@ $(document).ready(function() {
                 isNumberAndLetter:true
             },
             pindiamSpec:{
-                required:true,
                 isNumberD:true
             },
             belongDept:{

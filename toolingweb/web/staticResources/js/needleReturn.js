@@ -165,6 +165,7 @@ function selectChange(value){
         }else {
             $("#nextStation").append('<option value="ReIQC_PASS">维修后IQC PASS</option>'+
                 '<option value="IQC_PASS">IQC PASS</option>');
+            alert("此卡尚未release");
         }
         flag=true;
     }
@@ -228,6 +229,8 @@ function selectChange(value){
         if(releaseFlag){
             $("#nextStation").append('<option value="ReBuild_Back">重新制作返回</option>');
             flag=true;
+        }else {
+            alert("此卡尚未release");
         }
     }
         else if(lendFlag==true&&state!="In_Engineering"&&state!="Out_Fixing"&&state!="Inner_Repair"&&state!="Production_Verify"&&state!="Cust_Lending"&&state!="RE_Build"){
@@ -353,10 +356,16 @@ $(document).ready(function () {
                                 alert("add failed!,please check your information again!")
                             },
                             success:function () {
-                                $.ajax({
-                                    type:'post',
-                                    url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+$("#proberCardId").val()+"&releaseFlag=false",
-                                })
+                                if($("#oldStatus").val()=="RE_Build"){
+                                    $.ajax({
+                                        type:'post',
+                                        url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+$("#proberCardId").val()+"&releaseFlag=false",
+                                    })
+                                    $.ajax({
+                                        type:'post',
+                                        url:"/toolingweb/needleCard/updateProberCardInfoReleaseFlag?proberCardId="+$("#proberCardId").val()+"&releaseFlag=false",
+                                    })
+                                }
                                 document.getElementById("needleCardReturnForm").reset();
                                 alert("Return success!");
                             }

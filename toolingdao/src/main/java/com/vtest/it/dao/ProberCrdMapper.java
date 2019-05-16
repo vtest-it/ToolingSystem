@@ -41,6 +41,8 @@ public interface ProberCrdMapper {
 
     public boolean updateProberCardReleaseFlag(@Param("proberCardId") String proberCardId,@Param("releaseFlag")boolean releaseFlag);
 
+    public boolean updateProberCardInfoReleaseFlag(@Param("proberCardId") String proberCardId,@Param("releaseFlag")boolean releaseFlag);
+
     public boolean updateSingleState(@Param("proberCardId") String proberCardId,@Param("currentProcess")String currentProcess);
 
     public ArrayList<IqcRecordBean> getAllIQCRecord();

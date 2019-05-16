@@ -129,9 +129,11 @@ function selectChange(value){
             $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
-            if(flag){
+            if(releaseFlag){
                 $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
                 flag=true;
+            }else {
+                alert("此卡尚未release");
             }
 
         }
