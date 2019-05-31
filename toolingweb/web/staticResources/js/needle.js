@@ -332,7 +332,7 @@ $(document).ready(function() {
             },
             {
                 title:"水平",field:"afterPinlevel",cellStyle:function (value,row,index,field) {
-                    if(value!=row.pinlevelSpec){
+                    if(value>row.pinlevelSpec){
                         return {css:{'background-color':'red'}}
                     }else {
                         return {};
