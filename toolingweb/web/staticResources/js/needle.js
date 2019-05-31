@@ -89,13 +89,10 @@ $(document).ready(function() {
     setInterval(getTime,1000);
     $("#btnAdd").on('click',function () {
         $("#cardType").find("option:selected").attr("selected",false);
-        $("#cardType").find('option:contains("...")').attr("selected",true);
         $("#newOld").find("option:selected").attr("selected",false);
-        $("#newOld").find('option:contains("...")').attr("selected",true);
         $("#cleanType").find("option:selected").attr("selected",false);
-        $("#cleanType").find('option:contains("...")').attr("selected",true);
-        $("#releaseFlag").find("option:selected").attr("selected",false);
-        $("#releaseFlag").find('option:contains("...")').attr("selected",true);
+        $("#releaseFlag").empty();
+        $("#releaseFlag").append(' <option value="Unreleased">Unreleased</option>')
         $("#state").empty();
         $("#state").append(' <option value="New_Prod">新品入库</option>')
         $("#needCardModifyForm")[0].reset();
@@ -145,6 +142,16 @@ $(document).ready(function() {
         success:function (data) {
             $.each(data,function (i,item) {
                 var time=getSmpFormatDateByLong(item.receiptTime,true);
+                if(item.releaseFlag){
+                    item.releaseFlag="Release";
+                }else {
+                    item.releaseFlag="Unreleased";
+                }
+                if(item.newOld){
+                    item.newOld="new";
+                }else {
+                    item.newOld="old";
+                }
                 item.receiptTime=time;
                 $.each(proberCardStatus,function (j,issure) {
                     if(issure.proberCardId==item.proberCardId){
@@ -182,7 +189,7 @@ $(document).ready(function() {
         sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
         pageNumber: 1,                       //初始化加载第一页，默认第一页
         pageSize: 25,                       //每页的记录行数（*）
-        pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+        pageList: [25, 50, 100],        //可供选择的每页的行数（*）
         search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
         strictSearch: true,
         minimumCountColumns: 2,             //最少允许的列数
@@ -202,7 +209,8 @@ $(document).ready(function() {
                         $("#myModalLabel").text("针卡档案修改");
                         $("#myModal").modal('show');
                         $("#releaseFlag").parent().show();
-                        $("#releaseFlag").attr("disabled",false);
+                        $("#releaseFlag").empty();
+                        $("#releaseFlag").append('<option value="Release">Release</option><option value="Unreleased">Unreleased</option>')
                         $("#state").empty();
                         $("#state").append( '<option value="New_Prod">新品入库</option>'+
                             '<option value="IQC">IQC</option>'+
@@ -305,13 +313,31 @@ $(document).ready(function() {
             {
                 title:"剩餘可測TD",field:"remainingTD"
             },{
-                title:"针长",field:"afterPinlen"
+                title:"针长",field:"afterPinlen",cellStyle:function (value,row,index,field) {
+                    if(value<row.pinlenSpec){
+                        return {css:{'background-color':'red'}}
+                    }else {
+                        return {};
+                    }
+                }
             },
             {
-                title:"針徑",field:"afterPindiam"
+                title:"針徑",field:"afterPindiam",cellStyle:function (value,row,index,field) {
+                    if(value>row.pindiamSpec){
+                        return {css:{'background-color':'red'}}
+                    }else {
+                        return {};
+                    }
+                }
             },
             {
-                title:"水平",field:"afterPinlevel"
+                title:"水平",field:"afterPinlevel",cellStyle:function (value,row,index,field) {
+                    if(value!=row.pinlevelSpec){
+                        return {css:{'background-color':'red'}}
+                    }else {
+                        return {};
+                    }
+                }
             },
             {
                 title:"柜位",field:"cabPosition"
@@ -343,7 +369,7 @@ $(document).ready(function() {
                 title:"廠商編號",field:"vendorNo"
             },
             {
-                title:"Rebuild次數",field:"rebuildTime"
+                title:"Rebuild次數",field:"rebuildCount"
             },
             {
                 title:"GlassMask",field:"glassMask"

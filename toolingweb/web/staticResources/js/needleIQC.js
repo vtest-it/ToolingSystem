@@ -143,6 +143,27 @@ function selectChange(value){
         flag=true;
 
     }
+   else if(state=="Back_Fixing"&&lendFlag==true){
+        for(var k=0;k<rows.length;k++){
+            var rowIndex=rows[k].indexOf(":");
+            var title=rows[k].substring(1,rowIndex-1);
+            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+            if(title=="dutCount"||title=="pinCount"){
+                field=rows[k].substring(rowIndex+1,rows[k].length);
+            }
+            if(title=="receiptTime"){
+                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+            }
+            $('#'+title).val(field);
+        }
+        $("#lastStation").val("");
+        $("#lastStation").val(state);
+        $("#oldStatus").val(state);
+        $("#nextStation").html("");
+        $("#nextStation").append('<option value="IQC">IQC</option>'+
+            '<option value="Re_IQC">维修后IQC</option>');
+        flag=true;
+    }
         else if(state=="ReBuild_Back"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
@@ -158,15 +179,16 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+            $("#oldStatus").val(state);
             $("#nextStation").html("");
-            $("#nextStation").append('<option value="IQC">IQC</option>');
+            $("#nextStation").append('<option value="IQC_PASS">IQC_PASS</option>'+
+                '<option value="IQC_FAIL">IQC_FAIL</option>');
             flag=true;
-
         }
-        else if(lendFlag==true&&state!="IQC"&&state!="Re_IQC"&&state!="ReBuild_Back"){
+        else if(lendFlag==true&&state!="IQC"&&state!="Re_IQC"&&state!="ReBuild_Back"&&state!="Back_Fixing"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在IQC,维修后IQC,重新制作返回这三种状态");
+            $("#error").html("存在这个针卡编号，但不在IQC,维修后IQC,重新制作返回待IQC，厂外维修返回这四种状态");
             $("#myModal").modal('show');
             flag=false;
         }
@@ -309,7 +331,7 @@ $(document).ready(function () {
                 }
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在IQC,维修后IQC,重新制作返回这三种状态");
+                $("#error").html("不存在该针卡编号或不在IQC,维修后IQC,重新制作返回,厂外维修返回这四种状态");
                 $("#myModal").modal('show');
             }
 

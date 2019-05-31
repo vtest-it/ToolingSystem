@@ -83,10 +83,28 @@
                     <!--&lt;!&ndash; /input-group &ndash;&gt;-->
                     <!--</li>-->
                     <li>
-                        <a href="#"><i class="fa fa-book fa-fw"></i>档案管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <%--<a href="#"><i class="fa fa-book fa-fw"></i>档案管理<span class="fa arrow"></span></a>--%>
+                        <ul class="nav">
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
+                            </li>
+                            <li>
+                                <a href="needleCardIQC">针卡IQC</a>
+                            </li>
+                            <li>
+                                <a href="needleCardLend">针卡借出 </a>
+                            </li>
+                            <li>
+                                <a href="needleCardReturn">针卡归还</a>
+                            </li>
+                            <li>
+                                <a href="needleCardCheck">针卡验收</a>
+                            </li>
+                            <li>
+                                <a href="needleCardRelease">针卡Release</a>
+                            </li>
+                            <li>
+                                <a href="needleCardMaintain">针卡保养</a>
                             </li>
                             <%--<li>--%>
                                 <%--<a href="#">tooling档案</a>--%>
@@ -100,24 +118,24 @@
                             <%--</li>--%>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 进出管制<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="needleCardIQC.html">针卡IQC</a>
-                            </li>
-                            <li>
-                                <a href="needleCardLend.html">针卡借出 </a>
-                            </li>
-                            <li>
-                                <a href="needleCardReturn.html">针卡归还</a>
-                            </li>
-                            <li>
-                                <a href="needleCardCheck.html">針卡验收</a>
-                            </li>
-                            <li>
-                                <a href="needleCardRelease.html">針卡Release</a>
-                            </li>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 进出管制<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardIQC.html">针卡IQC</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardLend.html">针卡借出 </a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardReturn.html">针卡归还</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardCheck.html">針卡验收</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardRelease.html">針卡Release</a>--%>
+                            <%--</li>--%>
                             <%--<li>--%>
                                 <%--<a href="#">tooling借出 </a>--%>
                             <%--</li>--%>
@@ -136,20 +154,20 @@
                             <%--<li>--%>
                                 <%--<a href="#">INK归还</a>--%>
                             <%--</li>--%>
-                        </ul>
+                        <%--</ul>--%>
                         <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="needleCardMaintain">针卡保养</a>
-                            </li>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
                             <%--<li>--%>
-                                <%--<a href="#">针卡保养纪录</a>--%>
+                                <%--<a href="needleCardMaintain">针卡保养</a>--%>
                             <%--</li>--%>
-                        </ul>
-                    </li>
+                            <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<a href="#">针卡保养纪录</a>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
                     <%--<li>--%>
                         <%--<a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>--%>
                         <%--<ul class="nav nav-second-level">--%>
@@ -467,13 +485,9 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">测试机编号</label>
-                                        <input class="form-control" name="testerID" id="testerID" style="width:40%"type="text">
-                                    </p>
-                                    <p class="col-lg-8">
-                                        <label class="col-lg-2">备注</label>
-                                        <textarea class="form-control" name="note"  id="note"  style="width: 80%" rows="3"></textarea>
+                                    <p class="col-lg-12">
+                                        <label class="col-lg-1">备注</label>
+                                        <textarea class="form-control" name="note"  id="note"  style="width: 90%" rows="3"></textarea>
                                     </p>
                                 </div>
                                 <div class="form-group" style="display: none">

@@ -63,6 +63,20 @@ function formClean(){
     $("#createOperator").val("");
     $("#note").val("");
 }
+function issueChange(value) {
+    if(value=="false"){
+        $('#issueDesc').html("");
+        $("#issueDesc").append('<option value="noAbnormity">无异常</option>')
+    }else {
+        $('#issueDesc').html("");
+        $("#issueDesc").append('<option value="markAbnormity">针痕异常</option>' +
+             '<option value="fixedSiteFail">固定site連續FAIL</option>' +
+            '<option value="crashCard">撞卡</option>' +
+            '<option value="lowYield">低良</option>' +
+            '<option value="partDamage">零件損壞</option>' +
+            '<option value="cleaning">清潔</option>')
+    }
+}
 function selectChange(value){
     var lendingData=[]
     var lendFlag=true;
@@ -227,7 +241,7 @@ function selectChange(value){
         $("#oldStatus").val(state);
         $("#nextStation").html("");
         if(releaseFlag){
-            $("#nextStation").append('<option value="ReBuild_Back">重新制作返回</option>');
+            $("#nextStation").append('<option value="ReBuild_Back">重新制作返回待IQC</option>');
             flag=true;
         }else {
             alert("此卡尚未release");
@@ -357,6 +371,14 @@ $(document).ready(function () {
                             },
                             success:function () {
                                 if($("#oldStatus").val()=="RE_Build"){
+                                    var rebuildCount=0;
+                                    $.ajax({
+                                        type:'get',
+                                        url:"/toolingweb/needleCard/getInfoRebuildCount?proberCardId="+$("#proberCardId").val(),
+                                        success:function (data) {
+                                            rebuildCount=data;
+                                        }
+                                    })
                                     $.ajax({
                                         type:'post',
                                         url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+$("#proberCardId").val()+"&releaseFlag=false",
@@ -364,6 +386,18 @@ $(document).ready(function () {
                                     $.ajax({
                                         type:'post',
                                         url:"/toolingweb/needleCard/updateProberCardInfoReleaseFlag?proberCardId="+$("#proberCardId").val()+"&releaseFlag=false",
+                                    })
+                                    $.ajax({
+                                        type:'post',
+                                        url:"/toolingweb/needleCard/updateProberCardItem?proberCardId="+$("#proberCardId").val()+"&pinlenSpec='0'&pindiamSpec='0'&pinlevelSpec='0'&rebuildCount="+rebuildCount,
+                                    })
+                                    $.ajax({
+                                        type:'post',
+                                        url:"/toolingweb/needleCard/updateMaintainItem?proberCardId="+$("#proberCardId").val()+"&afterPinlen=0&afterPindiam=0&afterPinlevel=0",
+                                    })
+                                    $.ajax({
+                                        type:'post',
+                                        url:"/toolingweb/needleCard/updateIQCItem?proberCardId="+$("#proberCardId").val()+"&pinMinlen=0&pinMaxdiam=0&pinLevel=0",
                                     })
                                 }
                                 document.getElementById("needleCardReturnForm").reset();

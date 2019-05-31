@@ -49,4 +49,11 @@ public interface ProberCrdMapper {
 
     public ArrayList<ProberCardMaintainBean> getAllMaintainRecord();
 
+    public boolean updateProberCardItem(@Param("proberCardId") String proberCardId,@Param("pinlenSpec")String pinlenSpec,@Param("pindiamSpec")String pindiamSpec,@Param("pinlevelSpec")String pinlevelSpec,@Param("rebuildCount")Integer rebuildCount);
+
+    public boolean updateMaintainItem(@Param("proberCardId") String proberCardId,@Param("afterPinlen")double afterPinlen,@Param("afterPindiam")double afterPindiam,@Param("afterPinlevel")double afterPinlevel);
+
+    public boolean updateIQCItem(@Param("proberCardId") String proberCardId,@Param("pinMinlen") double pinMinlen,@Param("pinMaxdiam") double pinMaxdiam,@Param("pinLevel") double pinLevel);
+
+    public Integer getInfoRebuildCount(@Param("proberCardId") String proberCardId);
 }

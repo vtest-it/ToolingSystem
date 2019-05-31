@@ -99,28 +99,7 @@ function selectChange(value){
         }
     })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
-        if(state=="Back_Fixing"&&lendFlag==true){
-        for(var k=0;k<rows.length;k++){
-            var rowIndex=rows[k].indexOf(":");
-            var title=rows[k].substring(1,rowIndex-1);
-            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-            if(title=="dutCount"||title=="pinCount"){
-                field=rows[k].substring(rowIndex+1,rows[k].length);
-            }
-            if(title=="receiptTime"){
-                field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
-            }
-            $('#'+title).val(field);
-        }
-        $("#lastStation").val("");
-        $("#lastStation").val(state);
-        $("#oldStatus").val(state);
-        $("#nextStation").html("");
-        $("#nextStation").append('<option value="IQC">IQC</option>'+
-            '<option value="Re_IQC">维修后IQC</option>');
-        flag=true;
-    }
-        else if(state=="Inner_Back"&&lendFlag==true){
+      if(state=="Inner_Back"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -312,10 +291,10 @@ function selectChange(value){
             $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+'<option value="Final">归还客户</option>');
             flag=true;
         }
-        else if(lendFlag==true&&state!="Back_Fixing"&&state!="Inner_Back"&&state!="IQC_PASS"&&state!="IQC_FAIL"&&state!="Card_Idle"&&state!="Cust_Back"&&state!="Card_Scrap"&&state!="ReIQC_FAIL"&&state!="ReIQC_PASS"){
+        else if(lendFlag==true&&state!="Inner_Back"&&state!="IQC_PASS"&&state!="IQC_FAIL"&&state!="Card_Idle"&&state!="Cust_Back"&&state!="Card_Scrap"&&state!="ReIQC_FAIL"&&state!="ReIQC_PASS"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在IQC_PASS，IQC_FAIL，厂外维修返回，针卡待料 ，客户借出返回，报废,内部归还,维修后IQC PASS,维修后IQC FAIL这九种状态");
+            $("#error").html("存在这个针卡编号，但不在IQC_PASS，IQC_FAIL，针卡待料 ，客户借出返回，待拆版,内部归还,维修后IQC PASS,维修后IQC FAIL这八种状态");
             $("#myModal").modal('show');
             flag=false;
         }
@@ -448,7 +427,7 @@ $(document).ready(function () {
 
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在IQC_PASS，IQC_FAIL，厂外维修返回，针卡待料 ，客户借出返回，报废,内部归还,维修后IQC PASS,维修后IQC FAIL这九种状态");
+                $("#error").html("不存在该针卡编号或不在IQC_PASS，IQC_FAIL，针卡待料 ，客户借出返回，待拆版,内部归还,维修后IQC PASS,维修后IQC FAIL这八种状态");
                 $("#myModal").modal('show');
             }
 

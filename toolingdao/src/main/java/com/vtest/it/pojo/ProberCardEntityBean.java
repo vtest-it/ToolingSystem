@@ -31,6 +31,15 @@ public class ProberCardEntityBean implements Serializable {
     private Integer glassMask;
     private Integer mylarMask;
     private String note;
+    private Integer rebuildCount;
+
+    public Integer getRebuildCount() {
+        return rebuildCount;
+    }
+
+    public void setRebuildCount(Integer rebuildCount) {
+        this.rebuildCount = rebuildCount;
+    }
 
     public String getProberCardId() {
         return proberCardId;

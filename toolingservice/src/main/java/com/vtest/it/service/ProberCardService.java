@@ -99,4 +99,17 @@ public class ProberCardService {
     public ArrayList<IqcRecordBean> getAllIQCRecord(){  return  mapper.getAllIQCRecord();}
 
     public ArrayList<ProberCardMaintainBean> getAllMaintainRecord(){  return  mapper.getAllMaintainRecord();}
+
+    public  boolean  updateProberCardItem(String proberCardId,String pinlenSpec,String pindiamSpec,String pinlevelSpec,Integer rebuildCount){
+       return  mapper.updateProberCardItem(proberCardId,pinlenSpec,pindiamSpec,pinlevelSpec,rebuildCount);
+    }
+    public  boolean  updateMaintainItem(String proberCardId,double afterPinlen,double afterPindiam,double afterPinlevel){
+        return  mapper.updateMaintainItem(proberCardId,afterPinlen,afterPindiam,afterPinlevel);
+    }
+    public  boolean  updateIQCItem(String proberCardId,double pinMinlen, double pinMaxdiam,double pinLevel){
+        return  mapper.updateIQCItem(proberCardId,pinMinlen,pinMaxdiam,pinLevel);
+    }
+    public Integer getInfoRebuildCount(String proberCardId){
+        return mapper.getInfoRebuildCount(proberCardId);
+    }
 }

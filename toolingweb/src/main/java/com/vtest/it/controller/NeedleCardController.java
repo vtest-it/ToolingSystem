@@ -28,9 +28,9 @@ public class NeedleCardController {
     public boolean addNewNeedleCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
                                    String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
                                    String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String operator, String cardModel, String belongDept,
-                                   String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note) throws ParseException {
+                                   String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note,Integer rebuildCount) throws ParseException {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             ProberCardEntityBean bean = new ProberCardEntityBean();
             bean.setProberCardId(proberCardId);
             bean.setCustName(custName);
@@ -68,6 +68,7 @@ public class NeedleCardController {
             bean.setGlassMask(glassMask);
             bean.setMylarMask(mylarMask);
             bean.setNote(note);
+            bean.setRebuildCount(rebuildCount);
             service.addNewProberCard(bean);
             return true;
         } catch (ParseException e) {
@@ -244,7 +245,7 @@ public class NeedleCardController {
                                     String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String operator, String cardModel, String belongDept,
                                     String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             ProberCardEntityBean bean= new ProberCardEntityBean();
             bean.setProberCardId(proberCardId);
             bean.setCustName(custName);
@@ -358,5 +359,50 @@ public class NeedleCardController {
     @RequestMapping("/getAllMaintainRecord")
     public String getAllMaintainRecord(){
         return  JSON.toJSONString(service.getAllMaintainRecord());
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateProberCardItem")
+    public boolean updateProberCardItem(String proberCardId,String pinlenSpec,String pindiamSpec,String pinlevelSpec,Integer rebuildCount){
+        try {
+             pinlenSpec=String.valueOf(0);
+             pindiamSpec=String.valueOf(0);
+             pinlevelSpec=String.valueOf(0);
+             rebuildCount++;
+            service.updateProberCardItem(proberCardId,pinlenSpec,pindiamSpec,pinlevelSpec,rebuildCount);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateMaintainItem")
+    public boolean updateMaintainItem(String proberCardId,double afterPinlen,double afterPindiam,double afterPinlevel){
+        try {
+            afterPinlen=0;
+            afterPindiam=0;
+            afterPinlevel=0;
+            service.updateMaintainItem(proberCardId,afterPinlen,afterPindiam,afterPinlevel);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateIQCItem")
+    public boolean updateIQCItem(String proberCardId,double pinMinlen, double pinMaxdiam,double pinLevel){
+        try {
+            pinMinlen=0;
+            pinMaxdiam=0;
+            pinLevel=0;
+            service.updateIQCItem(proberCardId,pinMinlen,pinMaxdiam,pinLevel);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getInfoRebuildCount")
+    public Integer getInfoRebuildCount(String proberCardId){
+       return  service.getInfoRebuildCount(proberCardId);
     }
 }

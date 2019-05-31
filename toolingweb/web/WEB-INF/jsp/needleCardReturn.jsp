@@ -83,41 +83,59 @@
                     <!--&lt;!&ndash; /input-group &ndash;&gt;-->
                     <!--</li>-->
                     <li>
-                        <a href="#"><i class="fa fa-book fa-fw"></i>档案管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <%--<a href="#"><i class="fa fa-book fa-fw"></i>档案管理<span class="fa arrow"></span></a>--%>
+                        <ul class="nav">
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
                             </li>
                             <li>
-                                <a href="#">tooling档案</a>
+                                <a href="needleCardIQC">针卡IQC</a>
                             </li>
                             <li>
-                                <a href="#">Correlation wafer档案</a>
+                                <a href="needleCardLend">针卡借出 </a>
                             </li>
+                            <li>
+                                <a href="needleCardReturn">针卡归还</a>
+                            </li>
+                            <li>
+                                <a href="needleCardCheck">针卡验收</a>
+                            </li>
+                            <li>
+                                <a href="needleCardRelease">针卡Release</a>
+                            </li>
+                            <li>
+                                <a href="needleCardMaintain">针卡保养</a>
+                            </li>
+                            <%--<li>--%>
+                            <%--<a href="#">tooling档案</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                            <%--<a href="#">Correlation wafer档案</a>--%>
+                            <%--</li>--%>
 
-                            <li>
-                                <a href="#">消耗品档案</a>
-                            </li>
+                            <%--<li>--%>
+                            <%--<a href="#">消耗品档案</a>--%>
+                            <%--</li>--%>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 进出管制<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="needleCardIQC.html">针卡IQC</a>
-                            </li>
-                            <li>
-                                <a href="needleCardLend.html">针卡借出 </a>
-                            </li>
-                            <li>
-                                <a href="needleCardReturn.html">针卡归还</a>
-                            </li>
-                            <li>
-                                <a href="needleCardCheck.html">針卡验收</a>
-                            </li>
-                            <li>
-                                <a href="needleCardRelease.html">針卡Release</a>
-                            </li>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 进出管制<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardIQC.html">针卡IQC</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardLend.html">针卡借出 </a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardReturn.html">针卡归还</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardCheck.html">針卡验收</a>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<a href="needleCardRelease.html">針卡Release</a>--%>
+                            <%--</li>--%>
                             <%--<li>--%>
                                 <%--<a href="#">tooling借出 </a>--%>
                             <%--</li>--%>
@@ -136,20 +154,20 @@
                             <%--<li>--%>
                                 <%--<a href="#">INK归还</a>--%>
                             <%--</li>--%>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="needleCardMaintain">针卡保养</a>
-                            </li>
+                        <%--</ul>--%>
+                        <%--<!-- /.nav-second-level -->--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a href="#"><i class="fa fa-table fa-fw"></i> 针卡保养<span class="fa arrow"></span></a>--%>
+                        <%--<ul class="nav nav-second-level">--%>
                             <%--<li>--%>
-                                <%--<a href="#">针卡保养纪录</a>--%>
+                                <%--<a href="needleCardMaintain">针卡保养</a>--%>
                             <%--</li>--%>
-                        </ul>
-                    </li>
+                            <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<a href="#">针卡保养纪录</a>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                        <%--</ul>--%>
+                    <%--</li>--%>
                     <%--<li>--%>
                         <%--<a href="#"><i class="fa fa-edit fa-fw"></i> 进出纪录<span class="fa arrow"></span></a>--%>
                         <%--<ul class="nav nav-second-level">--%>
@@ -327,11 +345,11 @@
                                 </p>
                             </div>
                             <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-4">归还机台</label>
-                                    <input class="form-control" name="backuseEquipment" id="backuseEquipment" style="width: 35%" type="text">
+                                <p class="col-lg-6">
+                                    <label class="col-lg-3">归还机台</label>
+                                    <input class="form-control" name="backuseEquipment" id="backuseEquipment" style="width: 45%" type="text">
                                 </p>
-                                <p class="col-lg-4">
+                                <p class="col-lg-4" style="display:none">
                                     <label class="col-lg-4">归还状态</label>
                                     <select  class="form-control" name="backStatus" id="backStatus" style="width: 35%">
                                         <option value="IQC_pass">IQC pass</option>
@@ -344,16 +362,16 @@
                                         <option value="repairIQC_Fail">维修后IQC fail</option>
                                     </select>
                                 </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-4">归还人员</label>
-                                    <input class="form-control" name="backOperator" id="backOperator" style="width: 35%" type="text">
+                                <p class="col-lg-6">
+                                    <label class="col-lg-3">归还人员</label>
+                                    <input class="form-control" name="backOperator" id="backOperator" style="width: 45%" type="text">
                                 </p>
 
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-6">
                                     <label class="col-lg-3">是否异常</label>
-                                    <select  class="form-control" name="issueFlag" id="issueFlag" style="width: 45%">
+                                    <select  class="form-control" name="issueFlag" id="issueFlag" style="width: 45%" onchange="issueChange(this.value)">
                                         <option value="true">是</option>
                                         <option value="false">否</option>
                                     </select>
@@ -367,7 +385,6 @@
                                         <option value="lowYield">低良</option>
                                         <option value="partDamage">零件損壞</option>
                                         <option value="cleaning">清潔</option>
-                                        <option value="noAbnormity">無異常</option>
                                     </select>
                                 </p>
                             </div>
