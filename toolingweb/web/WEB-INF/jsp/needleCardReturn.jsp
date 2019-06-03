@@ -345,7 +345,7 @@
                                 </p>
                             </div>
                             <div class="form-group">
-                                <p class="col-lg-6">
+                                <p class="col-lg-6" id="backUse">
                                     <label class="col-lg-3">归还机台</label>
                                     <input class="form-control" name="backuseEquipment" id="backuseEquipment" style="width: 45%" type="text">
                                 </p>
@@ -372,19 +372,14 @@
                                 <p class="col-lg-6">
                                     <label class="col-lg-3">是否异常</label>
                                     <select  class="form-control" name="issueFlag" id="issueFlag" style="width: 45%" onchange="issueChange(this.value)">
-                                        <option value="true">是</option>
                                         <option value="false">否</option>
+                                        <option value="true">是</option>
                                     </select>
                                 </p>
                                 <p class="col-lg-6">
                                     <label class="col-lg-3">异常描述</label>
                                     <select  class="form-control" name="issueDesc" id="issueDesc" style="width: 45%">
-                                        <option value="markAbnormity">针痕异常</option>
-                                        <option value="fixedSiteFail">固定site連續FAIL</option>
-                                        <option value="crashCard">撞卡</option>
-                                        <option value="lowYield">低良</option>
-                                        <option value="partDamage">零件損壞</option>
-                                        <option value="cleaning">清潔</option>
+                                        <option value="noAbnormity">无异常</option>
                                     </select>
                                 </p>
                             </div>

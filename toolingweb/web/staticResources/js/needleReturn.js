@@ -114,6 +114,7 @@ function selectChange(value){
     })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
     if(state=="In_Engineering"&&lendFlag==true){
+        $("#backUse").show();
         for(var k=0;k<rows.length;k++){
             var rowIndex=rows[k].indexOf(":");
             var title=rows[k].substring(1,rowIndex-1);
@@ -136,6 +137,7 @@ function selectChange(value){
         flag=true;
     }
     else if(state=="Out_Fixing"&&lendFlag==true){
+        $("#backUse").show();
         for(var k=0;k<rows.length;k++){
             var rowIndex=rows[k].indexOf(":");
             var title=rows[k].substring(1,rowIndex-1);
@@ -156,6 +158,7 @@ function selectChange(value){
         flag=true;
     }
     else if(state=="Inner_Repair"&&lendFlag==true){
+        $("#backUse").show();
         for(var k=0;k<rows.length;k++){
             var rowIndex=rows[k].indexOf(":");
             var title=rows[k].substring(1,rowIndex-1);
@@ -184,6 +187,7 @@ function selectChange(value){
         flag=true;
     }
     else if(state=="Production_Verify"&&lendFlag==true){
+        $("#backUse").show();
         for(var k=0;k<rows.length;k++){
             var rowIndex=rows[k].indexOf(":");
             var title=rows[k].substring(1,rowIndex-1);
@@ -204,6 +208,7 @@ function selectChange(value){
         flag=true;
     }
     else if(state=="Cust_Lending"&&lendFlag==true){
+        $("#backUse").show();
         for(var k=0;k<rows.length;k++){
             var rowIndex=rows[k].indexOf(":");
             var title=rows[k].substring(1,rowIndex-1);
@@ -224,6 +229,7 @@ function selectChange(value){
         flag=true;
     }
     else if(state=="RE_Build"&&lendFlag==true){
+        $("#backUse").hide();
         for(var k=0;k<rows.length;k++){
             var rowIndex=rows[k].indexOf(":");
             var title=rows[k].substring(1,rowIndex-1);
@@ -248,6 +254,7 @@ function selectChange(value){
         }
     }
         else if(lendFlag==true&&state!="In_Engineering"&&state!="Out_Fixing"&&state!="Inner_Repair"&&state!="Production_Verify"&&state!="Cust_Lending"&&state!="RE_Build"){
+        $("#backUse").show();
             formClean();
             $("#error").html("");
             $("#error").html("存在这个针卡编号，但不在厂外维修，工程中,维修清针,测试/验证中,归还客户,客户借出和重新制作这七种状态");
@@ -255,6 +262,7 @@ function selectChange(value){
            flag=false;
         }
         else if(lendFlag==false){
+        $("#backUse").show();
             formClean();
             $("#error").html("");
             $("#error").html("不存在这个针卡编号");

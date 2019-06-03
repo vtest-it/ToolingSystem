@@ -232,7 +232,7 @@ $(document).ready(function() {
                             '<option value="Card_Idle">针卡待料 </option>'+
                             '<option value="Un_Sealed">待拆版</option>'+
                             '<option value="Re_Build">重新制作</option>'+
-                            '<option value="ReBuild_Back">重新制作返回</option>'+
+                            '<option value="ReBuild_Back">重新制作返回IQC</option>'+
                             '<option value="Card_Check">针卡验收</option>'+
                             '<option value="Card_Release">针卡Release</option>');
                         var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
