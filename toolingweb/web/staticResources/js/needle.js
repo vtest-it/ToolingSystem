@@ -91,16 +91,14 @@ $(document).ready(function() {
         $("#cardType").find("option:selected").attr("selected",false);
         $("#newOld").find("option:selected").attr("selected",false);
         $("#cleanType").find("option:selected").attr("selected",false);
-        $("#releaseFlag").empty();
-        $("#releaseFlag").append(' <option value="Unreleased">Unreleased</option>')
+        $('#releaseFlag').find('option:contains("Unreleased")').attr("selected",true);
         $("#state").empty();
         $("#state").append(' <option value="New_Prod">新品入库</option>')
         $("#needCardModifyForm")[0].reset();
         $("#myModalLabel").text("针卡建档");
         $("#myModal").modal('show');
         $("#releaseFlag").parent().hide();
-        $("#submit").show();
-        $("#editBtn").hide();
+        $("#submit").attr('value','提交');
 
     })
     var needleCardData=[];
@@ -209,8 +207,6 @@ $(document).ready(function() {
                         $("#myModalLabel").text("针卡档案修改");
                         $("#myModal").modal('show');
                         $("#releaseFlag").parent().show();
-                        $("#releaseFlag").empty();
-                        $("#releaseFlag").append('<option value="Release">Release</option><option value="Unreleased">Unreleased</option>')
                         $("#state").empty();
                         $("#state").append( '<option value="New_Prod">新品入库</option>'+
                             '<option value="IQC">IQC</option>'+
@@ -241,21 +237,21 @@ $(document).ready(function() {
                             var title=rows[k].substring(1,rowIndex-1);
                             var field=rows[k].substring(rowIndex+2,rows[k].length-1);
                             if(title=="dutCount"||title=="glassMask"||title=="mylarMask"||title=="pinCount"){
-                                field=rows[k].substring(rowIndex+1,rows[k].length);
+                                field=rows[k].substring(rowIndex+1,rows[k].length).replace('"','').replace('"','');
                             }
                             if(title=="cardType"||title=="cleanType"||title=="state"){
                                 $('#'+title).find('option[value='+field+']').attr("selected",true);
                                 // $('#'+title).find('option:contains('+field+')').attr("selected",true);
                             }else if(title=='newOld'){
                                 field=rows[k].substring(rowIndex+1,rows[k].length);
-                                if(field=='true'){
+                                if(field=='"new"'){
                                     $('#newOld').find('option:contains("新")').attr("selected",true);
                                 }else {
                                     $('#newOld').find('option:contains("旧")').attr("selected",true);
                                 }
                             } else if(title=="releaseFlag"){
                                 field=rows[k].substring(rowIndex+1,rows[k].length);
-                                if(field=='true'){
+                                if(field=='"Release"'){
                                     $('#releaseFlag').find('option:contains("Release")').attr("selected",true);
                                 }else {
                                     $('#releaseFlag').find('option:contains("Unreleased")').attr("selected",true);
