@@ -376,7 +376,7 @@
                                 <div class="form-group">
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">作业人员</label>
-                                        <input class="form-control" name="updateOperator" id="updateOperator" style="width: 40%" type="text">
+                                        <input class="form-control" name="updateOperator" id="updateOperator" style="width: 35%" type="text">
                                     </p>
                                     <p class="col-lg-4">
                                         <label class="col-lg-4">上一站</label>

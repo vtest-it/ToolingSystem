@@ -178,9 +178,9 @@ $(document).ready(function () {
     setInterval(getTime,1000);
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
+        var operator=/^[a-z||A-Z]{1}\d{3}$]*|^\d{4}$/;
         return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
+    },warning+"v111或1111");
     jQuery.validator.addMethod("isPercent",function (value,element) {
         var percent= /^\d+\.?\d{0,2}$/;
         return this.optional(element)||(percent.test(value));

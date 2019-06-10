@@ -410,9 +410,9 @@ $(document).ready(function() {
     },warning+"英文数字-_");
 
     jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
+        var operator=/^[a-z||A-Z]{1}\d{3}$]*|^\d{4}$/;
         return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
+    },warning+"v111或1111");
     jQuery.validator.addMethod("isNumberD",function (value,element) {
         var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+(\+-(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)+)*|0$/;
         return this.optional(element)||(number.test(value));

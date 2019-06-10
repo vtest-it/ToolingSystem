@@ -337,7 +337,7 @@
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">作业人员</label>
-                                    <input class="form-control" name="operator" id="operator" style="width: 45%" type="text" disabled>
+                                    <input class="form-control" name="operator" id="operator" style="width: 35%" type="text" disabled>
                                 </p>
 
                             </div>

@@ -160,8 +160,9 @@ function selectChange(value){
         $("#lastStation").val(state);
         $("#oldStatus").val(state);
         $("#nextStation").html("");
-        $("#nextStation").append('<option value="IQC">IQC</option>'+
-            '<option value="Re_IQC">维修后IQC</option>');
+        $("#nextStation").append('<option value="IQC_PASS">IQC_PASS</option>'+
+            '<option value="IQC_FAIL">IQC_FAIL</option>'+'<option value="ReIQC_PASS">维修后IQC PASS</option>'+
+            '<option value="ReIQC_FAIL">维修后IQC FAIL</option>');
         flag=true;
     }
         else if(state=="ReBuild_Back"&&lendFlag==true){
@@ -240,9 +241,9 @@ $(document).ready(function () {
     setInterval(getTime,1000);
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
+        var operator=/^[a-z||A-Z]{1}\d{3}$]*|^\d{4}$/;
         return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
+    },warning+"v111或1111");
     jQuery.validator.addMethod("isPercent",function (value,element) {
         var percent= /^\d+\.?\d{0,2}%$/;
         return this.optional(element)||(percent.test(value));

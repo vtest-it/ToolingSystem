@@ -136,11 +136,39 @@ function selectChange(value){
                 alert("此卡尚未release");
             }
 
+        } else if(state=="Inner_Repair"&&lendFlag==true){
+            $("#backUse").show();
+            for(var k=0;k<rows.length;k++){
+                var rowIndex=rows[k].indexOf(":");
+                var title=rows[k].substring(1,rowIndex-1);
+                var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                if(title=="dutCount"||title=="pinCount"){
+                    field=rows[k].substring(rowIndex+1,rows[k].length);
+                }
+                if(title=="receiptTime"){
+                    field=new Date(parseInt(rows[k].substring(rowIndex+1,rows[k].length),10)).format("yyyy-MM-dd hh:mm:ss");
+                }
+                $('#'+title).val(field);
+            }
+            $("#lastStation").val("");
+            $("#lastStation").val(state);
+            $("#oldStatus").val(state);
+            $("#nextStation").html("");
+            if(releaseFlag){
+                $("#nextStation").append('<option value="Card_Idle">针卡待料</option>'+
+                    '<option value="ReIQC_PASS">维修后IQC PASS</option>'+
+                    '<option value="IQC_PASS">IQC PASS</option>');
+            }else {
+                $("#nextStation").append('<option value="IQC_PASS">IQC PASS</option>');
+                alert("此卡尚未release");
+            }
+            flag=true;
         }
-        else if(lendFlag==true&&state!="Card_PM"){
+
+        else if(lendFlag==true&&state!="Card_PM"&&state!="Inner_Repair"){
             formClean();
             $("#error").html("");
-            $("#error").html("存在这个针卡编号，但不在保养中状态");
+            $("#error").html("存在这个针卡编号，但不在保养中和维修清针两种状态");
             $("#myModal").modal('show');
             flag=false;
         }
@@ -192,9 +220,9 @@ $(document).ready(function () {
     setInterval(getTime,1000);
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isOperator",function (value,element) {
-        var operator=/^[a-z||A-Z]{1}\d{1,6}]*$/;
+        var operator=/^[a-z||A-Z]{1}\d{3}$]*|^\d{4}$/;
         return this.optional(element)||(operator.test(value));
-    },warning+"格式（V900)");
+    },warning+"v111或1111");
     jQuery.validator.addMethod("isPercent",function (value,element) {
         var percent= /^\d+\.?\d{0,2}%$/;
         return this.optional(element)||(percent.test(value));
@@ -259,6 +287,10 @@ $(document).ready(function () {
             testerID:{
                 required: true,
                 isNumberAndLetter:true
+            },
+            updateOperator:{
+                required:true,
+                isOperator:true
             }
 
         },submitHandler:function (form) {
@@ -283,7 +315,7 @@ $(document).ready(function () {
                 }
             }else {
                 $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在保养中状态");
+                $("#error").html("不存在该针卡编号或不在保养中和维修清针这两种状态");
                 $("#myModal").modal('show');
             }
 
