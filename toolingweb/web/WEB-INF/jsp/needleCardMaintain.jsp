@@ -499,7 +499,7 @@
                                 <div class="form-group" style="display: none">
                                     <p class="col-lg-12">
                                         <label class="col-lg-2">rebuildCount</label>
-                                        <input class="form-control" name="rebuildCount" id="rebuildCount" style="width: 45%" type="text">
+                                        <input class="form-control" name="rebuildCount" id="rebuildCount" style="width: 45%" type="text" value="0">
                                     </p>
                                 </div>
                                 <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="Submit">

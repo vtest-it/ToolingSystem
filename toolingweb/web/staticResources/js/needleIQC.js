@@ -319,7 +319,10 @@ $(document).ready(function () {
                             type:"post",
                             url:"/toolingweb/needleCard/iqcRelease",
                             data:$(form).serialize(),
-                            error:function () {
+                            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log(XMLHttpRequest.status);
+                                console.log(XMLHttpRequest.readyState);
+                                console.log(textStatus);
                                 alert("add failed!,please check your information again!")
                             },
                             success:function () {
