@@ -114,6 +114,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             if(releaseFlag) {
@@ -146,6 +147,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="In_Engineering">工程中</option>'+
@@ -168,6 +170,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+
@@ -189,6 +192,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             if(releaseFlag){
@@ -221,6 +225,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="IQC">IQC</option>');
@@ -241,6 +246,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             if(releaseFlag){
@@ -266,6 +272,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
@@ -286,6 +293,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+          $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+'<option value="Final">归还客户</option>');

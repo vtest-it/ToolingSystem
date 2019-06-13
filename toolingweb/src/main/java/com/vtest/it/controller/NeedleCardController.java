@@ -109,7 +109,7 @@ public class NeedleCardController {
     }
     @RequestMapping("/iqcRelease")
     @ResponseBody
-    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note){
+    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus){
         try {
             IqcRecordBean bean=new IqcRecordBean();
             bean.setProberCardId(proberCardId);
@@ -122,7 +122,7 @@ public class NeedleCardController {
             bean.setUpdateOperator(updateOperator);
             bean.setNextStation(nextStation);
             bean.setNote(note);
-            service.updateProberCardStatus(proberCardId,nextStation,"IQC",updateOperator);
+            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
             service.addNewIqcRecord(bean);
             return true;
         } catch (Exception e) {

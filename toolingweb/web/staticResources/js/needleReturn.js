@@ -129,6 +129,7 @@ function selectChange(value){
         }
         $("#lastStation").val("");
         $("#lastStation").val(state);
+        $("#oldStatus").val("");
         $("#oldStatus").val(state);
         $("#nextStation").html("");
         $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+
@@ -152,6 +153,7 @@ function selectChange(value){
         }
         $("#lastStation").val("");
         $("#lastStation").val(state);
+        $("#oldStatus").val("");
         $("#oldStatus").val(state);
         $("#nextStation").html("");
         $("#nextStation").append('<option value="Back_Fixing">厂外维修返回</option>');
@@ -173,6 +175,7 @@ function selectChange(value){
         }
         $("#lastStation").val("");
         $("#lastStation").val(state);
+        $("#oldStatus").val("");
         $("#oldStatus").val(state);
         $("#nextStation").html("");
         $("#nextStation").append('<option value="Inner_Back">内部归还</option>');
@@ -194,6 +197,7 @@ function selectChange(value){
         }
         $("#lastStation").val("");
         $("#lastStation").val(state);
+        $("#oldStatus").val("");
         $("#oldStatus").val(state);
         $("#nextStation").html("");
         $("#nextStation").append('<option value="Cust_Back">客户借出返回</option>');
@@ -215,6 +219,7 @@ function selectChange(value){
         }
         $("#lastStation").val("");
         $("#lastStation").val(state);
+        $("#oldStatus").val("");
         $("#oldStatus").val(state);
         $("#nextStation").html("");
         if(releaseFlag){

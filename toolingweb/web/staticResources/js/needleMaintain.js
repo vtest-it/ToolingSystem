@@ -152,6 +152,7 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
+            $("#oldStatus").val("");
             $("#oldStatus").val(state);
             $("#nextStation").html("");
             if(releaseFlag){
