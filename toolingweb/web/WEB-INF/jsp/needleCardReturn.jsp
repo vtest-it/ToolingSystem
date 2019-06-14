@@ -390,11 +390,11 @@
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-4">上一站</label>
-                                    <input class="form-control" name="lastStation" id="lastStation" style="width: 40%" type="text" disabled>
+                                    <input class="form-control" name="lastStation" id="lastStation" style="width: 50%" type="text" disabled>
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-4">下一站</label>
-                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 45%">
+                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 50%">
                                     </select>
                                 </p>
                             </div>

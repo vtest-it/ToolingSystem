@@ -20,8 +20,6 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap-datetimepicker.min.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap-table-fixed-columns.css"/> "/>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/fileinput.min.css"/> "/>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/fileinput-rtl.min.css"/> "/>
     <script src="<c:url value="/js/jquery.min.js"/> "></script>
     <script src="<c:url value="/js/sb-admin-2.js"/> "></script>
     <script src="<c:url value="/js/metisMenu.min.js"/> "></script>
@@ -33,7 +31,6 @@
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
-    <script src="<c:url value="/js/fileinput.min.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <style>
         .unit{

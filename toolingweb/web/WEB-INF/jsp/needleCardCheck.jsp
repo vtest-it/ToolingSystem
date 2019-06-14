@@ -378,7 +378,7 @@
                             <div class="form-group">
                                 <p class="col-lg-4">
                                     <label class="col-lg-4">下一站</label>
-                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 45%">
+                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 50%">
                                     </select>
                                 </p>
                                 <p class="col-lg-8">

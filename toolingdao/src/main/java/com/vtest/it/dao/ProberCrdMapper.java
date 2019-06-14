@@ -56,4 +56,6 @@ public interface ProberCrdMapper {
     public boolean updateIQCItem(@Param("proberCardId") String proberCardId,@Param("pinMinlen") double pinMinlen,@Param("pinMaxdiam") double pinMaxdiam,@Param("pinLevel") double pinLevel);
 
     public Integer getInfoRebuildCount(@Param("proberCardId") String proberCardId);
+
+    public ArrayList<ProberCardTDBean> getTD();
 }

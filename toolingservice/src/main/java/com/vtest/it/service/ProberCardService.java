@@ -112,4 +112,8 @@ public class ProberCardService {
     public Integer getInfoRebuildCount(String proberCardId){
         return mapper.getInfoRebuildCount(proberCardId);
     }
+
+    public ArrayList<ProberCardTDBean> getTD(){
+        return mapper.getTD();
+    }
 }

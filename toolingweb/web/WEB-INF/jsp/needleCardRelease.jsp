@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Release</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
@@ -355,7 +355,7 @@
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">下一站</label>
-                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 35%">
+                                    <select class="form-control"  name="nextStation" id="nextStation" style="width: 50%">
                                     </select>
                                 </p>
                             </div>
