@@ -150,6 +150,7 @@ $(document).ready(function() {
         success:function (data) {
             $.each(data,function (i,item) {
                 var time=getSmpFormatDateByLong(item.receiptTime,true);
+                item.operator="v236"
                 if(item.releaseFlag){
                     item.releaseFlag="Release";
                 }else {
@@ -300,7 +301,7 @@ $(document).ready(function() {
             {
                 title:"编号",field:"proberCardId"
             },{
-                title:"通用机台",field:"useEquipment"
+                title:"测试机台",field:"useEquipment"
             },
             {
                 title:"当前状态",field:"state"
@@ -328,10 +329,10 @@ $(document).ready(function() {
                 title:"TD Total",field:"tdTotal"
             },
             {
-                title:"距下次PM可測TD",field:"nextTD"
+                title:"距下次PM可测TD",field:"nextTD"
             },
             {
-                title:"剩餘可測TD",field:"remainingTD",cellStyle:function (value) {
+                title:"预估可测TD",field:"remainingTD",cellStyle:function (value) {
                     if(value==undefined){
                         return {css:{'background-color':'blue'}}
                     }else {
@@ -349,7 +350,7 @@ $(document).ready(function() {
                 }
             },
             {
-                title:"針徑",field:"afterPindiam",cellStyle:function (value,row,index,field) {
+                title:"针径",field:"afterPindiam",cellStyle:function (value,row,index,field) {
                     if(value>row.pindiamSpec){
                         return {css:{'background-color':'red'}}
                     }else {
@@ -375,28 +376,28 @@ $(document).ready(function() {
                 title:"PM时机",field:"pmTd"
             },
             {
-                title:"開始針長",field:"pinMinlen"
+                title:"开始针长",field:"pinMinlen"
             },
             {
-                title:"開始針徑",field:"pinMaxdiam"
+                title:"开始针径",field:"pinMaxdiam"
             },{
-                title:"開始水平",field:"pinLevel"
+                title:"开始水平",field:"pinLevel"
             },{
-                title:"針長Spec",field:"pinlenSpec"
+                title:"针长Spec",field:"pinlenSpec"
             },
             {
-                title:"針徑Spec",field:"pindiamSpec"
+                title:"针径Spec",field:"pindiamSpec"
             },{
                 title:"水平Spec",field:"pinlevelSpec"
             },
             {
-                title:"客戶編號",field:"custNo"
+                title:"客户编号",field:"custNo"
             },
             {
-                title:"廠商編號",field:"vendorNo"
+                title:"厂商编号",field:"vendorNo"
             },
             {
-                title:"Rebuild次數",field:"rebuildCount"
+                title:"Rebuild次数",field:"rebuildCount"
             },
             {
                 title:"GlassMask",field:"glassMask"
@@ -404,19 +405,19 @@ $(document).ready(function() {
             {
                 title:"MylarMask",field:"mylarMask"
             },{
-                title:"建檔日期",field:"receiptTime"
+                title:"建档日期",field:"receiptTime"
             },
             {
-                title:"建檔人員",field:"operator"
+                title:"建档人员",field:"operator"
             },
             {
                 title:"修改日期",field:"editTime"
             },
             {
-                title:"修改人員",field:"editOperator"
+                title:"修改人员",field:"editOperator"
             },
             {
-                title:"備註",field:"note"
+                title:"备注",field:"note"
             }],
         // selectItemName: 'parentItem'
     })
@@ -574,6 +575,7 @@ $(document).ready(function() {
                     var newData=new Object();
                     $.each(data,function (i,item) {
                         newData[item.name]=item.value;
+                        newData["operator"]="v236"
                     })
                     newDatas.push(newData);
                     $('#needleCardTable').bootstrapTable("append",newDatas);
@@ -618,6 +620,7 @@ $(document).ready(function() {
                     $.each(data,function (i,item) {
                         newData[item.name]=item.value;
                         newData['editTime']=editTime;
+                        newData['editOperator']="v236";
                     })
                     $("#needleCardTable").bootstrapTable("updateByUniqueId",{id:id,row:newData});
                     $(form).resetForm();

@@ -250,7 +250,7 @@
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-4">
-                                    <label class="col-lg-3">适用机台</label>
+                                    <label class="col-lg-3">测试机台</label>
                                     <input class="form-control" name="useEquipment" id="useEquipment" style="width: 45%" type="text">
                                 </p>
                                 <p class="col-lg-4">
@@ -337,7 +337,7 @@
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">作业人员</label>
-                                    <input class="form-control" name="operator" id="operator" style="width: 35%" type="text" disabled>
+                                    <input class="form-control" name="operator" id="operator" style="width: 35%" type="text" value="v236" disabled>
                                 </p>
 
                             </div>
