@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 @RequestMapping("/needleCard")
 public class NeedleCardController {
     private ProberCardService service;
-
     @Autowired
     public void setService(ProberCardService service) {
         this.service = service;
@@ -404,5 +403,10 @@ public class NeedleCardController {
     @RequestMapping(value = "/getInfoRebuildCount")
     public Integer getInfoRebuildCount(String proberCardId){
        return  service.getInfoRebuildCount(proberCardId);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getTd")
+    public String getTd(){
+        return JSON.toJSONString(service.getTd());
     }
 }

@@ -41,11 +41,11 @@
         p:configLocation="classpath:mybatis-config.xml"
         p:mapperLocations="classpath*:mapper/*Mapper.xml"
     />
-    <bean class="org.mybatis.spring.SqlSessionTemplate">
+    <bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <constructor-arg index="1" name="executorType" value="BATCH"/>
     </bean>
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
         p:basePackage="com.vtest.it.dao"
         p:sqlSessionFactoryBeanName="sqlSessionFactory"
     />

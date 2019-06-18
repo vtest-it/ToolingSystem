@@ -1,4 +1,4 @@
-package com.vtest.it.dao;
+package com.vtest.it.dao.prober;
 
 import com.vtest.it.pojo.*;
 import org.apache.ibatis.annotations.Param;
@@ -57,5 +57,6 @@ public interface ProberCrdMapper {
 
     public Integer getInfoRebuildCount(@Param("proberCardId") String proberCardId);
 
-    public ArrayList<ProberCardTDBean> getTD();
+    public ArrayList<ProberCardTDBean> getTd();
+
 }

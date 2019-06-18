@@ -1,49 +1,49 @@
 package com.vtest.it.pojo;
 
 public class ProberCardTDBean {
-    private String proberCardId;
-    private String TD;
-    private String TDTotal;
-    private String remainTD;
-    private String remainTDTotal;
+    private String probercard;
+    private Integer td;
+    private Integer tdTotal;
+    private Integer remainTd;
+    private Integer remainTotal;
 
-    public String getProberCardId() {
-        return proberCardId;
+    public String getProbercard() {
+        return probercard;
     }
 
-    public void setProberCardId(String proberCardId) {
-        this.proberCardId = proberCardId;
+    public void setProbercard(String probercard) {
+        this.probercard = probercard;
     }
 
-    public String getTD() {
-        return TD;
+    public Integer getTd() {
+        return td;
     }
 
-    public void setTD(String TD) {
-        this.TD = TD;
+    public void setTd(Integer td) {
+        this.td = td;
     }
 
-    public String getTDTotal() {
-        return TDTotal;
+    public Integer getTdTotal() {
+        return tdTotal;
     }
 
-    public void setTDTotal(String TDTotal) {
-        this.TDTotal = TDTotal;
+    public void setTdTotal(Integer tdTotal) {
+        this.tdTotal = tdTotal;
     }
 
-    public String getRemainTD() {
-        return remainTD;
+    public Integer getRemainTd() {
+        return remainTd;
     }
 
-    public void setRemainTD(String remainTD) {
-        this.remainTD = remainTD;
+    public void setRemainTd(Integer remainTd) {
+        this.remainTd = remainTd;
     }
 
-    public String getRemainTDTotal() {
-        return remainTDTotal;
+    public Integer getRemainTotal() {
+        return remainTotal;
     }
 
-    public void setRemainTDTotal(String remainTDTotal) {
-        this.remainTDTotal = remainTDTotal;
+    public void setRemainTotal(Integer remainTotal) {
+        this.remainTotal = remainTotal;
     }
 }

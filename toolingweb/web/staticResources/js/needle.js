@@ -105,6 +105,7 @@ $(document).ready(function() {
     var proberCardStatus=[];
     var IQCRecord=[];
     var maintainRecord=[];
+    var TD=[];
     $.ajax({
         type:"get",
         async: false,
@@ -112,6 +113,15 @@ $(document).ready(function() {
         url:"/toolingweb/needleCard/getAllProberCardStatus",
         success:function (data) {
             proberCardStatus=data;
+        }
+    })
+    $.ajax({
+        type:"get",
+        async: false,
+        dataType:"json",
+        url:"/toolingweb/needleCard/getTd",
+        success:function (data) {
+            TD=data;
         }
     })
     $.ajax({
@@ -168,6 +178,20 @@ $(document).ready(function() {
                         item.afterPinlen=d.afterPinlen;
                         item.afterPindiam=d.afterPindiam;
                         item.afterPinlevel=d.afterPinlevel;
+                    }
+                })
+                $.each(TD,function (z,y) {
+                    if(y.probercard==item.proberCardId){
+                        item.TD=y.td;
+                        item.tdTotal=y.tdTotal;
+                        item.nextTD=y.remainTd;
+                        if(y.remainTotal<=0){
+                            item.remainingTD=null
+                        }else {
+                            item.remainingTD=y.remainTotal;
+                        }
+
+
                     }
                 })
             })
@@ -307,7 +331,14 @@ $(document).ready(function() {
                 title:"距下次PM可測TD",field:"nextTD"
             },
             {
-                title:"剩餘可測TD",field:"remainingTD"
+                title:"剩餘可測TD",field:"remainingTD",cellStyle:function (value) {
+                    if(value==undefined){
+                        return {css:{'background-color':'blue'}}
+                    }else {
+                        return {};
+                    }
+
+                }
             },{
                 title:"针长",field:"afterPinlen",cellStyle:function (value,row,index,field) {
                     if(value<row.pinlenSpec){

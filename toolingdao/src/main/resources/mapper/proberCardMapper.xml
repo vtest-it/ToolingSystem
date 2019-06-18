@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vtest.it.dao.ProberCrdMapper">
+<mapper namespace="com.vtest.it.dao.prober.ProberCrdMapper">
     <insert id="addNewProberCardInfo" parameterType="com.vtest.it.pojo.ProberCardEntityBean">
       insert into VTProberCard.Probercard_Info(prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask, note,rebuild_count)
       value (#{proberCardId},#{custName},#{custNo},#{receiptTime},#{vendorName},#{vendorNo},#{belongDept},#{useEquipment},#{dutCount},#{pinCount},#{cabPosition},#{cardSource},#{pmTd},#{cardType},#{newOld},#{cleanType},#{pinlenSpec},#{pindiamSpec},#{pinlevelSpec},#{pindepthSpec},#{tdTotal},#{cardModel},#{releaseFlag},#{glassMask},#{mylarMask},#{note},#{rebuildCount});
@@ -108,5 +108,8 @@
     </update>
     <select id="getInfoRebuildCount" resultType="integer">
         SELECT rebuild_Count FROM  VTProberCard.Probercard_Info where prober_card_id=#{proberCardId}
+    </select>
+    <select id="getTd" resultType="com.vtest.it.pojo.ProberCardTDBean" statementType="CALLABLE">
+        {call pro_GetCardTouchInfo()}
     </select>
 </mapper>

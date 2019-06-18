@@ -77,6 +77,16 @@ function selectChange(value){
     var lendFlag=false;
     var state="";
     var releaseFlag=false;
+    var TD=[];
+    $.ajax({
+        type:"get",
+        async: false,
+        dataType:"json",
+        url:"/toolingweb/needleCard/getTd",
+        success:function (data) {
+            TD=data;
+        }
+    })
     $.ajax({
         type:'get',
         dataType:"json",
@@ -90,6 +100,12 @@ function selectChange(value){
                 $.each(data,function (i,item) {
                     var time=getSmpFormatDateByLong(item.receiptTime,true);
                     item.receiptTime=time.substring(0,11);
+                    $.each(TD,function (y,issue) {
+                        if(value==issue.probercard){
+                            data["TD"]=issue.td;
+                            data["TDTotal"]=issue.tdTotal;
+                        }
+                    })
                 })
                 lendingData=data;
             }
@@ -118,7 +134,7 @@ function selectChange(value){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                if(title=="dutCount"||title=="pinCount"){
+                if(title=="dutCount"||title=="pinCount"||title=="TD"||title=="TDTotal"){
                     field=rows[k].substring(rowIndex+1,rows[k].length);
                 }
                 $('#'+title).val(field);
@@ -142,7 +158,7 @@ function selectChange(value){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
                 var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                if(title=="dutCount"||title=="pinCount"){
+                if(title=="dutCount"||title=="pinCount"||title=="TD"||title=="TDTotal"){
                     field=rows[k].substring(rowIndex+1,rows[k].length);
                 }
                 if(title=="receiptTime"){
