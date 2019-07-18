@@ -59,4 +59,8 @@ public interface ProberCrdMapper {
 
     public ArrayList<ProberCardTDBean> getTd();
 
+    public ArrayList<OutProberCardBean> getOutProberCard();
+
+    public ArrayList<BackProberCardBean> getBackProberCard();
+
 }

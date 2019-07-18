@@ -26,8 +26,8 @@ public class NeedleCardController {
     @ResponseBody
     public boolean addNewNeedleCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
                                    String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
-                                   String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String operator, String cardModel, String belongDept,
-                                   String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note,Integer rebuildCount) throws ParseException {
+                                   String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String creator, String cardModel, String belongDept,
+                                   String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note,Integer rebuildCount,String confirmer) throws ParseException {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             ProberCardEntityBean bean = new ProberCardEntityBean();
@@ -68,6 +68,8 @@ public class NeedleCardController {
             bean.setMylarMask(mylarMask);
             bean.setNote(note);
             bean.setRebuildCount(rebuildCount);
+            bean.setCreator(creator);
+            bean.setConfirmer(confirmer);
             service.addNewProberCard(bean);
             return true;
         } catch (ParseException e) {
@@ -241,8 +243,8 @@ public class NeedleCardController {
     @ResponseBody
     public boolean updateProberCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
                                     String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
-                                    String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String operator, String cardModel, String belongDept,
-                                    String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note) {
+                                    String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String creator, String cardModel, String belongDept,
+                                    String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note,String confirmer) {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             ProberCardEntityBean bean= new ProberCardEntityBean();
@@ -278,6 +280,8 @@ public class NeedleCardController {
             bean.setPinlenSpec(pinlenSpec);
             bean.setTdTotal(tdTotal);
             bean.setCardModel(cardModel);
+            bean.setCreator(creator);
+            bean.setConfirmer(confirmer);
             if(releaseFlag.equals("Release")){
                 bean.setReleaseFlag(true);
             }else {
@@ -408,5 +412,15 @@ public class NeedleCardController {
     @RequestMapping(value = "/getTd")
     public String getTd(){
         return JSON.toJSONString(service.getTd());
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getOutProberCard")
+    public String getOutProberCard(){
+        return JSON.toJSONString(service.getOutProberCard());
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getBackProberCard")
+    public String getBackProberCard(){
+        return JSON.toJSONString(service.getBackProberCard());
     }
 }

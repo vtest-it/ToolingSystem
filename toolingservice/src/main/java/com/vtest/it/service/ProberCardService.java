@@ -114,4 +114,10 @@ public class ProberCardService {
    public ArrayList<ProberCardTDBean> getTd(){
         return  mapper.getTd();
    }
+   public ArrayList<OutProberCardBean> getOutProberCard(){
+        return  mapper.getOutProberCard();
+   }
+   public ArrayList<BackProberCardBean> getBackProberCard(){
+        return  mapper.getBackProberCard();
+   }
 }

@@ -87,20 +87,6 @@ $(document).ready(function() {
     }
     getTime();
     setInterval(getTime,1000);
-    $("#btnAdd").on('click',function () {
-        $("#cardType").find("option:selected").attr("selected",false);
-        $("#newOld").find("option:selected").attr("selected",false);
-        $("#cleanType").find("option:selected").attr("selected",false);
-        $('#releaseFlag').find('option:contains("Unreleased")').attr("selected",true);
-        $("#state").empty();
-        $("#state").append(' <option value="New_Prod">新品入库</option>')
-        $("#needCardModifyForm")[0].reset();
-        $("#myModalLabel").text("针卡建档");
-        $("#myModal").modal('show');
-        $("#releaseFlag").parent().hide();
-        $("#submit").attr('value','提交');
-
-    })
     var needleCardData=[];
     var proberCardStatus=[];
     var IQCRecord=[];
@@ -150,6 +136,7 @@ $(document).ready(function() {
         success:function (data) {
             $.each(data,function (i,item) {
                 var time=getSmpFormatDateByLong(item.receiptTime,true);
+                item.operator="v236"
                 if(item.releaseFlag){
                     item.releaseFlag="Release";
                 }else {
@@ -289,139 +276,56 @@ $(document).ready(function() {
                     }
                 }
             },{
-                title:"客户",field:"custName"
-            },
-            {
-                title:"厂商",field:"vendorName"
-            },
-            {
-                title:"型号",field:"cardModel"
-            },
-            {
-                title:"编号",field:"proberCardId"
-            },{
-                title:"测试机台",field:"useEquipment"
-            },
-            {
-                title:"当前状态",field:"state"
-            },
-            {
-                title:"是否Release",field:"releaseFlag"
-            },
-            {
-                title:"Dut数",field:"dutCount"
-            },{
-                title:"Pin数",field:"pinCount"
-            },
-            {
-                title:"新旧",field:"newOld"
-            },
-            {
-                title:"clean type",field:"cleanType"
-            },
-            {
-                title:"类型",field:"cardType"
-            },{
-                title:"TD",field:"TD",cellStyle:function (value,row,index,field) {
-                    if(value>(row.pmTd)*0.82){
-                        return {css:{'background-color':'red'}}
-                    }else {
-                        return {};
-                    }
-                }
+                title:"项次",field:""
             },
             {
                 title:"TD Total",field:"tdTotal"
             },
             {
-                title:"距下次PM可测TD",field:"nextTD"
+                title:"开始时间",field:""
             },
             {
-                title:"预估可测TD",field:"remainingTD",cellStyle:function (value) {
-                    if(value==undefined){
-                        return {css:{'background-color':'blue'}}
-                    }else {
-                        return {};
-                    }
-
-                }
+                title:"维修前针长",field:"beforePinlen"
+            },
+            {
+                title:"维修前针径",field:"beforePindiam"
+            },
+            {
+                title:"维修前水平",field:"beforePinlevel"
             },{
-                title:"针长",field:"afterPinlen",cellStyle:function (value,row,index,field) {
-                    if(value<row.pinlenSpec){
-                        return {css:{'background-color':'red'}}
-                    }else {
-                        return {};
-                    }
-                }
+                title:"维修期前零件/飞线",field:""
             },
             {
-                title:"针径",field:"afterPindiam",cellStyle:function (value,row,index,field) {
-                    if(value>row.pindiamSpec){
-                        return {css:{'background-color':'red'}}
-                    }else {
-                        return {};
-                    }
-                }
-            },
-            {
-                title:"水平",field:"afterPinlevel",cellStyle:function (value,row,index,field) {
-                    if(value>row.pinlevelSpec){
-                        return {css:{'background-color':'red'}}
-                    }else {
-                        return {};
-                    }
-                }
-            },
-            {
-                title:"柜位",field:"cabPosition"
+                title:"维修前针痕",field:""
             },{
-                title:"财产单位",field:"belongDept"
+                title:"测试机编号",field:""
             },
             {
-                title:"PM时机",field:"pmTd"
-            },
-            {
-                title:"开始针长",field:"pinMinlen"
-            },
-            {
-                title:"开始针径",field:"pinMaxdiam"
+                title:"异常描述",field:""
             },{
-                title:"开始水平",field:"pinLevel"
+                title:"作业人员",field:""
+            },
+            {
+                title:"开始时间",field:""
+            },
+            {
+                title:"维修后针长",field:"afterPinlen"
+            },
+            {
+                title:"维修后针径",field:"afterPindiam"
             },{
-                title:"针长Spec",field:"pinlenSpec"
-            },
-            {
-                title:"针径Spec",field:"pindiamSpec"
+                title:"维修后水平",field:"afterPinlevel"
             },{
-                title:"水平Spec",field:"pinlevelSpec"
+                title:"维修后零件/飞线",field:""
             },
             {
-                title:"客户编号",field:"custNo"
+                title:"维修后针痕",field:""
             },
             {
-                title:"厂商编号",field:"vendorNo"
+                title:"处理项目",field:""
             },
             {
-                title:"Rebuild次数",field:"rebuildCount"
-            },
-            {
-                title:"GlassMask",field:"glassMask"
-            },
-            {
-                title:"MylarMask",field:"mylarMask"
-            },{
-                title:"建档日期",field:"receiptTime"
-            },
-            {
-                title:"建档人员",field:"creator"
-            },{
-                title:"确认人",field:"confirmer"
-            },
-            {
-                title:"修改日期",field:"editTime"
-            },
-            {
-                title:"修改人员",field:"editOperator"
+                title:"作业人员",field:""
             },
             {
                 title:"备注",field:"note"
@@ -536,13 +440,6 @@ $(document).ready(function() {
             mylarMask:{
                 required:true,
                 isPositiveInteger:true
-            },creator:{
-                required:true,
-                isOperator:true
-            },
-            confirmer:{
-                required:true,
-                isOperator:true
             }
         },
         submitHandler:function (form) {
@@ -589,6 +486,7 @@ $(document).ready(function() {
                     var newData=new Object();
                     $.each(data,function (i,item) {
                         newData[item.name]=item.value;
+                        newData["operator"]="v236"
                     })
                     newDatas.push(newData);
                     $('#needleCardTable').bootstrapTable("append",newDatas);

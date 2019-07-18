@@ -32,7 +32,24 @@ public class ProberCardEntityBean implements Serializable {
     private Integer mylarMask;
     private String note;
     private Integer rebuildCount;
+    private String creator;
+    private String confirmer;
 
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getConfirmer() {
+        return confirmer;
+    }
+
+    public void setConfirmer(String confirmer) {
+        this.confirmer = confirmer;
+    }
     public Integer getRebuildCount() {
         return rebuildCount;
     }

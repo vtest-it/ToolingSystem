@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.vtest.it.dao.prober.ProberCrdMapper">
     <insert id="addNewProberCardInfo" parameterType="com.vtest.it.pojo.ProberCardEntityBean">
-      insert into VTProberCard.Probercard_Info(prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask, note,rebuild_count)
-      value (#{proberCardId},#{custName},#{custNo},#{receiptTime},#{vendorName},#{vendorNo},#{belongDept},#{useEquipment},#{dutCount},#{pinCount},#{cabPosition},#{cardSource},#{pmTd},#{cardType},#{newOld},#{cleanType},#{pinlenSpec},#{pindiamSpec},#{pinlevelSpec},#{pindepthSpec},#{tdTotal},#{cardModel},#{releaseFlag},#{glassMask},#{mylarMask},#{note},#{rebuildCount});
+      insert into VTProberCard.Probercard_Info(prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask,note,rebuild_count,creator,confirmer)
+      value (#{proberCardId},#{custName},#{custNo},#{receiptTime},#{vendorName},#{vendorNo},#{belongDept},#{useEquipment},#{dutCount},#{pinCount},#{cabPosition},#{cardSource},#{pmTd},#{cardType},#{newOld},#{cleanType},#{pinlenSpec},#{pindiamSpec},#{pinlevelSpec},#{pindepthSpec},#{tdTotal},#{cardModel},#{releaseFlag},#{glassMask},#{mylarMask},#{note},#{rebuildCount},#{creator},#{confirmer});
     </insert>
     <select id="getAllProberCardStatus" resultType="com.vtest.it.pojo.ProberCardStatusBean">
         SELECT prober_card_id,last_process,current_process,update_operator FROM VTProberCard.ProberCard_Current_State ;
     </select>
     <select id="getAllList" resultType="com.vtest.it.pojo.ProberCardEntityBean">
-        select prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask,note,rebuild_count from VTProberCard.Probercard_Info
+        select prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask,note,rebuild_count,creator,confirmer from VTProberCard.Probercard_Info
     </select>
     <delete id="deleteProberCardInfo" parameterType="string">
         delete from VTProberCard.Probercard_Info where prober_card_id=#{cardId};
@@ -77,7 +77,7 @@
     </insert>
     <update id="updateProberCard">
         update VTProberCard.Probercard_Info set cust_name =#{custName} ,cust_no=#{custNo},receipt_time=#{receiptTime},vendor_name =#{vendorName} ,vendor_no=#{vendorNo},belong_dept=#{belongDept},use_equipment =#{useEquipment} ,dut_count=#{dutCount},pin_count=#{pinCount},cab_position =#{cabPosition} ,card_source=#{cardSource},pm_td=#{pmTd},
-        card_type =#{cardType} ,new_old=#{newOld},clean_type=#{cleanType},pinlen_spec =#{pinlenSpec} ,pindiam_spec=#{pindiamSpec},pinlevel_spec=#{pinlevelSpec},pindepth_spec =#{pindepthSpec} ,td_total=#{tdTotal},card_model=#{cardModel},release_flag =#{releaseFlag} ,glass_mask=#{glassMask},mylar_mask=#{mylarMask},note=#{note},rebuild_count=#{rebuildCount} where prober_card_id=#{proberCardId};
+        card_type =#{cardType} ,new_old=#{newOld},clean_type=#{cleanType},pinlen_spec =#{pinlenSpec} ,pindiam_spec=#{pindiamSpec},pinlevel_spec=#{pinlevelSpec},pindepth_spec =#{pindepthSpec} ,td_total=#{tdTotal},card_model=#{cardModel},release_flag =#{releaseFlag} ,glass_mask=#{glassMask},mylar_mask=#{mylarMask},note=#{note},rebuild_count=#{rebuildCount},creator=#{creator},confirmer=#{confirmer} where prober_card_id=#{proberCardId};
     </update>
     <select id="getProberCardReleaseFlag" resultType="boolean">
         select release_flag from VTProberCard.ProberCard_Release_Record where  prober_card_id=#{proberCardId};
@@ -111,5 +111,11 @@
     </select>
     <select id="getTd" resultType="com.vtest.it.pojo.ProberCardTDBean" statementType="CALLABLE">
         {call pro_GetCardTouchInfo()}
+    </select>
+    <select id="getOutProberCard" resultType="com.vtest.it.pojo.OutProberCardBean">
+        select  prober_card_id,outuse_equipment,out_using,out_operator,note order by load_timed desc
+    </select>
+    <select id="getBackProberCard" resultType="com.vtest.it.pojo.BackProberCardBean">
+        select  prober_card_id,backuse_equipment,back_status,back_operator,issue_flag,issue_desc,note  order by load_timed desc
     </select>
 </mapper>

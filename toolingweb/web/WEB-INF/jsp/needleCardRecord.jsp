@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>needleCard</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/fonts/bootstrap.min.css"/> ">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/font-awesome.min.css"/> ">
@@ -33,10 +33,7 @@
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <style>
-        .unit{
-            font-weight: 700;
-        }
-        td{
+        td {
             white-space: nowrap;
         }
     </style>
@@ -224,12 +221,12 @@
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">客户</label>
-                                    <input class="form-control" name="custName" id="custName" style="width: 45%" type="text">
+                                    <input class="form-control" name="custName" id="custName" style="width: 35%" type="text">
 
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">客户编号</label>
-                                    <input class="form-control" name="custNo" id="custNo" style="width: 45%" type="text">
+                                    <input class="form-control" name="custNo" id="custNo" style="width: 35%" type="text">
 
                                 </p>
                             </div>
@@ -240,46 +237,46 @@
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">厂商</label>
-                                    <input class="form-control" name="vendorName" id="vendorName" style="width: 45%"type="text">
+                                    <input class="form-control" name="vendorName" id="vendorName" style="width: 35%"type="text">
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">厂商编号</label>
-                                    <input class="form-control" name="vendorNo" id="vendorNo" style="width: 45%"type="text">
+                                    <input class="form-control" name="vendorNo" id="vendorNo" style="width: 35%"type="text">
                                 </p>
 
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">测试机台</label>
-                                    <input class="form-control" name="useEquipment" id="useEquipment" style="width: 45%" type="text">
+                                    <input class="form-control" name="useEquipment" id="useEquipment" style="width: 35%" type="text">
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">Dut 数</label>
-                                    <input class="form-control" name="dutCount" id="dutCount" style="width: 45%"type="text">
+                                    <input class="form-control" name="dutCount" id="dutCount" style="width: 35%;margin: 0px"type="text">
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">Pin 数</label>
-                                    <input class="form-control" name="pinCount" id="pinCount" style="width: 45%"type="text">
+                                    <input class="form-control" name="pinCount" id="pinCount" style="width: 35%"type="text">
                                 </p>
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">柜位</label>
-                                    <input class="form-control" name="cabPosition"  id="cabPosition" style="width: 45%"type="text">
+                                    <input class="form-control" name="cabPosition"  id="cabPosition" style="width: 35%"type="text">
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">來源</label>
-                                    <input class="form-control" name="cardSource" id="cardSource" style="width: 45%"type="text">
+                                    <input class="form-control" name="cardSource" id="cardSource" style="width: 35%"type="text">
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">PM时机</label>
-                                    <input class="form-control" name="pmTd" id="pmTd" style="width: 45%" type="text">
+                                    <input class="form-control" name="pmTd" id="pmTd" style="width: 35%" type="text">
                                 </p>
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">类 型</label>
-                                    <select  class="form-control" name="cardType" id="cardType" style="width: 45%">
+                                    <select  class="form-control" name="cardType" id="cardType" style="width: 35%">
                                         <option value="CANTILEVER">CANTILEVER</option>
                                         <option value="COBRA">COBRA</option>
                                         <option value="POGO_PIN">POGO PIN</option>
@@ -290,14 +287,14 @@
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">新旧</label>
-                                    <select  class="form-control" name="newOld" id="newOld" style="width: 45%">
+                                    <select  class="form-control" name="newOld" id="newOld" style="width: 35%">
                                         <option value="new">新</option>
                                         <option value="old">旧</option>
                                     </select>
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">cleanType</label>
-                                    <select  class="form-control" name="cleanType" id="cleanType" style="width: 45%">
+                                    <select  class="form-control" name="cleanType" id="cleanType" style="width: 35%">
                                         <option value="3M_3um">3M 3um</option>
                                         <option value="MIPOX_GC8000">MIPOX GC8000</option>
                                         <option value="MIPOX_SI10000">MIPOX SI10000</option>
@@ -309,62 +306,67 @@
 
                             </div>
                             <div class="form-group">
-                                <p class="col-lg-4">
-                                    <label class="col-lg-4">针长spec</label>
-                                    <input class="form-control" name="pinlenSpec" id="pinlenSpec" style="width: 30%"type="text"><span class="unit">mil</span>
-                                </p>
-                                <p class="col-lg-4">
+                                <div class="col-lg-4">
+                                     <label class="col-lg-4">针长spec</label>
+                                    <input class="form-control" name="pinlenSpec" id="pinlenSpec" type="text" style="width: 35%">
+                                       mil
+                                </div>
+                                <div class="col-lg-4">
                                     <label class="col-lg-4">针径spec</label>
-                                    <input class="form-control" name="pindiamSpec" id="pindiamSpec" style="width: 30%"type="text"><span class="unit">mil</span>
-                                </p>
-                                <p class="col-lg-4">
-                                    <label class="col-lg-4">水平spec</label>
-                                    <input class="form-control" name="pinlevelSpec"  id="pinlevelSpec" style="width: 30%" type="text"><span class="unit">mil</span>
-                                </p>
+                                      <input class="form-control" name="pindiamSpec" id="pindiamSpec" type="text" style="width: 35%">mil
+                                </div>
+                                <div class="col-lg-4">
+                                <label class="col-lg-4" >水平spec</label>
+                                    <input class="form-control" name="pinlevelSpec"  id="pinlevelSpec"  type="text" style="width: 35%">mil
+                                </div>
 
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">状态</label>
-                                    <select  class="form-control" name="state"  id="state" style="width:45%;">
+                                    <select  class="form-control" name="state"  id="state" style="width:35%;">
                                         <option value="New_Prod">新品入库</option>
                                     </select>
                                 </p>
 
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">DEPTH</label>
-                                    <input class="form-control" name="pindepthSpec"  id="pindepthSpec" style="width: 35%" type="text"><span class="unit">mil</span>
+                                    <input class="form-control" name="pindepthSpec"  id="pindepthSpec" style="width: 35%" type="text">mil
                                 </p>
                                 <p class="col-lg-4">
                                     <label class="col-lg-3">作业人员</label>
-                                    <input class="form-control" name="operator" id="operator" style="width: 35%" type="text" value="v236" disabled>
+                                    <input class="form-control" name="creator" id="creator" style="width: 35%" type="text">
                                 </p>
 
                             </div>
                             <div class="form-group">
-                                <p class="col-lg-6">
+                                <p class="col-lg-4">
                                     <label class="col-lg-3">型号</label>
-                                    <input class="form-control" name="cardModel"  id="cardModel" style="width: 45%" type="text">
+                                    <input class="form-control" name="cardModel"  id="cardModel" style="width: 35%" type="text">
                                 </p>
-                                <p class="col-lg-6">
+                                <p class="col-lg-4">
                                     <label class="col-lg-3">财产单位</label>
-                                    <input class="form-control" name="belongDept" id="belongDept" style="width: 45%"type="text">
+                                    <input class="form-control" name="belongDept" id="belongDept" style="width: 35%"type="text">
+                                </p>
+                                <p class="col-lg-4">
+                                    <label class="col-lg-3">确认人</label>
+                                    <input class="form-control" name="confirmer" id="confirmer" style="width: 35%"type="text">
                                 </p>
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-6">
                                     <label class="col-lg-3">Glass Mask</label>
-                                    <input class="form-control" name="glassMask"  id="glassMask" style="width: 45%" type="text">
+                                    <input class="form-control" name="glassMask"  id="glassMask" style="width: 40%" type="text">
                                 </p>
                                 <p class="col-lg-6">
                                     <label class="col-lg-3">Mylar Mask</label>
-                                    <input class="form-control" name="mylarMask" id="mylarMask" style="width: 45%"type="text">
+                                    <input class="form-control" name="mylarMask" id="mylarMask" style="width: 35%"type="text">
                                 </p>
                             </div>
                             <div class="form-group">
                                 <p class="col-lg-12" style="display: none">
                                     <label class="col-lg-3">Release/Unrelease</label>
-                                    <select  class="form-control" name="releaseFlag" id="releaseFlag" style="width: 45%;">
+                                    <select  class="form-control" name="releaseFlag" id="releaseFlag" style="width: 35%;">
                                         <option value="Release">Release</option>
                                         <option value="Unreleased">Unreleased</option>
                                     </select>
@@ -373,7 +375,7 @@
                             <div class="form-group">
                                 <p class="col-lg-12"style="display: none">
                                     <label class="col-lg-2">Rebuild次數</label>
-                                    <input class="form-control" name="rebuildCount"  id="rebuildCount" style="width: 45%" value="0" type="text">
+                                    <input class="form-control" name="rebuildCount"  id="rebuildCount" style="width: 35%" value="0" type="text">
                                 </p>
                             </div>
                             <div class="form-group">
