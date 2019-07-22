@@ -389,7 +389,14 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <p class="col-lg-12">
+                                    <p class="col-lg-3">
+                                        <label class="col-lg-4">是否PM</label>
+                                        <select class="form-control" name="pmFlag" id="pmFlag" style="width: 45%">
+                                            <option value="false">否</option>
+                                            <option value="true">是</option>
+                                        </select>
+                                    </p>
+                                    <p class="col-lg-9">
                                         <label class="col-lg-2">备注</label>
                                         <textarea class="form-control" name="note" id="note" style="width: 80%" rows="3"></textarea>
                                     </p>
