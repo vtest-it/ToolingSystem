@@ -389,39 +389,46 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">清针量测</label>
-                                        <select class="form-control" name="cleanFlag" id="cleanFlag" style="width: 20%">
-                                            <option value="true">是</option>
+                                    <p class="col-lg-2">
+                                        <label class="col-lg-5">是否PM</label>
+                                        <select class="form-control" name="pmFlag" id="pmFlag" style="width: 45%">
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
-                                        <label class="col-lg-5">磨针</label>
+                                        <label class="col-lg-5">清针量测</label>
+                                        <select class="form-control" name="cleanFlag" id="cleanFlag" style="width: 45%">
+                                            <option value="false">否</option>
+                                            <option value="true">是</option>
+                                        </select>
+                                    </p>
+                                    <p class="col-lg-2">
+                                        <label class="col-lg-5">是否磨针</label>
                                         <select class="form-control" name="grindingFlag" id="grindingFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
-                                        <label class="col-lg-5">腐蚀</label>
+                                        <label class="col-lg-5">是否腐蚀</label>
                                         <select class="form-control" name="corrosionFlag"  id="corrosionFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
-                                        <label class="col-lg-5">调针</label>
+                                        <label class="col-lg-5">是否调针</label>
                                         <select class="form-control" name="adjustmentFlag"  id="adjustmentFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
-                                        <label class="col-lg-5">烘烤</label>
+                                        <label class="col-lg-5">是否烘烤</label>
                                         <select class="form-control" name="bakeFlag" id="bakeFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                 </div>
@@ -429,15 +436,15 @@
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">手磨针径</label>
                                         <select class="form-control" name="handgrindFlag" id="handgrindFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">检查焊点</label>
                                         <select class="form-control" name="checksolderFlag" id="checksolderFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
@@ -450,22 +457,22 @@
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">检查零件</label>
                                         <select class="form-control" name="checkpartsFlag" id="checkpartsFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
                                         <label class="col-lg-5">零件更换</label>
                                         <select class="form-control" name="changepartsFlag"  id="changepartsFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">
-                                        <label class="col-lg-5">跳线</label>
+                                        <label class="col-lg-5">是否跳线</label>
                                         <select class="form-control" name="jumperFlag" id="jumperFlag" style="width: 45%">
-                                            <option value="true">是</option>
                                             <option value="false">否</option>
+                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                 </div>
