@@ -347,9 +347,9 @@ $(document).ready(function() {
                 }
             },{
                 title:"针长",field:"afterPinlen",cellStyle:function (value,row,index,field) {
-                    if(value<row.pinlenSpec){
+                    if(value<parseFloat(row.pinlenSpec)){
                         return {css:{'background-color':'red'}}
-                    }else if(value>row.pinlenSpec&&value<row.pinlenSpec+1.5){
+                    }else if(value>parseFloat(row.pinlenSpec)&&value<parseFloat(row.pinlenSpec)+1.5){
                         return {css:{'background-color':'blue'}}
                     }else {
                         return {};
