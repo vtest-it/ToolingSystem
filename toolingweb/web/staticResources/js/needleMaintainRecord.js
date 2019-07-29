@@ -293,17 +293,12 @@ $(document).ready(function() {
             {
                 title:"维修前水平",field:"beforePinlevel"
             },{
-                title:"维修期前零件/飞线",field:""
-            },
-            {
-                title:"维修前针痕",field:""
-            },{
-                title:"测试机编号",field:""
+                title:"测试机编号",field:"useEquipment"
             },
             {
                 title:"异常描述",field:""
             },{
-                title:"作业人员",field:""
+                title:"作业人员",field:"updateOperator"
             },
             {
                 title:"开始时间",field:""
@@ -315,11 +310,6 @@ $(document).ready(function() {
                 title:"维修后针径",field:"afterPindiam"
             },{
                 title:"维修后水平",field:"afterPinlevel"
-            },{
-                title:"维修后零件/飞线",field:""
-            },
-            {
-                title:"维修后针痕",field:""
             },
             {
                 title:"处理项目",field:""

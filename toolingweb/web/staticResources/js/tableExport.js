@@ -216,9 +216,9 @@
         $rows.each(function () {
           trData = "";
           ForEachVisibleCell(this, rowselector, rowIndex, length + $rows.length,
-                             function (cell, row, col) {
-                               trData += csvString(cell, row, col) + (defaults.type === 'tsv' ? '\t' : defaults.csvSeparator);
-                             });
+              function (cell, row, col) {
+                trData += csvString(cell, row, col) + (defaults.type === 'tsv' ? '\t' : defaults.csvSeparator);
+              });
           trData = $.trim(trData).substring(0, trData.length - 1);
           if ( trData.length > 0 ) {
 
@@ -260,8 +260,8 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.' + defaults.type,
-          'data:text/' + (defaults.type === 'csv' ? 'csv' : 'plain') + ';charset=utf-8,' + ((defaults.type === 'csv' && defaults.csvUseBOM) ? '\ufeff' : ''),
-          csvData);
+            'data:text/' + (defaults.type === 'csv' ? 'csv' : 'plain') + ';charset=utf-8,' + ((defaults.type === 'csv' && defaults.csvUseBOM) ? '\ufeff' : ''),
+            csvData);
       }
 
     } else if ( defaults.type === 'sql' ) {
@@ -273,9 +273,9 @@
       $hrows     = collectHeadRows ($(el));
       $($hrows).each(function () {
         ForEachVisibleCell(this, 'th,td', rowIndex, $hrows.length,
-                           function (cell, row, col) {
-                             tdData += "'" + parseString(cell, row, col) + "',";
-                           });
+            function (cell, row, col) {
+              tdData += "'" + parseString(cell, row, col) + "',";
+            });
         rowIndex++;
         tdData = $.trim(tdData).substring(0, tdData.length - 1);
       });
@@ -286,9 +286,9 @@
       $($rows).each(function () {
         trData = "";
         ForEachVisibleCell(this, 'td,th', rowIndex, $hrows.length + $rows.length,
-                           function (cell, row, col) {
-                             trData += "'" + parseString(cell, row, col) + "',";
-                           });
+            function (cell, row, col) {
+              trData += "'" + parseString(cell, row, col) + "',";
+            });
         if ( trData.length > 3 ) {
           tdData += "(" + trData;
           tdData = $.trim(tdData).substring(0, tdData.length - 1);
@@ -313,8 +313,8 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.sql',
-          'data:application/sql;charset=utf-8,',
-          tdData);
+            'data:application/sql;charset=utf-8,',
+            tdData);
       }
 
     } else if ( defaults.type === 'json' ) {
@@ -325,9 +325,9 @@
         var jsonArrayTd = [];
 
         ForEachVisibleCell(this, 'th,td', rowIndex, $hrows.length,
-                           function (cell, row, col) {
-                             jsonArrayTd.push(parseString(cell, row, col));
-                           });
+            function (cell, row, col) {
+              jsonArrayTd.push(parseString(cell, row, col));
+            });
         jsonHeaderArray.push(jsonArrayTd);
       });
 
@@ -340,14 +340,14 @@
         var colIndex = 0;
 
         ForEachVisibleCell(this, 'td,th', rowIndex, $hrows.length + $rows.length,
-                           function (cell, row, col) {
-                             if ( jsonHeaderArray.length ) {
-                               jsonObjectTd[jsonHeaderArray[jsonHeaderArray.length - 1][colIndex]] = parseString(cell, row, col);
-                             } else {
-                               jsonObjectTd[colIndex] = parseString(cell, row, col);
-                             }
-                             colIndex++;
-                           });
+            function (cell, row, col) {
+              if ( jsonHeaderArray.length ) {
+                jsonObjectTd[jsonHeaderArray[jsonHeaderArray.length - 1][colIndex]] = parseString(cell, row, col);
+              } else {
+                jsonObjectTd[colIndex] = parseString(cell, row, col);
+              }
+              colIndex++;
+            });
         if ( $.isEmptyObject(jsonObjectTd) === false )
           jsonArray.push(jsonObjectTd);
 
@@ -375,8 +375,8 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.json',
-          'data:application/json;charset=utf-8;base64,',
-          sdata);
+            'data:application/json;charset=utf-8;base64,',
+            sdata);
       }
 
     } else if ( defaults.type === 'xml' ) {
@@ -390,9 +390,9 @@
       $($hrows).each(function () {
 
         ForEachVisibleCell(this, 'th,td', rowIndex, $hrows.length,
-                           function (cell, row, col) {
-                             xml += "<field>" + parseString(cell, row, col) + "</field>";
-                           });
+            function (cell, row, col) {
+              xml += "<field>" + parseString(cell, row, col) + "</field>";
+            });
         rowIndex++;
       });
       xml += '</fields><data>';
@@ -405,10 +405,10 @@
         var colCount = 1;
         trData       = "";
         ForEachVisibleCell(this, 'td,th', rowIndex, $hrows.length + $rows.length,
-                           function (cell, row, col) {
-                             trData += "<column-" + colCount + ">" + parseString(cell, row, col) + "</column-" + colCount + ">";
-                             colCount++;
-                           });
+            function (cell, row, col) {
+              trData += "<column-" + colCount + ">" + parseString(cell, row, col) + "</column-" + colCount + ">";
+              colCount++;
+            });
         if ( trData.length > 0 && trData !== "<column-1></column-1>" ) {
           xml += '<row id="' + rowCount + '">' + trData + '</row>';
           rowCount++;
@@ -431,8 +431,8 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.xml',
-          'data:application/xml;charset=utf-8;base64,',
-          xml);
+            'data:application/xml;charset=utf-8;base64,',
+            xml);
       }
     }
     else if ( defaults.type === 'excel' && defaults.mso.fileFormat === 'xmlss' ) {
@@ -475,72 +475,72 @@
             trData   = "";
 
             ForEachVisibleCell(this, 'td,th', rowIndex, length + $rows.length,
-                               function (cell, row, col) {
-                                 if ( cell !== null ) {
-                                   var style = "";
-                                   var data  = parseString(cell, row, col);
-                                   var type  = "String";
+                function (cell, row, col) {
+                  if ( cell !== null ) {
+                    var style = "";
+                    var data  = parseString(cell, row, col);
+                    var type  = "String";
 
-                                   if ( jQuery.isNumeric(data) !== false ) {
-                                     type = "Number";
-                                   }
-                                   else {
-                                     var number = parsePercent(data);
-                                     if ( number !== false ) {
-                                       data  = number;
-                                       type  = "Number";
-                                       style += ' ss:StyleID="pct1"';
-                                     }
-                                   }
+                    if ( jQuery.isNumeric(data) !== false ) {
+                      type = "Number";
+                    }
+                    else {
+                      var number = parsePercent(data);
+                      if ( number !== false ) {
+                        data  = number;
+                        type  = "Number";
+                        style += ' ss:StyleID="pct1"';
+                      }
+                    }
 
-                                   if ( type !== "Number" )
-                                     data = data.replace(/\n/g, '<br>');
+                    if ( type !== "Number" )
+                      data = data.replace(/\n/g, '<br>');
 
-                                   var colspan = getColspan (cell);
-                                   var rowspan = getRowspan (cell);
+                    var colspan = getColspan (cell);
+                    var rowspan = getRowspan (cell);
 
-                                   // Skip spans
-                                   $.each(spans, function () {
-                                     var range = this;
-                                     if ( rowIndex >= range.s.r && rowIndex <= range.e.r && nCols >= range.s.c && nCols <= range.e.c ) {
-                                       for ( var i = 0; i <= range.e.c - range.s.c; ++i ) {
-                                         nCols++;
-                                         ssIndex++;
-                                       }
-                                     }
-                                   });
+                    // Skip spans
+                    $.each(spans, function () {
+                      var range = this;
+                      if ( rowIndex >= range.s.r && rowIndex <= range.e.r && nCols >= range.s.c && nCols <= range.e.c ) {
+                        for ( var i = 0; i <= range.e.c - range.s.c; ++i ) {
+                          nCols++;
+                          ssIndex++;
+                        }
+                      }
+                    });
 
-                                   // Handle Row Span
-                                   if ( rowspan || colspan ) {
-                                     rowspan = rowspan || 1;
-                                     colspan = colspan || 1;
-                                     spans.push({
-                                                  s: {r: rowIndex, c: nCols},
-                                                  e: {r: rowIndex + rowspan - 1, c: nCols + colspan - 1}
-                                                });
-                                   }
+                    // Handle Row Span
+                    if ( rowspan || colspan ) {
+                      rowspan = rowspan || 1;
+                      colspan = colspan || 1;
+                      spans.push({
+                        s: {r: rowIndex, c: nCols},
+                        e: {r: rowIndex + rowspan - 1, c: nCols + colspan - 1}
+                      });
+                    }
 
-                                   // Handle Colspan
-                                   if ( colspan > 1 ) {
-                                     style += ' ss:MergeAcross="' + (colspan-1) + '"';
-                                     nCols += (colspan - 1);
-                                   }
+                    // Handle Colspan
+                    if ( colspan > 1 ) {
+                      style += ' ss:MergeAcross="' + (colspan-1) + '"';
+                      nCols += (colspan - 1);
+                    }
 
-                                   if ( rowspan > 1 ) {
-                                     style += ' ss:MergeDown="' + (rowspan-1) + '" ss:StyleID="rsp1"';
-                                   }
+                    if ( rowspan > 1 ) {
+                      style += ' ss:MergeDown="' + (rowspan-1) + '" ss:StyleID="rsp1"';
+                    }
 
-                                   if ( ssIndex > 0 ) {
-                                     style += ' ss:Index="' + (nCols+1) + '"';
-                                     ssIndex = 0;
-                                   }
+                    if ( ssIndex > 0 ) {
+                      style += ' ss:Index="' + (nCols+1) + '"';
+                      ssIndex = 0;
+                    }
 
-                                   trData += '<Cell' + style + '><Data ss:Type="' + type + '">' +
-                                     $('<div />').text(data).html() +
-                                     '</Data></Cell>\r';
-                                   nCols++;
-                                 }
-                               });
+                    trData += '<Cell' + style + '><Data ss:Type="' + type + '">' +
+                        $('<div />').text(data).html() +
+                        '</Data></Cell>\r';
+                    nCols++;
+                  }
+                });
             if ( trData.length > 0 )
               docData += '<Row ss:AutoFitHeight="0">\r' + trData + '</Row>\r';
             rowIndex++;
@@ -575,50 +575,50 @@
 
       var CreationDate = new Date().toISOString();
       var xmlssDocFile = '<?xml version="1.0" encoding="UTF-8"?>\r' +
-        '<?mso-application progid="Excel.Sheet"?>\r' +
-        '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"\r' +
-        ' xmlns:o="urn:schemas-microsoft-com:office:office"\r' +
-        ' xmlns:x="urn:schemas-microsoft-com:office:excel"\r' +
-        ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"\r' +
-        ' xmlns:html="http://www.w3.org/TR/REC-html40">\r' +
-        '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">\r' +
-        '  <Created>' + CreationDate + '</Created>\r' +
-        '</DocumentProperties>\r' +
-        '<OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">\r' +
-        '  <AllowPNG/>\r' +
-        '</OfficeDocumentSettings>\r' +
-        '<ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">\r' +
-        '  <WindowHeight>9000</WindowHeight>\r' +
-        '  <WindowWidth>13860</WindowWidth>\r' +
-        '  <WindowTopX>0</WindowTopX>\r' +
-        '  <WindowTopY>0</WindowTopY>\r' +
-        '  <ProtectStructure>False</ProtectStructure>\r' +
-        '  <ProtectWindows>False</ProtectWindows>\r' +
-        '</ExcelWorkbook>\r' +
-        '<Styles>\r' +
-        '  <Style ss:ID="Default" ss:Name="Normal">\r' +
-        '    <Alignment ss:Vertical="Bottom"/>\r' +
-        '    <Borders/>\r' +
-        '    <Font/>\r' +
-        '    <Interior/>\r' +
-        '    <NumberFormat/>\r' +
-        '    <Protection/>\r' +
-        '  </Style>\r' +
-        '  <Style ss:ID="rsp1">\r' +
-        '    <Alignment ss:Vertical="Center"/>\r' +
-        '  </Style>\r' +
-        '  <Style ss:ID="pct1">\r' +
-        '    <NumberFormat ss:Format="Percent"/>\r' +
-        '  </Style>\r' +
-        '</Styles>\r';
+          '<?mso-application progid="Excel.Sheet"?>\r' +
+          '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"\r' +
+          ' xmlns:o="urn:schemas-microsoft-com:office:office"\r' +
+          ' xmlns:x="urn:schemas-microsoft-com:office:excel"\r' +
+          ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"\r' +
+          ' xmlns:html="http://www.w3.org/TR/REC-html40">\r' +
+          '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">\r' +
+          '  <Created>' + CreationDate + '</Created>\r' +
+          '</DocumentProperties>\r' +
+          '<OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">\r' +
+          '  <AllowPNG/>\r' +
+          '</OfficeDocumentSettings>\r' +
+          '<ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">\r' +
+          '  <WindowHeight>9000</WindowHeight>\r' +
+          '  <WindowWidth>13860</WindowWidth>\r' +
+          '  <WindowTopX>0</WindowTopX>\r' +
+          '  <WindowTopY>0</WindowTopY>\r' +
+          '  <ProtectStructure>False</ProtectStructure>\r' +
+          '  <ProtectWindows>False</ProtectWindows>\r' +
+          '</ExcelWorkbook>\r' +
+          '<Styles>\r' +
+          '  <Style ss:ID="Default" ss:Name="Normal">\r' +
+          '    <Alignment ss:Vertical="Bottom"/>\r' +
+          '    <Borders/>\r' +
+          '    <Font/>\r' +
+          '    <Interior/>\r' +
+          '    <NumberFormat/>\r' +
+          '    <Protection/>\r' +
+          '  </Style>\r' +
+          '  <Style ss:ID="rsp1">\r' +
+          '    <Alignment ss:Vertical="Center"/>\r' +
+          '  </Style>\r' +
+          '  <Style ss:ID="pct1">\r' +
+          '    <NumberFormat ss:Format="Percent"/>\r' +
+          '  </Style>\r' +
+          '</Styles>\r';
 
       for ( var j = 0; j < docDatas.length; j++ ) {
         xmlssDocFile += '<Worksheet ss:Name="' + docNames[j] + '" ss:RightToLeft="' + (defaults.mso.rtl ? '1' : '0') + '">\r' +
-          docDatas[j];
+            docDatas[j];
         if (defaults.mso.rtl) {
           xmlssDocFile += '<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">\r' +
-            '<DisplayRightToLeft/>\r' +
-            '</WorksheetOptions>\r';
+              '<DisplayRightToLeft/>\r' +
+              '</WorksheetOptions>\r';
         }
         else
           xmlssDocFile += '<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel"/>\r';
@@ -639,8 +639,8 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.xml',
-          'data:application/xml;charset=utf-8;base64,',
-          xmlssDocFile);
+            'data:application/xml;charset=utf-8;base64,',
+            xmlssDocFile);
       }
     }
     else if ( defaults.type === 'excel' && defaults.mso.fileFormat === 'xlsx' ) {
@@ -655,55 +655,55 @@
       $($rows).each(function () {
         var cols = [];
         ForEachVisibleCell(this, 'th,td', rowIndex, $rows.length,
-                           function (cell, row, col) {
-                             if ( typeof cell !== 'undefined' && cell !== null ) {
+            function (cell, row, col) {
+              if ( typeof cell !== 'undefined' && cell !== null ) {
 
-                               var cellValue = parseString(cell, row, col);
+                var cellValue = parseString(cell, row, col);
 
-                               var colspan = getColspan (cell);
-                               var rowspan = getRowspan (cell);
+                var colspan = getColspan (cell);
+                var rowspan = getRowspan (cell);
 
-                               // Skip span ranges
-                               $.each(spans, function () {
-                                 var range = this;
-                                 if ( rowIndex >= range.s.r && rowIndex <= range.e.r && cols.length >= range.s.c && cols.length <= range.e.c ) {
-                                   for ( var i = 0; i <= range.e.c - range.s.c; ++i )
-                                     cols.push(null);
-                                 }
-                               });
+                // Skip span ranges
+                $.each(spans, function () {
+                  var range = this;
+                  if ( rowIndex >= range.s.r && rowIndex <= range.e.r && cols.length >= range.s.c && cols.length <= range.e.c ) {
+                    for ( var i = 0; i <= range.e.c - range.s.c; ++i )
+                      cols.push(null);
+                  }
+                });
 
-                               // Handle Row Span
-                               if ( rowspan || colspan ) {
-                                 rowspan = rowspan || 1;
-                                 colspan = colspan || 1;
-                                 spans.push({
-                                              s: {r: rowIndex, c: cols.length},
-                                              e: {r: rowIndex + rowspan - 1, c: cols.length + colspan - 1}
-                                            });
-                               }
+                // Handle Row Span
+                if ( rowspan || colspan ) {
+                  rowspan = rowspan || 1;
+                  colspan = colspan || 1;
+                  spans.push({
+                    s: {r: rowIndex, c: cols.length},
+                    e: {r: rowIndex + rowspan - 1, c: cols.length + colspan - 1}
+                  });
+                }
 
-                               // Handle Value
-                               if ( typeof defaults.onCellData !== 'function' ) {
+                // Handle Value
+                if ( typeof defaults.onCellData !== 'function' ) {
 
-                                 // Type conversion
-                                 if ( cellValue !== "" && cellValue === +cellValue )
-                                   cellValue = +cellValue;
-                               }
-                               cols.push(cellValue !== "" ? cellValue : null);
+                  // Type conversion
+                  if ( cellValue !== "" && cellValue === +cellValue )
+                    cellValue = +cellValue;
+                }
+                cols.push(cellValue !== "" ? cellValue : null);
 
-                               // Handle Colspan
-                               if ( colspan )
-                                 for ( var k = 0; k < colspan - 1; ++k )
-                                   cols.push(null);
-                             }
-                           });
+                // Handle Colspan
+                if ( colspan )
+                  for ( var k = 0; k < colspan - 1; ++k )
+                    cols.push(null);
+              }
+            });
         data.push(cols);
         rowIndex++;
       });
 
       //noinspection JSPotentiallyInvalidConstructorUsage
       var wb = new jx_Workbook(),
-        ws = jx_createSheet(data);
+          ws = jx_createSheet(data);
 
       // add span ranges to worksheet
       ws['!merges'] = spans;
@@ -721,8 +721,8 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.' + defaults.mso.fileFormat,
-          'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8,',
-          jx_s2ab(wbout));
+            'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8,',
+            jx_s2ab(wbout));
       }
     }
     else if ( defaults.type === 'excel' || defaults.type === 'xls' || defaults.type === 'word' || defaults.type === 'doc' ) {
@@ -758,33 +758,33 @@
         $($hrows).each(function () {
           trData = "";
           ForEachVisibleCell(this, 'th,td', rowIndex, $hrows.length,
-                             function (cell, row, col) {
-                               if ( cell !== null ) {
-                                 var thstyle = '';
-                                 trData += '<th';
-                                 for ( var styles in defaults.mso.styles ) {
-                                   if ( defaults.mso.styles.hasOwnProperty(styles) ) {
-                                     var thcss = $(cell).css(defaults.mso.styles[styles]);
-                                     if ( thcss !== '' && thcss !== '0px none rgb(0, 0, 0)' && thcss !== 'rgba(0, 0, 0, 0)' ) {
-                                       thstyle += (thstyle === '') ? 'style="' : ';';
-                                       thstyle += defaults.mso.styles[styles] + ':' + thcss;
-                                     }
-                                   }
-                                 }
-                                 if ( thstyle !== '' )
-                                   trData += ' ' + thstyle + '"';
+              function (cell, row, col) {
+                if ( cell !== null ) {
+                  var thstyle = '';
+                  trData += '<th';
+                  for ( var styles in defaults.mso.styles ) {
+                    if ( defaults.mso.styles.hasOwnProperty(styles) ) {
+                      var thcss = $(cell).css(defaults.mso.styles[styles]);
+                      if ( thcss !== '' && thcss !== '0px none rgb(0, 0, 0)' && thcss !== 'rgba(0, 0, 0, 0)' ) {
+                        thstyle += (thstyle === '') ? 'style="' : ';';
+                        thstyle += defaults.mso.styles[styles] + ':' + thcss;
+                      }
+                    }
+                  }
+                  if ( thstyle !== '' )
+                    trData += ' ' + thstyle + '"';
 
-                                 var tdcolspan = getColspan (cell);
-                                 if ( tdcolspan > 0 )
-                                   trData += ' colspan="' + tdcolspan + '"';
+                  var tdcolspan = getColspan (cell);
+                  if ( tdcolspan > 0 )
+                    trData += ' colspan="' + tdcolspan + '"';
 
-                                 var tdrowspan = getRowspan (cell);
-                                 if ( tdrowspan > 0 )
-                                   trData += ' rowspan="' + tdrowspan + '"';
+                  var tdrowspan = getRowspan (cell);
+                  if ( tdrowspan > 0 )
+                    trData += ' rowspan="' + tdrowspan + '"';
 
-                                 trData += '>' + parseString(cell, row, col) + '</th>';
-                               }
-                             });
+                  trData += '>' + parseString(cell, row, col) + '</th>';
+                }
+              });
           if ( trData.length > 0 )
             docData += '<tr>' + trData + '</tr>';
           rowIndex++;
@@ -797,50 +797,50 @@
           var $row = $(this);
           trData   = "";
           ForEachVisibleCell(this, 'td,th', rowIndex, $hrows.length + $rows.length,
-                             function (cell, row, col) {
-                               if ( cell !== null ) {
-                                 var tdvalue = parseString(cell, row, col);
-                                 var tdstyle = '';
-                                 var tdcss   = $(cell).data("tableexport-msonumberformat");
+              function (cell, row, col) {
+                if ( cell !== null ) {
+                  var tdvalue = parseString(cell, row, col);
+                  var tdstyle = '';
+                  var tdcss   = $(cell).data("tableexport-msonumberformat");
 
-                                 if ( typeof tdcss === 'undefined' && typeof defaults.mso.onMsoNumberFormat === 'function' )
-                                   tdcss = defaults.mso.onMsoNumberFormat(cell, row, col);
+                  if ( typeof tdcss === 'undefined' && typeof defaults.mso.onMsoNumberFormat === 'function' )
+                    tdcss = defaults.mso.onMsoNumberFormat(cell, row, col);
 
-                                 if ( typeof tdcss !== 'undefined' && tdcss !== '' )
-                                   tdstyle = 'style="mso-number-format:\'' + tdcss + '\'';
+                  if ( typeof tdcss !== 'undefined' && tdcss !== '' )
+                    tdstyle = 'style="mso-number-format:\'' + tdcss + '\'';
 
-                                 for ( var cssStyle in defaults.mso.styles ) {
-                                   if ( defaults.mso.styles.hasOwnProperty(cssStyle) ) {
-                                     tdcss = $(cell).css(defaults.mso.styles[cssStyle]);
-                                     if ( tdcss === '' )
-                                       tdcss = $row.css(defaults.mso.styles[cssStyle]);
+                  for ( var cssStyle in defaults.mso.styles ) {
+                    if ( defaults.mso.styles.hasOwnProperty(cssStyle) ) {
+                      tdcss = $(cell).css(defaults.mso.styles[cssStyle]);
+                      if ( tdcss === '' )
+                        tdcss = $row.css(defaults.mso.styles[cssStyle]);
 
-                                     if ( tdcss !== '' && tdcss !== '0px none rgb(0, 0, 0)' && tdcss !== 'rgba(0, 0, 0, 0)' ) {
-                                       tdstyle += (tdstyle === '') ? 'style="' : ';';
-                                       tdstyle += defaults.mso.styles[cssStyle] + ':' + tdcss;
-                                     }
-                                   }
-                                 }
-                                 trData += '<td';
-                                 if ( tdstyle !== '' )
-                                   trData += ' ' + tdstyle + '"';
+                      if ( tdcss !== '' && tdcss !== '0px none rgb(0, 0, 0)' && tdcss !== 'rgba(0, 0, 0, 0)' ) {
+                        tdstyle += (tdstyle === '') ? 'style="' : ';';
+                        tdstyle += defaults.mso.styles[cssStyle] + ':' + tdcss;
+                      }
+                    }
+                  }
+                  trData += '<td';
+                  if ( tdstyle !== '' )
+                    trData += ' ' + tdstyle + '"';
 
-                                 var tdcolspan = getColspan (cell);
-                                 if ( tdcolspan > 0 )
-                                   trData += ' colspan="' + tdcolspan + '"';
+                  var tdcolspan = getColspan (cell);
+                  if ( tdcolspan > 0 )
+                    trData += ' colspan="' + tdcolspan + '"';
 
-                                 var tdrowspan = getRowspan (cell);
-                                 if ( tdrowspan > 0 )
-                                   trData += ' rowspan="' + tdrowspan + '"';
+                  var tdrowspan = getRowspan (cell);
+                  if ( tdrowspan > 0 )
+                    trData += ' rowspan="' + tdrowspan + '"';
 
-                                 if ( typeof tdvalue === 'string' && tdvalue !== '' ) {
-                                   tdvalue = preventInjection(tdvalue);
-                                   tdvalue = tdvalue.replace(/\n/g, '<br>');
-                                 }
+                  if ( typeof tdvalue === 'string' && tdvalue !== '' ) {
+                    tdvalue = preventInjection(tdvalue);
+                    tdvalue = tdvalue.replace(/\n/g, '<br>');
+                  }
 
-                                 trData += '>' + tdvalue + '</td>';
-                               }
-                             });
+                  trData += '>' + tdvalue + '</td>';
+                }
+              });
           if ( trData.length > 0 )
             docData += '<tr>' + trData + '</tr>';
           rowIndex++;
@@ -908,44 +908,44 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.' + MSDocExt,
-          'data:application/vnd.ms-' + MSDocType + ';base64,',
-          docFile);
+            'data:application/vnd.ms-' + MSDocType + ';base64,',
+            docFile);
       }
     }
     else if ( defaults.type === 'png' ) {
       //html2canvas($(el)[0], {
       //  onrendered: function (canvas) {
       html2canvas($(el)[0]).then(
-        function (canvas) {
+          function (canvas) {
 
-          var image      = canvas.toDataURL();
-          var byteString = atob(image.substring(22)); // remove data stuff
-          var buffer     = new ArrayBuffer(byteString.length);
-          var intArray   = new Uint8Array(buffer);
+            var image      = canvas.toDataURL();
+            var byteString = atob(image.substring(22)); // remove data stuff
+            var buffer     = new ArrayBuffer(byteString.length);
+            var intArray   = new Uint8Array(buffer);
 
-          for ( var i = 0; i < byteString.length; i++ )
-            intArray[i] = byteString.charCodeAt(i);
+            for ( var i = 0; i < byteString.length; i++ )
+              intArray[i] = byteString.charCodeAt(i);
 
-          if ( defaults.outputMode === 'string' )
-            return byteString;
+            if ( defaults.outputMode === 'string' )
+              return byteString;
 
-          if ( defaults.outputMode === 'base64' )
-            return base64encode(image);
+            if ( defaults.outputMode === 'base64' )
+              return base64encode(image);
 
-          if ( defaults.outputMode === 'window' ) {
-            window.open(image);
-            return;
-          }
+            if ( defaults.outputMode === 'window' ) {
+              window.open(image);
+              return;
+            }
 
-          try {
-            blob = new Blob([buffer], {type: "image/png"});
-            saveAs(blob, defaults.fileName + '.png');
-          }
-          catch (e) {
-            downloadFile(defaults.fileName + '.png', 'data:image/png,', blob);
-          }
-          //}
-        });
+            try {
+              blob = new Blob([buffer], {type: "image/png"});
+              saveAs(blob, defaults.fileName + '.png');
+            }
+            catch (e) {
+              downloadFile(defaults.fileName + '.png', 'data:image/png,', blob);
+            }
+            //}
+          });
 
     } else if ( defaults.type === 'pdf' ) {
 
@@ -968,25 +968,25 @@
             var r = [];
 
             ForEachVisibleCell(this, colselector, rowIndex, length,
-                               function (cell, row, col) {
-                                 if ( typeof cell !== 'undefined' && cell !== null ) {
+                function (cell, row, col) {
+                  if ( typeof cell !== 'undefined' && cell !== null ) {
 
-                                   var colspan = getColspan (cell);
-                                   var rowspan = getRowspan (cell);
+                    var colspan = getColspan (cell);
+                    var rowspan = getRowspan (cell);
 
-                                   var cellValue = parseString(cell, row, col) || " ";
+                    var cellValue = parseString(cell, row, col) || " ";
 
-                                   if ( colspan > 1 || rowspan > 1 ) {
-                                     colspan = colspan || 1;
-                                     rowspan = rowspan || 1;
-                                     r.push({colSpan: colspan, rowSpan: rowspan, text: cellValue});
-                                   }
-                                   else
-                                     r.push(cellValue);
-                                 }
-                                 else
-                                   r.push(" ");
-                               });
+                    if ( colspan > 1 || rowspan > 1 ) {
+                      colspan = colspan || 1;
+                      rowspan = rowspan || 1;
+                      r.push({colSpan: colspan, rowSpan: rowspan, text: cellValue});
+                    }
+                    else
+                      r.push(cellValue);
+                  }
+                  else
+                    r.push(" ");
+                });
 
             if ( r.length )
               body.push(r);
@@ -1060,12 +1060,12 @@
 
         var doc = new jsPDF(defaults.jspdf.orientation, defaults.jspdf.unit, defaults.jspdf.format);
         doc.addHTML($(el).first(),
-                    defaults.jspdf.margins.left,
-                    defaults.jspdf.margins.top,
-                    addHtmlOptions,
-                    function () {
-                      jsPdfOutput(doc, false);
-                    });
+            defaults.jspdf.margins.left,
+            defaults.jspdf.margins.top,
+            addHtmlOptions,
+            function () {
+              jsPdfOutput(doc, false);
+            });
         //delete doc;
       }
       else {
@@ -1112,8 +1112,8 @@
         // thus it can be accessed from any callback function
         if ( teOptions.doc == null ) {
           teOptions.doc = new jsPDF(defaults.jspdf.orientation,
-                                    defaults.jspdf.unit,
-                                    defaults.jspdf.format);
+              defaults.jspdf.unit,
+              defaults.jspdf.format);
           teOptions.wScaleFactor = 1;
           teOptions.hScaleFactor = 1;
 
@@ -1141,9 +1141,9 @@
 
             $($rows).each(function () {
               ForEachVisibleCell(this, 'td,th', $hrows.length + rowCount, $hrows.length + $rows.length,
-                                 function (cell) {
-                                   collectImages(cell, $(cell).children(), teOptions);
-                                 });
+                  function (cell) {
+                    collectImages(cell, $(cell).children(), teOptions);
+                  });
               rowCount++;
             });
           });
@@ -1275,7 +1275,7 @@
                 var colopt = teOptions.columns [data.column.dataKey];
 
                 if ( (colopt.style.hasOwnProperty("hidden") !== true || colopt.style.hidden !== true) &&
-                  colopt.rowIndex >= 0 )
+                    colopt.rowIndex >= 0 )
                   return prepareAutoTableText(cell, data, colopt);
                 else
                   return false; // cell is hidden
@@ -1293,7 +1293,7 @@
                     teOptions.doc.rect(cell.x, cell.y, cell.width, cell.height, cell.styles.fillStyle);
 
                     if ( typeof tecell !== 'undefined' &&
-                         typeof tecell.elements !== 'undefined' && tecell.elements.length ) {
+                        typeof tecell.elements !== 'undefined' && tecell.elements.length ) {
 
                       var hScale = cell.height / tecell.rect.height;
                       if ( hScale > teOptions.hScaleFactor )
@@ -1306,7 +1306,7 @@
 
                       drawAutotableText(cell, tecell.elements, teOptions);
                     }
-                    else 
+                    else
                       drawAutotableText(cell, {}, teOptions);
                   }
                 }
@@ -1318,7 +1318,7 @@
                   cell.width = r.width * teOptions.wScaleFactor;
                   cell.height = r.height * teOptions.hScaleFactor;
                   data.row.height = cell.height;
-                  
+
                   jsPdfDrawImage (cell, container, imgId, teOptions);
                 }
                 return false;
@@ -1333,13 +1333,13 @@
               teOptions.headerrows[rowIndex] = [];
 
               ForEachVisibleCell(this, 'th,td', rowIndex, $hrows.length,
-                                 function (cell, row, col) {
-                                   var obj      = getCellStyles(cell);
-                                   obj.title    = parseString(cell, row, col);
-                                   obj.key      = colKey++;
-                                   obj.rowIndex = rowIndex;
-                                   teOptions.headerrows[rowIndex].push(obj);
-                                 });
+                  function (cell, row, col) {
+                    var obj      = getCellStyles(cell);
+                    obj.title    = parseString(cell, row, col);
+                    obj.key      = colKey++;
+                    obj.rowIndex = rowIndex;
+                    teOptions.headerrows[rowIndex].push(obj);
+                  });
               rowIndex++;
             });
 
@@ -1354,7 +1354,7 @@
                     obj = teOptions.headerrows[lastrow - 1][this.key];
 
                   if ( obj !== null && obj.rowIndex >= 0 &&
-                    (obj.style.hasOwnProperty("hidden") !== true || obj.style.hidden !== true) )
+                      (obj.style.hasOwnProperty("hidden") !== true || obj.style.hidden !== true) )
                     teOptions.columns.push(obj);
                 });
 
@@ -1370,34 +1370,34 @@
               colKey      = 0;
 
               ForEachVisibleCell(this, 'td,th', rowIndex, $hrows.length + $rows.length,
-                                 function (cell, row, col) {
-                                   var obj;
+                  function (cell, row, col) {
+                    var obj;
 
-                                   if ( typeof teOptions.columns[colKey] === 'undefined' ) {
-                                     // jsPDF-Autotable needs columns. Thus define hidden ones for tables without thead
-                                     obj = {
-                                       title: '',
-                                       key:   colKey,
-                                       style: {
-                                         hidden: true
-                                       }
-                                     };
-                                     teOptions.columns.push(obj);
-                                   }
-                                   if ( typeof cell !== 'undefined' && cell !== null ) {
-                                     obj = getCellStyles(cell);
-                                     obj.isCanvas = cell.hasAttribute("data-tableexport-canvas");
-                                     obj.elements = obj.isCanvas ? $(cell) : $(cell).children();
-                                     teOptions.teCells [rowCount + ":" + colKey++] = obj;
-                                   }
-                                   else {
-                                     obj = $.extend(true, {}, teOptions.teCells [rowCount + ":" + (colKey - 1)]);
-                                     obj.colspan = -1;
-                                     teOptions.teCells [rowCount + ":" + colKey++] = obj;
-                                   }
+                    if ( typeof teOptions.columns[colKey] === 'undefined' ) {
+                      // jsPDF-Autotable needs columns. Thus define hidden ones for tables without thead
+                      obj = {
+                        title: '',
+                        key:   colKey,
+                        style: {
+                          hidden: true
+                        }
+                      };
+                      teOptions.columns.push(obj);
+                    }
+                    if ( typeof cell !== 'undefined' && cell !== null ) {
+                      obj = getCellStyles(cell);
+                      obj.isCanvas = cell.hasAttribute("data-tableexport-canvas");
+                      obj.elements = obj.isCanvas ? $(cell) : $(cell).children();
+                      teOptions.teCells [rowCount + ":" + colKey++] = obj;
+                    }
+                    else {
+                      obj = $.extend(true, {}, teOptions.teCells [rowCount + ":" + (colKey - 1)]);
+                      obj.colspan = -1;
+                      teOptions.teCells [rowCount + ":" + colKey++] = obj;
+                    }
 
-                                   rowData.push(parseString(cell, row, col));
-                                 });
+                    rowData.push(parseString(cell, row, col));
+                  });
               if ( rowData.length ) {
                 teOptions.rows.push(rowData);
                 rowCount++;
@@ -1505,9 +1505,9 @@
             if (typeof this.rowIndex !== 'undefined' && this.rowIndex === $element[0].rowIndex)
               found = true;
             else if (typeof this.cellIndex !== 'undefined' && this.cellIndex === $element[0].cellIndex &&
-              typeof this.parentNode.rowIndex !== 'undefined' &&
-              typeof $element[0].parentNode.rowIndex !== 'undefined' &&
-              this.parentNode.rowIndex === $element[0].parentNode.rowIndex)
+                typeof this.parentNode.rowIndex !== 'undefined' &&
+                typeof $element[0].parentNode.rowIndex !== 'undefined' &&
+                this.parentNode.rowIndex === $element[0].parentNode.rowIndex)
               found = true;
           }
           return found;
@@ -1522,9 +1522,9 @@
       if (isVisible($cell)) {
         if ( defaults.ignoreColumn.length > 0 ) {
           if ( $.inArray(colIndex, defaults.ignoreColumn) !== -1 ||
-            $.inArray(colIndex - rowLength, defaults.ignoreColumn) !== -1 ||
-            (colNames.length > colIndex && typeof colNames[colIndex] !== 'undefined' &&
-              $.inArray(colNames[colIndex], defaults.ignoreColumn) !== -1) )
+              $.inArray(colIndex - rowLength, defaults.ignoreColumn) !== -1 ||
+              (colNames.length > colIndex && typeof colNames[colIndex] !== 'undefined' &&
+                  $.inArray(colNames[colIndex], defaults.ignoreColumn) !== -1) )
             result = true;
         }
       }
@@ -1542,9 +1542,9 @@
           ignoreRow = defaults.onIgnoreRow($(tableRow), rowIndex);
 
         if (ignoreRow === false &&
-          $.inArray(rowIndex, defaults.ignoreRow) === -1 &&
-          $.inArray(rowIndex - rowCount, defaults.ignoreRow) === -1 &&
-          isVisible($(tableRow))) {
+            $.inArray(rowIndex, defaults.ignoreRow) === -1 &&
+            $.inArray(rowIndex - rowCount, defaults.ignoreRow) === -1 &&
+            isVisible($(tableRow))) {
 
           var $cells = findTableElements($(tableRow), selector);
           var cellCount = 0;
@@ -1570,9 +1570,9 @@
                 rowspan = rowspan || 1;
                 colspan = colspan || 1;
                 ranges.push({
-                              s: {r: rowIndex, c: cellCount},
-                              e: {r: rowIndex + rowspan - 1, c: cellCount + colspan - 1}
-                            });
+                  s: {r: rowIndex, c: cellCount},
+                  e: {r: rowIndex + rowspan - 1, c: cellCount + colspan - 1}
+                });
               }
 
               // Handle Value
@@ -1655,8 +1655,8 @@
       }
       catch (e) {
         downloadFile(defaults.fileName + '.pdf',
-          'data:application/pdf' + (hasimages ? '' : ';base64') + ',',
-          hasimages ? doc.output('blob') : doc.output());
+            'data:application/pdf' + (hasimages ? '' : ';base64') + ',',
+            hasimages ? doc.output('blob') : doc.output());
       }
     }
 
@@ -1861,7 +1861,7 @@
 
             if ( w ) {
               if ( cell.styles.overflow === 'linebreak' &&
-                   x > cell.textPos.x && (x + w) > (cell.textPos.x + cell.width) ) {
+                  x > cell.textPos.x && (x + w) > (cell.textPos.x + cell.width) ) {
                 var chars = ".,!%*;:=-";
                 if ( chars.indexOf(txt.charAt(0)) >= 0 ) {
                   var s = txt.charAt(0);
@@ -1978,8 +1978,8 @@
                 if ( typeof $(this).html() === 'undefined' )
                   htmlData += $(this).text();
                 else if ( jQuery().bootstrapTable === undefined ||
-                  ($(this).hasClass('filterControl') !== true &&
-                    $(cell).parents('.detail-view').length === 0) )
+                    ($(this).hasClass('filterControl') !== true &&
+                        $(cell).parents('.detail-view').length === 0) )
                   htmlData += $(this).html();
               }
             });
@@ -2021,15 +2021,15 @@
             result = result.replace(/\u00A0/g, " "); // replace nbsp's with spaces
 
             if ( defaults.type === 'json' ||
-              (defaults.type === 'excel' && defaults.mso.fileFormat === 'xmlss') ||
-              defaults.numbers.output === false ) {
+                (defaults.type === 'excel' && defaults.mso.fileFormat === 'xmlss') ||
+                defaults.numbers.output === false ) {
               number = parseNumber(result);
 
               if ( number !== false )
                 result = Number(number);
             }
             else if ( defaults.numbers.html.decimalMark !== defaults.numbers.output.decimalMark ||
-              defaults.numbers.html.thousandsSeparator !== defaults.numbers.output.thousandsSeparator ) {
+                defaults.numbers.html.thousandsSeparator !== defaults.numbers.output.thousandsSeparator ) {
               number = parseNumber(result);
 
               if ( number !== false ) {
@@ -2039,8 +2039,8 @@
                 var mod = frac[0].length > 3 ? frac[0].length % 3 : 0;
 
                 result = (number < 0 ? "-" : "") +
-                  (defaults.numbers.output.thousandsSeparator ? ((mod ? frac[0].substr(0, mod) + defaults.numbers.output.thousandsSeparator : "") + frac[0].substr(mod).replace(/(\d{3})(?=\d)/g, "$1" + defaults.numbers.output.thousandsSeparator)) : frac[0]) +
-                  (frac[1].length ? defaults.numbers.output.decimalMark + frac[1] : "");
+                    (defaults.numbers.output.thousandsSeparator ? ((mod ? frac[0].substr(0, mod) + defaults.numbers.output.thousandsSeparator : "") + frac[0].substr(mod).replace(/(\d{3})(?=\d)/g, "$1" + defaults.numbers.output.thousandsSeparator)) : frac[0]) +
+                    (frac[1].length ? defaults.numbers.output.decimalMark + frac[1] : "");
               }
             }
           }
@@ -2267,8 +2267,8 @@
           var extension = filename.substr((filename.lastIndexOf('.') +1));
           switch(extension) {
             case 'doc': case 'json': case 'png': case 'pdf': case 'xls': case 'xlsx':
-            filename += ".txt";
-            break;
+              filename += ".txt";
+              break;
           }
           frame.contentDocument.execCommand("SaveAs", true, filename);
           document.body.removeChild(frame);
@@ -2365,8 +2365,8 @@
           enc4 = 64;
         }
         output = output +
-          keyStr.charAt(enc1) + keyStr.charAt(enc2) +
-          keyStr.charAt(enc3) + keyStr.charAt(enc4);
+            keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+            keyStr.charAt(enc3) + keyStr.charAt(enc4);
       }
       return output;
     }
