@@ -99,6 +99,9 @@
                             <li>
                                 <a href="needleCardMaintain">针卡保养</a>
                             </li>
+                            <li>
+                                <a href="needleCardAllRecord">针卡全记录</a>
+                            </li>
                             <%--<li>--%>
                                 <%--<a href="#">tooling档案</a>--%>
                             <%--</li>--%>

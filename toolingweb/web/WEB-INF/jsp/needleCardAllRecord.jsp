@@ -10,7 +10,8 @@
 <html>
 <head>
     <title>needleCard</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/fonts/bootstrap.min.css"/> ">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/js/dist/css/bootstrap-select.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/font-awesome.min.css"/> ">
@@ -26,12 +27,18 @@
     <script src="<c:url value="/js/jquery.validate.min.js"/> "></script>
     <script src="<c:url value="/js/messages_zh.js"/> "></script>
     <script src="<c:url value="/js/bootstrap/bootstrap.min.js"/> "></script>
+    <script src="<c:url value="/js/dist/js/bootstrap-select.min.js"/> "></script>
+    <script src="<c:url value="/js/dist/js/i18n/defaults-zh_CN.min.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-table.js"/> "></script>
+    <script src="<c:url value="/js/xlsx.core.min.js"/> "></script>
+    <script src="<c:url value="/js/FileSaver.min.js"/> "></script>
+    <script src="<c:url value="/js/tableExport.js"/> "></script>
+    <script src="<c:url value="/js/bootstrap-table-export.min.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-table-fixed-columns.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
-    <script src="<c:url value="/js/needle.js"/> "></script>
+    <script src="<c:url value="/js/needleAllRecord.js"/> "></script>
     <style>
         td {
             white-space: nowrap;
@@ -100,7 +107,7 @@
                                 <a href="needleCardMaintain">针卡保养</a>
                             </li>
                             <li>
-                                <a href="needleCardAllRecord">针卡全记录</a>
+                                <a href="needleCardAllRecord">针卡保养</a>
                             </li>
                             <%--<li>--%>
                                 <%--<a href="#">tooling档案</a>--%>
@@ -208,18 +215,37 @@
         </div>
     </nav>
     <div id='page-wrapper'>
+        <select class="selectpicker " id="needleCardSelect" multiple data-actions-box="true" data-live-search="true">
+
+        </select>
+        <select class="selectpicker" id="typeSelect" multiple data-actions-box="true">
+            <option value="info">建档</option>
+            <option value="iqc">IQC</option>
+            <option value="out">借出</option>
+            <option value="back">归还</option>
+            <option value="maintain">保养</option>
+            <option value="release">Release</option>
+        </select>
+        <button class="button button-3d button-primary" id="confirm">确认</button>
         <div class="row" id="needleCardSearchPage">
             <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        针卡借出归还记录
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <table id="needleCardTable">
+                <div class="panel-body" id="tableBody">
+                    <table id="needleCardInfoTable">
                     </table>
+                    <table id="needleCardIQCTable">
+                    </table>
+                    <table id="needleCardOutTable">
+                    </table>
+                    <table id="needleCardBackTable">
+                    </table>
+                    <table id="needleCardMaintainTable">
+                    </table>
+                    <table id="needleCardReleaseTable">
+                    </table>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>

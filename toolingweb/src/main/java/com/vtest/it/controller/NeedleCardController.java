@@ -414,13 +414,33 @@ public class NeedleCardController {
         return JSON.toJSONString(service.getTd());
     }
     @ResponseBody
-    @RequestMapping(value = "/getOutProberCard")
-    public String getOutProberCard(){
-        return JSON.toJSONString(service.getOutProberCard());
+    @RequestMapping(value = "/getOutProberCard", produces = "text/html;charset=UTF-8")
+    public String getOutProberCard(String[] proberCardIdArrays){
+        return JSON.toJSONString(service.getOutProberCard(proberCardIdArrays));
     }
     @ResponseBody
-    @RequestMapping(value = "/getBackProberCard")
-    public String getBackProberCard(){
-        return JSON.toJSONString(service.getBackProberCard());
+    @RequestMapping(value = "/getBackProberCard", produces = "text/html;charset=UTF-8")
+    public String getBackProberCard(String[] proberCardIdArrays){
+        return JSON.toJSONString(service.getBackProberCard(proberCardIdArrays));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getInfoProberCard", produces = "text/html;charset=UTF-8")
+    public String getInfoProberCard(String[] proberCardIdArrays){
+        return JSON.toJSONString(service.getInfoProberCard(proberCardIdArrays));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getIQCProberCard", produces = "text/html;charset=UTF-8")
+    public String getIQCProberCard(String[] proberCardIdArrays){
+        return JSON.toJSONString(service.getIQCProberCard(proberCardIdArrays));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getMaintainProberCard", produces = "text/html;charset=UTF-8")
+    public String getMaintainProberCard(String[] proberCardIdArrays){
+        return JSON.toJSONString(service.getMaintainProberCard(proberCardIdArrays));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getReleaseProberCard", produces = "text/html;charset=UTF-8")
+    public String getReleaseProberCard(String[] proberCardIdArrays){
+        return JSON.toJSONString(service.getReleaseProberCard(proberCardIdArrays));
     }
 }
