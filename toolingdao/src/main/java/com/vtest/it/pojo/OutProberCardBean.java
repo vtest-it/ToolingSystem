@@ -1,5 +1,7 @@
 package com.vtest.it.pojo;
 
+import java.util.Date;
+
 public class OutProberCardBean {
     private String proberCardId;
     private String outUseEquipment;
@@ -7,6 +9,15 @@ public class OutProberCardBean {
     private String outOperator;
     private String nextStation;
     private String note;
+    private Date loadTime;
+
+    public Date getLoadTime() {
+        return loadTime;
+    }
+
+    public void setLoadTime(Date loadTime) {
+        this.loadTime = loadTime;
+    }
 
     public String getProberCardId() {
         return proberCardId;

@@ -34,6 +34,15 @@ public class ProberCardEntityBean implements Serializable {
     private Integer rebuildCount;
     private String creator;
     private String confirmer;
+    private Date  loadTime;
+
+    public Date getLoadTime() {
+        return loadTime;
+    }
+
+    public void setLoadTime(Date loadTime) {
+        this.loadTime = loadTime;
+    }
 
     public String getCreator() {
         return creator;

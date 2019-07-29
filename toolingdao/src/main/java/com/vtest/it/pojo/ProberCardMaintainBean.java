@@ -1,5 +1,7 @@
 package com.vtest.it.pojo;
 
+import java.util.Date;
+
 public class ProberCardMaintainBean {
     private String proberCardId;
     private double beforePinlen;
@@ -24,6 +26,15 @@ public class ProberCardMaintainBean {
     private String updateOperator;
     private String note;
     private double rebuildCount;
+    private Date loadTime;
+
+    public Date getLoadTime() {
+        return loadTime;
+    }
+
+    public void setLoadTime(Date loadTime) {
+        this.loadTime = loadTime;
+    }
 
     public double getRebuildCount() {
         return rebuildCount;

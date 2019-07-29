@@ -107,17 +107,36 @@ public class ProberCardService {
     public  boolean  updateIQCItem(String proberCardId,double pinMinlen, double pinMaxdiam,double pinLevel){
         return  mapper.updateIQCItem(proberCardId,pinMinlen,pinMaxdiam,pinLevel);
     }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
     public Integer getInfoRebuildCount(String proberCardId){
         return mapper.getInfoRebuildCount(proberCardId);
     }
-
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
    public ArrayList<ProberCardTDBean> getTd(){
         return  mapper.getTd();
    }
-   public ArrayList<OutProberCardBean> getOutProberCard(){
-        return  mapper.getOutProberCard();
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+   public ArrayList<OutProberCardBean> getOutProberCard(String[] proberCardIdArrays){
+        return  mapper.getOutProberCard(proberCardIdArrays);
    }
-   public ArrayList<BackProberCardBean> getBackProberCard(){
-        return  mapper.getBackProberCard();
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+   public ArrayList<BackProberCardBean> getBackProberCard(String[] proberCardIdArrays){
+        return  mapper.getBackProberCard(proberCardIdArrays);
    }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public ArrayList<ProberCardEntityBean> getInfoProberCard(String[] proberCardIdArrays){
+        return  mapper.getInfoProberCard(proberCardIdArrays);
+    }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public ArrayList<IqcRecordBean> getIQCProberCard(String[] proberCardIdArrays){
+        return  mapper.getIQCProberCard(proberCardIdArrays);
+    }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public ArrayList<ProberCardMaintainBean> getMaintainProberCard(String[] proberCardIdArrays){
+        return  mapper.getMaintainProberCard(proberCardIdArrays);
+    }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public ArrayList<ReleaseProberCardBean> getReleaseProberCard(String[] proberCardIdArrays){
+        return  mapper.getReleaseProberCard(proberCardIdArrays);
+    }
 }

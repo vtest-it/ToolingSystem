@@ -59,8 +59,15 @@ public interface ProberCrdMapper {
 
     public ArrayList<ProberCardTDBean> getTd();
 
-    public ArrayList<OutProberCardBean> getOutProberCard();
+    public ArrayList<OutProberCardBean> getOutProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
 
-    public ArrayList<BackProberCardBean> getBackProberCard();
+    public ArrayList<BackProberCardBean> getBackProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
 
+    public ArrayList<ProberCardEntityBean> getInfoProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
+
+    public ArrayList<IqcRecordBean> getIQCProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
+
+    public ArrayList<ProberCardMaintainBean> getMaintainProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
+
+    public ArrayList<ReleaseProberCardBean> getReleaseProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
 }
