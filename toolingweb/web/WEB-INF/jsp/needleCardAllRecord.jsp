@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>needleCard</title>
+    <title>needleCardAllRecord</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/fonts/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/js/dist/css/bootstrap-select.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
