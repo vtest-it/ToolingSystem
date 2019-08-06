@@ -15,6 +15,9 @@
         p:prefix="/WEB-INF/jsp/"
          p:suffix=".jsp"
     />
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+    </bean>
     <mvc:annotation-driven/>
     <mv:resources mapping="/image/**" location="/staticResources/image/"/>
     <mv:resources mapping="/css/**" location="/staticResources/css/"/>

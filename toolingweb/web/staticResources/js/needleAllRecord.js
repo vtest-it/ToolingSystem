@@ -184,9 +184,6 @@ $(document).ready(function() {
                         title:"归还人员",field:"backOperator"
                     },
                     {
-                        title:"作业人员",field:"createOperator"
-                    },
-                    {
                         title:"是否异常",field:"issueFlag"
                     },
                     {

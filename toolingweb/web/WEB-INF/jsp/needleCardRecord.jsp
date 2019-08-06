@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap-table.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/objects.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/> "/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/fileinput.min.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap-datetimepicker.min.css"/> "/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap-table-fixed-columns.css"/> "/>
     <script src="<c:url value="/js/jquery.min.js"/> "></script>
@@ -30,6 +31,7 @@
     <script src="<c:url value="/js/bootstrap-table-fixed-columns.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
+    <script src="<c:url value="/js/fileinput.min.js"/>"></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <style>
@@ -207,6 +209,22 @@
             </div>
         </div>
     </nav>
+    <div class="modal fade" id="uploadFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="uploadFileLabel">上传文件</h4>
+                </div>
+                <div class="modal-body" id="fileBody">
+                    <input id="excelFile" name="file" type="file" multiple>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 1200px;left: -300px">
