@@ -83,6 +83,7 @@ $(document).ready(function() {
     }
     getTime();
     setInterval(getTime,1000);
+    var custNameSet=new Set();
     $.ajax({
         type:"get",
         async: false,
@@ -91,12 +92,17 @@ $(document).ready(function() {
         success:function (data) {
             $.each(data,function (i,item) {
                 $("#needleCardSelect").append('<option value="'+item.proberCardId+'">'+item.proberCardId+'</option>');
+                custNameSet.add(item.custName);
             })
         }
+    });
+    $.each(custNameSet,function(data){
+        $("#custNameSelect").append('<option value="'+data+'">'+data+'</option>');
     })
     $("#confirm").click(function () {
         $("#tableBody").html("");
         var dataList=new Array();
+        var nameList=new Array();
         var infoFlag=false;
         var iqcFlag=false;
         var outFlag=false;
@@ -106,6 +112,12 @@ $(document).ready(function() {
         $("#needleCardSelect option:selected").each(function () {
             dataList.push($(this).val());
         })
+        $("#custNameSelect option:selected").each(function () {
+            nameList.push($(this).val());
+        })
+       if(dataList.length<1&&nameList.length>0){
+
+        }
         $("#typeSelect option:selected").each(function () {
             if($(this).val()=="info"){
                 infoFlag=true;

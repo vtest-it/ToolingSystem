@@ -31,7 +31,6 @@
     <script src="<c:url value="/js/bootstrap-table-fixed-columns.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js"/> "></script>
-    <script src="<c:url value="/js/fileinput.min.js"/>"></script>
     <script src="<c:url value="/js/jquery.form.min.js"/> "></script>
     <script src="<c:url value="/js/needle.js"/> "></script>
     <style>

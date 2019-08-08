@@ -215,6 +215,9 @@
         </div>
     </nav>
     <div id='page-wrapper'>
+        <%--<select class="selectpicker " id="custNameSelect" multiple data-actions-box="true" data-live-search="true">--%>
+
+        <%--</select>--%>
         <select class="selectpicker " id="needleCardSelect" multiple data-actions-box="true" data-live-search="true">
 
         </select>
