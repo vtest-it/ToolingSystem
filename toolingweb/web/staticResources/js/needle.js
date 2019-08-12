@@ -50,57 +50,6 @@ $(document).ready(function() {
         }
         return date.format(pattern);
     }
-    function getTime(){
-        var now=new Date();
-        var year=now.getFullYear(),
-            month=now.getMonth()+1,
-            day=now.getDate(),
-            hour=now.getHours(),
-            minute=now.getMinutes(),
-            week=now.getDay();
-        if(week==7){
-            week="日";
-        }else if(week==6){
-            week="六";
-        }else if(week==5){
-            week="五";
-        }else if(week==4){
-            week="四";
-        }else if(week==3){
-            week="三";
-        }else if(week==2){
-            week="二";
-        }else if(week==1){
-            week="一";
-        }
-        if(month>=1&&month<=9){
-            month="0"+month;
-        }
-        if(day>=1&&day<=9){
-            day="0"+day;
-        }
-        if(minute>=1&&minute<=9){
-            minute="0"+minute;
-        }
-        $("#date").html("日期："+year+"-"+month+"-"+day+"&nbsp;"+hour+":"+minute+"&nbsp;星期"+week)
-
-    }
-    getTime();
-    setInterval(getTime,1000);
-    $("#btnAdd").on('click',function () {
-        $("#cardType").find("option:selected").attr("selected",false);
-        $("#newOld").find("option:selected").attr("selected",false);
-        $("#cleanType").find("option:selected").attr("selected",false);
-        $('#releaseFlag').find('option:contains("Unreleased")').attr("selected",true);
-        $("#state").empty();
-        $("#state").append(' <option value="New_Prod">新品入库</option>')
-        $("#needCardModifyForm")[0].reset();
-        $("#myModalLabel").text("针卡建档");
-        $("#myModal").modal('show');
-        $("#releaseFlag").parent().hide();
-        $("#submit").attr('value','提交');
-
-    })
     var needleCardData=[];
     var proberCardStatus=[];
     var IQCRecord=[];
@@ -204,98 +153,70 @@ $(document).ready(function() {
         data:needleCardData,
         toolbar: '.scroll',                //工具按钮用哪个容器
         striped: true,                      //是否显示行间隔色
-        cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
         pagination: true,                   //是否显示分页（*）
-        sortable: false,                     //是否启用排序
         sortOrder: "asc",                   //排序方式
         sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
         pageNumber: 1,                       //初始化加载第一页，默认第一页
         pageSize: 25,                       //每页的记录行数（*）
-        pageList: [25, 50, 100],        //可供选择的每页的行数（*）
         search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-        strictSearch: true,
-        minimumCountColumns: 2,             //最少允许的列数
-        clickToSelect: true,                //是否启用点击选中行
+        pageList: [25, 50,100], //可供选择的每页的行数（*）
+        strictSearch: false, //是否全局匹配,false模糊匹配
+        showColumns: true, //是否显示所有的列
+        showRefresh: false, //是否显示刷新按钮
+        minimumCountColumns: 2, //最少允许的列数
+        clickToSelect: false, //是否启用点击选中行
+        showToggle: false, //是否显示详细视图和列表视图的切换按钮
+        cardView: false, //是否显示详细视图
+        detailView: false, //是否显示父子表
+        sortable: true, //是否启用排序
         fixedColumns:true,
         fixedNumber:1,
-        height:420,
+        height:580,
         uniqueId: "proberCardId",
         columns:[
-            {title:"操作",formatter:function (value,row,index) {
-                    return['<button id="btnEdit" type="button" class="btn btn-default"> <span class="fa fa-edit" aria-hidden="true"></span>修改 </button>'].join("");
+            {title:"下载",formatter:function (value,row,index) {
+                    return['<button id="btnPreview" type="button" class="btn btn-default">下载</button>'].join("");
                 },events:{
-                    "click #btnEdit":function (e,value,row,index) {
-                        $("#submit").attr('value','修改');
-                        $("#needCardModifyForm")[0].reset();
-                        $("#submit").attr("proberCardID",row.proberCardId);
-                        $("#myModalLabel").text("针卡档案修改");
-                        $("#myModal").modal('show');
-                        $("#releaseFlag").parent().show();
-                        $("#state").empty();
-                        $("#state").append( '<option value="New_Prod">新品入库</option>'+
-                            '<option value="IQC">IQC</option>'+
-                            '<option value="IQC_PASS">IQC PASS</option>'+
-                            '<option value="IQC_FAIL">IQC FAIL</option>'+
-                            '<option value="Re_IQC">维修后IQC</option>'+
-                            '<option value="ReIQC_PASS">维修后IQC PASS</option>'+
-                            '<option value="ReIQC_FAIL">维修后IQC FAIL</option>'+
-                            '<option value="Production_Verify">测试/验证中</option>'+
-                            '<option value="In_Engineering">工程中</option>'+
-                            '<option value="Inner_Back">内部归还</option>'+
-                            '<option value="Final">归还客户</option>'+
-                            '<option value="Card_PM">保养中 PM</option>'+
-                            '<option value="Inner_Repair">维修清针</option>'+
-                            '<option value="Out_Fixing">厂外维修</option>'+
-                            '<option value="Back_Fixing">厂外维修返回</option>'+
-                            '<option value="Cust_Lending">客户借出</option>'+
-                            '<option value="Cust_Lending">客户借出返回</option>'+
-                            '<option value="Card_Idle">针卡待料 </option>'+
-                            '<option value="Un_Sealed">待拆版</option>'+
-                            '<option value="Re_Build">重新制作</option>'+
-                            '<option value="ReBuild_Back">重新制作返回IQC</option>'+
-                            '<option value="Card_Check">针卡验收</option>'+
-                            '<option value="Card_Release">针卡Release</option>');
+                    "click #btnPreview":function (e,value,row,index) {
+                        $("#previewTable>tbody").html("");
+                        var proberCardId;
                         var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
                         for(var k=0;k<rows.length;k++){
                             var rowIndex=rows[k].indexOf(":");
                             var title=rows[k].substring(1,rowIndex-1);
                             var field=rows[k].substring(rowIndex+2,rows[k].length-1);
-                            if(title=="dutCount"||title=="glassMask"||title=="mylarMask"||title=="pinCount"){
-                                field=rows[k].substring(rowIndex+1,rows[k].length).replace('"','').replace('"','');
+                            if(title=='proberCardId'){
+                                proberCardId=field;
                             }
-                            if(title=="cardType"||title=="cleanType"||title=="state"){
-                                $('#'+title).find('option[value='+field+']').attr("selected",true);
-                                // $('#'+title).find('option:contains('+field+')').attr("selected",true);
-                            }else if(title=='newOld'){
-                                field=rows[k].substring(rowIndex+1,rows[k].length);
-                                if(field=='"new"'){
-                                    $('#newOld').find('option:contains("新")').attr("selected",true);
-                                }else {
-                                    $('#newOld').find('option:contains("旧")').attr("selected",true);
-                                }
-                            } else if(title=="releaseFlag"){
-                                field=rows[k].substring(rowIndex+1,rows[k].length);
-                                if(field=='"Release"'){
-                                    $('#releaseFlag').find('option:contains("Release")').attr("selected",true);
-                                }else {
-                                    $('#releaseFlag').find('option:contains("Unreleased")').attr("selected",true);
-                                }
-                            }else{
-                                $('#'+title).val(field)
-                            }
-
                         }
-
+                        $.ajax({
+                            type:"get",
+                            async: false,
+                            dataType:"json",
+                            url:"/toolingweb/proberCard/"+proberCardId,
+                            success:function (data) {
+                                    for(var file of data){
+                                        var fileName=file.split("\\")[3];
+                                        var fileLink="../"+file.split("\\")[1]+"/"+file.split("\\")[2]+"/"+file.split("\\")[3]
+                                        var link="<a href='"+fileLink+"' download=''>"+fileName+"</a>"
+                                        $("#previewTable").append("<tr><td>"+link+"</td></tr>");
+                                    }
+                                }
+                        })
+                        $("#previewFile").modal('show');
                     }
                 }
             },{
-                title:"客户",field:"custName"
+                title:"客户",field:"custName",
+                visible:false
             },
             {
-                title:"厂商",field:"vendorName"
+                title:"厂商",field:"vendorName",
+                visible:false
             },
             {
-                title:"型号",field:"cardModel"
+                title:"型号",field:"cardModel",
+                visible:false
             },
             {
                 title:"编号",field:"proberCardId"
@@ -375,58 +296,141 @@ $(document).ready(function() {
                 }
             },
             {
-                title:"柜位",field:"cabPosition"
+                title:"柜位",field:"cabPosition",
+                visible:false
             },{
-                title:"财产单位",field:"belongDept"
+                title:"财产单位",field:"belongDept",
+                visible:false
             },
             {
-                title:"PM时机",field:"pmTd"
+                title:"PM时机",field:"pmTd",
+                visible:false
             },
             {
-                title:"开始针长",field:"pinMinlen"
+                title:"开始针长",field:"pinMinlen",
+                visible:false
             },
             {
-                title:"开始针径",field:"pinMaxdiam"
+                title:"开始针径",field:"pinMaxdiam",
+                visible:false
             },{
-                title:"开始水平",field:"pinLevel"
+                title:"开始水平",field:"pinLevel",
+                visible:false
             },{
-                title:"针长Spec",field:"pinlenSpec"
+                title:"针长Spec",field:"pinlenSpec",
+                visible:false
             },
             {
-                title:"针径Spec",field:"pindiamSpec"
+                title:"针径Spec",field:"pindiamSpec",
+                visible:false
             },{
-                title:"水平Spec",field:"pinlevelSpec"
+                title:"水平Spec",field:"pinlevelSpec",
+                visible:false
             },
             {
-                title:"客户编号",field:"custNo"
+                title:"客户编号",field:"custNo",
+                visible:false
             },
             {
-                title:"厂商编号",field:"vendorNo"
+                title:"厂商编号",field:"vendorNo",
+                visible:false
             },
             {
-                title:"Rebuild次数",field:"rebuildCount"
+                title:"Rebuild次数",field:"rebuildCount",
+                visible:false
             },
             {
-                title:"GlassMask",field:"glassMask"
+                title:"GlassMask",field:"glassMask",
+                visible:false
             },
             {
-                title:"MylarMask",field:"mylarMask"
+                title:"MylarMask",field:"mylarMask",
+                visible:false
             },{
-                title:"建档日期",field:"receiptTime"
+                title:"建档日期",field:"receiptTime",
+                visible:false
             },
             {
-                title:"建档人员",field:"creator"
+                title:"建档人员",field:"creator",
+                visible:false
             },{
-                title:"确认人",field:"confirmer"
+                title:"确认人",field:"confirmer",
+                visible:false
             },
             {
-                title:"修改日期",field:"editTime"
+                title:"修改日期",field:"editTime",
+                visible:false
             },
             {
-                title:"修改人员",field:"editOperator"
+                title:"修改人员",field:"editOperator",
+                visible:false
             },
             {
                 title:"备注",field:"note"
+            }, {title:"操作",formatter:function (value,row,index) {
+                    return['<button id="btnEdit" type="button" class="btn btn-default"> <span class="fa fa-edit" aria-hidden="true"></span>修改 </button>'].join("");
+                },events:{
+                    "click #btnEdit":function (e,value,row,index) {
+                        $("#needCardModifyForm")[0].reset();
+                        $("#myModal").modal('show');
+                        $("#submit").attr("proberCardID",row.proberCardId);
+                        $("#state").empty();
+                        $("#state").append( '<option value="New_Prod">新品入库</option>'+
+                            '<option value="IQC">IQC</option>'+
+                            '<option value="IQC_PASS">IQC PASS</option>'+
+                            '<option value="IQC_FAIL">IQC FAIL</option>'+
+                            '<option value="Re_IQC">维修后IQC</option>'+
+                            '<option value="ReIQC_PASS">维修后IQC PASS</option>'+
+                            '<option value="ReIQC_FAIL">维修后IQC FAIL</option>'+
+                            '<option value="Production_Verify">测试/验证中</option>'+
+                            '<option value="In_Engineering">工程中</option>'+
+                            '<option value="Inner_Back">内部归还</option>'+
+                            '<option value="Final">归还客户</option>'+
+                            '<option value="Card_PM">保养中 PM</option>'+
+                            '<option value="Inner_Repair">维修清针</option>'+
+                            '<option value="Out_Fixing">厂外维修</option>'+
+                            '<option value="Back_Fixing">厂外维修返回</option>'+
+                            '<option value="Cust_Lending">客户借出</option>'+
+                            '<option value="Cust_Lending">客户借出返回</option>'+
+                            '<option value="Card_Idle">针卡待料 </option>'+
+                            '<option value="Un_Sealed">待拆版</option>'+
+                            '<option value="Re_Build">重新制作</option>'+
+                            '<option value="ReBuild_Back">重新制作返回IQC</option>'+
+                            '<option value="Card_Check">针卡验收</option>'+
+                            '<option value="Card_Release">针卡Release</option>');
+                        var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
+                        for(var k=0;k<rows.length;k++){
+                            var rowIndex=rows[k].indexOf(":");
+                            var title=rows[k].substring(1,rowIndex-1);
+                            var field=rows[k].substring(rowIndex+2,rows[k].length-1);
+                            if(title=="dutCount"||title=="glassMask"||title=="mylarMask"||title=="pinCount"){
+                                field=rows[k].substring(rowIndex+1,rows[k].length).replace('"','').replace('"','');
+                            }
+                            if(title=="cardType"||title=="cleanType"||title=="state"){
+                                $('#'+title).find('option[value='+field+']').attr("selected",true);
+                                // $('#'+title).find('option:contains('+field+')').attr("selected",true);
+                            }else if(title=='newOld'){
+                                field=rows[k].substring(rowIndex+1,rows[k].length);
+                                if(field=='"new"'){
+                                    $('#newOld').find('option:contains("新")').attr("selected",true);
+                                }else {
+                                    $('#newOld').find('option:contains("旧")').attr("selected",true);
+                                }
+                            } else if(title=="releaseFlag"){
+                                field=rows[k].substring(rowIndex+1,rows[k].length);
+                                if(field=='"Release"'){
+                                    $('#releaseFlag').find('option:contains("Release")').attr("selected",true);
+                                }else {
+                                    $('#releaseFlag').find('option:contains("Unreleased")').attr("selected",true);
+                                }
+                            }else{
+                                $('#'+title).val(field)
+                            }
+
+                        }
+
+                    }
+                }
             }],
         // selectItemName: 'parentItem'
     })
@@ -461,7 +465,7 @@ $(document).ready(function() {
     jQuery.validator.addMethod("isCustomer",function (value,element) {
         var customer=/^([a-zA-Z]{3}|NA)*$/;
         return this.optional(element)||(customer.test(value));
-    },warning+"三位字母或NA")
+    },warning+"字母或NA")
     $("#needCardModifyForm").validate({
         errorPlacement: function(error, element) {
             error.css({width:"25%",float:"right",color:"#DAA520"})
@@ -565,38 +569,6 @@ $(document).ready(function() {
                         isReleaseFlag=item.value;
                     }
                 })
-                if($("#submit").attr("value")=="提交"){
-                    $(form).ajaxSubmit({
-                        type:'post',
-                        url:'/toolingweb/needleCard/addNewNeedleCard',
-                        data:$(form).serialize(),
-                        error:function (XMLHttpRequest, textStatus, errorThrown) {
-                            console.log(XMLHttpRequest.status);
-                            console.log(XMLHttpRequest.readyState);
-                            console.log(textStatus);
-                            alert("add failed!,please check your information again!")
-                        }
-                    });
-                    var date=new Date();
-                    var month=date.getMonth()+1;
-                    var day=date.getDate();
-                    if(month>=1&&month<=9){
-                        month="0"+month;
-                    }
-                    if(day>=1&&day<=9){
-                        day="0"+day;
-                    }
-                    var data= $(form).serializeArray();
-                    var newDatas=[];
-                    var newData=new Object();
-                    $.each(data,function (i,item) {
-                        newData[item.name]=item.value;
-                    })
-                    newDatas.push(newData);
-                    $('#needleCardTable').bootstrapTable("append",newDatas);
-                    $(form).resetForm();
-                    $("#myModal").modal('hide');
-                }else {
                     $(form).ajaxSubmit({
                         type:'post',
                         url:'/toolingweb/needleCard/updateProberCard',
@@ -641,8 +613,6 @@ $(document).ready(function() {
                     $(form).resetForm();
                     $("#myModal").modal('hide');
                 }
-
-            }
             return false;
         }
 

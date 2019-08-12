@@ -79,14 +79,14 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search">
-                        <span id="date"></span>
-                    </li>
                     <li>
                         <%--<a href="#"><i class="fa fa-book fa-fw"></i>档案管理<span class="fa arrow"></span></a>--%>
                         <ul class="nav">
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
+                            </li>
+                            <li>
+                                <a href="needleCardBuildRecord">针卡建档</a>
                             </li>
                             <li>
                                 <a href="needleCardIQC">针卡IQC</a>
@@ -215,9 +215,9 @@
         </div>
     </nav>
     <div id='page-wrapper'>
-        <%--<select class="selectpicker " id="custNameSelect" multiple data-actions-box="true" data-live-search="true">--%>
+        <select class="selectpicker " id="custNameSelect" multiple data-actions-box="true" data-live-search="true">
 
-        <%--</select>--%>
+        </select>
         <select class="selectpicker " id="needleCardSelect" multiple data-actions-box="true" data-live-search="true">
 
         </select>

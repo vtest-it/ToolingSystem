@@ -46,44 +46,8 @@ $(document).ready(function() {
         }
         return date.format(pattern);
     }
-    function getTime(){
-        var now=new Date();
-        var year=now.getFullYear(),
-            month=now.getMonth()+1,
-            day=now.getDate(),
-            hour=now.getHours(),
-            minute=now.getMinutes(),
-            week=now.getDay();
-        if(week==7){
-            week="日";
-        }else if(week==6){
-            week="六";
-        }else if(week==5){
-            week="五";
-        }else if(week==4){
-            week="四";
-        }else if(week==3){
-            week="三";
-        }else if(week==2){
-            week="二";
-        }else if(week==1){
-            week="一";
-        }
-        if(month>=1&&month<=9){
-            month="0"+month;
-        }
-        if(day>=1&&day<=9){
-            day="0"+day;
-        }
-        if(minute>=1&&minute<=9){
-            minute="0"+minute;
-        }
-        $("#date").html("日期："+year+"-"+month+"-"+day+"&nbsp;"+hour+":"+minute+"&nbsp;星期"+week)
-
-    }
-    getTime();
-    setInterval(getTime,1000);
     var custNameSet=new Set();
+    var nameList=new Array();
     $.ajax({
         type:"get",
         async: false,
@@ -91,33 +55,43 @@ $(document).ready(function() {
         url:"/toolingweb/needleCard/getAllProberCardInfos",
         success:function (data) {
             $.each(data,function (i,item) {
-                $("#needleCardSelect").append('<option value="'+item.proberCardId+'">'+item.proberCardId+'</option>');
                 custNameSet.add(item.custName);
             })
         }
     });
-    $.each(custNameSet,function(data){
-        $("#custNameSelect").append('<option value="'+data+'">'+data+'</option>');
+    for (var item of custNameSet){
+        $("#custNameSelect").append('<option value="'+item+'">'+item+'</option>');
+    }
+    $("#custNameSelect").change(function () {
+            nameList.push($(this).val());
+        $.ajax({
+            type:"get",
+            async: false,
+            dataType:"json",
+            url:"/toolingweb/needleCard/getProberCardId?custNameArrays="+nameList.toString(),
+            success:function (data) {
+                $.each(data,function (i,item) {
+                    $("#needleCardSelect").append('<option value="'+item.proberCardId+'">'+item.proberCardId+'</option>');
+                })
+            }
+        })
+        $('#needleCardSelect').selectpicker('refresh');
+
     })
+
     $("#confirm").click(function () {
-        $("#tableBody").html("");
         var dataList=new Array();
-        var nameList=new Array();
+        $("#needleCardSelect option:selected").each(function () {
+            dataList.push($(this).val());
+        })
+        $("#tableBody").html("");
         var infoFlag=false;
         var iqcFlag=false;
         var outFlag=false;
         var backFlag=false;
         var maintainFlag=false;
         var releaseFlag=false;
-        $("#needleCardSelect option:selected").each(function () {
-            dataList.push($(this).val());
-        })
-        $("#custNameSelect option:selected").each(function () {
-            nameList.push($(this).val());
-        })
-       if(dataList.length<1&&nameList.length>0){
 
-        }
         $("#typeSelect option:selected").each(function () {
             if($(this).val()=="info"){
                 infoFlag=true;
@@ -189,10 +163,7 @@ $(document).ready(function() {
                     },
                     {
                         title:"归还机台",field:"backuseEquipment"
-                    },
-                    {
-                        title:"归还状态",field:"backStatus"
-                    },{
+                    }, {
                         title:"归还人员",field:"backOperator"
                     },
                     {
@@ -203,7 +174,7 @@ $(document).ready(function() {
                     }
                     ,
                     {
-                        title:"下一站",field:"nextStation"
+                        title:"归还状态",field:"nextStation"
                     }
                     ,
                     {
@@ -265,14 +236,11 @@ $(document).ready(function() {
                     },
                     {
                         title:"借出机台",field:"outUseEquipment"
-                    },
-                    {
-                        title:"借出用途",field:"outUsing"
                     },{
                         title:"借出人员",field:"outOperator"
                     },
                     {
-                        title:"下一站",field:"nextStation"
+                        title:"借出用途",field:"nextStation"
                     },
                     {
                         title:"备注",field:"note"

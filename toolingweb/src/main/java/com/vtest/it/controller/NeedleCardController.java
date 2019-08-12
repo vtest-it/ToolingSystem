@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -110,7 +112,7 @@ public class NeedleCardController {
     }
     @RequestMapping("/iqcRelease")
     @ResponseBody
-    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus){
+    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus,@RequestParam(value = "excelFile") CommonsMultipartFile file){
         try {
             IqcRecordBean bean=new IqcRecordBean();
             bean.setProberCardId(proberCardId);
@@ -123,6 +125,13 @@ public class NeedleCardController {
             bean.setUpdateOperator(updateOperator);
             bean.setNextStation(nextStation);
             bean.setNote(note);
+            String descPath="D:/upload/"+proberCardId;
+            File descFile=new File(descPath);
+            if(!descFile.exists()){
+                descFile.mkdir();
+            }
+            File newFile=new File(descFile,"/"+file.getOriginalFilename());
+            file.transferTo(newFile);
             service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
             service.addNewIqcRecord(bean);
             return true;
@@ -442,5 +451,10 @@ public class NeedleCardController {
     @RequestMapping(value = "/getReleaseProberCard", produces = "text/html;charset=UTF-8")
     public String getReleaseProberCard(String[] proberCardIdArrays){
         return JSON.toJSONString(service.getReleaseProberCard(proberCardIdArrays));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getProberCardId", produces = "text/html;charset=UTF-8")
+    public String getProberCardId(String[] custNameArrays){
+        return JSON.toJSONString(service.getProberCardId(custNameArrays));
     }
 }

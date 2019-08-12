@@ -1,31 +1,34 @@
 package com.vtest.it.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.util.ArrayList;
 
 @Controller
 public class fileUploadController {
     @ResponseBody
-    @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public boolean upload( @RequestParam(value = "proberCard") String desc, @RequestParam(value = "file") CommonsMultipartFile file){
+    @RequestMapping(value = "/proberCard/{id}",method = RequestMethod.GET)
+    @GetMapping
+    public ArrayList<String> preview(@PathVariable("id") String id) {
         try {
-            System.out.println(desc);
-            String descPath="D:/ErrorData/"+desc;
-            File descFile=new File(descPath);
-            if(!descFile.exists()){
-                descFile.mkdir();
+            String descPath="D:/upload/"+id;
+            File proberCardFile=new File(descPath);
+            if(!proberCardFile.exists()){
+                proberCardFile.mkdir();
             }
-            File newFile=new File(descFile,"/"+file.getOriginalFilename());
-            file.transferTo(newFile);
-            return true;
+            File[] files= proberCardFile.listFiles();
+            ArrayList<String> fileList=new ArrayList<>();
+            for (File file: files) {
+                System.out.println(file.getAbsolutePath());
+                fileList.add(file.getAbsolutePath());
+            }
+            return fileList;
         }catch (Exception e){
-            return false;
+            return null;
         }
+
     }
+
 }

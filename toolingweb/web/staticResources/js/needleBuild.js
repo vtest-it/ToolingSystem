@@ -50,43 +50,6 @@ $(document).ready(function() {
         }
         return date.format(pattern);
     }
-    function getTime(){
-        var now=new Date();
-        var year=now.getFullYear(),
-            month=now.getMonth()+1,
-            day=now.getDate(),
-            hour=now.getHours(),
-            minute=now.getMinutes(),
-            week=now.getDay();
-        if(week==7){
-            week="日";
-        }else if(week==6){
-            week="六";
-        }else if(week==5){
-            week="五";
-        }else if(week==4){
-            week="四";
-        }else if(week==3){
-            week="三";
-        }else if(week==2){
-            week="二";
-        }else if(week==1){
-            week="一";
-        }
-        if(month>=1&&month<=9){
-            month="0"+month;
-        }
-        if(day>=1&&day<=9){
-            day="0"+day;
-        }
-        if(minute>=1&&minute<=9){
-            minute="0"+minute;
-        }
-        $("#date").html("日期："+year+"-"+month+"-"+day+"&nbsp;"+hour+":"+minute+"&nbsp;星期"+week)
-
-    }
-    getTime();
-    setInterval(getTime,1000);
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isNumber",function (value,element) {
         //var number=/^(0\.[1-9]\d*|[1-9]\d*(\.\d+)?)$/;
@@ -118,7 +81,7 @@ $(document).ready(function() {
     jQuery.validator.addMethod("isCustomer",function (value,element) {
         var customer=/^([a-zA-Z]{3}|NA)*$/;
         return this.optional(element)||(customer.test(value));
-    },warning+"三位字母或NA")
+    },warning+"字母或NA")
     $("#needCardModifyForm").validate({
         errorPlacement: function(error, element) {
             error.css({width:"25%",float:"right",color:"#DAA520"})
@@ -215,9 +178,13 @@ $(document).ready(function() {
                             console.log(XMLHttpRequest.status);
                             console.log(XMLHttpRequest.readyState);
                             console.log(textStatus);
-                            alert("add failed!,please check your information again!")
+                            alert("add failed!please check your information again!")
+                        },
+                        success:function () {
+                            alert("add Success!")
                         }
                     });
+                $(form).resetForm();
                 }
             return false;
         }

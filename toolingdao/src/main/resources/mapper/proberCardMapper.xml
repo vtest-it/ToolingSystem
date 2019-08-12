@@ -173,4 +173,14 @@
         </trim>
         )
     </select>
+    <select id="getProberCardId" resultType="com.vtest.it.pojo.ProberCardEntityBean">
+        select  prober_card_id FROM VTProberCard.Probercard_Info  where cust_name in
+        (
+        <trim suffix="" suffixOverrides=",">
+            <foreach item="cust_name" index="index" collection="custNameArrays">
+                #{cust_name},
+            </foreach>
+        </trim>
+        )
+    </select>
 </mapper>

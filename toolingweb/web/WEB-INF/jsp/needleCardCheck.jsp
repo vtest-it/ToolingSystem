@@ -68,9 +68,6 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search">
-                        <span id="date"></span>
-                    </li>
                     <!--<li class="sidebar-search">-->
                     <!--<div class="input-group custom-search-form">-->
                     <!--<input type="text" class="form-control" placeholder="Search...">-->
@@ -87,6 +84,9 @@
                         <ul class="nav">
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
+                            </li>
+                            <li>
+                                <a href="needleCardBuildRecord">针卡建档</a>
                             </li>
                             <li>
                                 <a href="needleCardIQC">针卡IQC</a>

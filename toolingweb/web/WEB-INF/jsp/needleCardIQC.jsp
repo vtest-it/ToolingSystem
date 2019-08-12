@@ -68,9 +68,6 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search">
-                        <span id="date"></span>
-                    </li>
                     <!--<li class="sidebar-search">-->
                     <!--<div class="input-group custom-search-form">-->
                     <!--<input type="text" class="form-control" placeholder="Search...">-->
@@ -87,6 +84,9 @@
                         <ul class="nav">
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
+                            </li>
+                            <li>
+                                <a href="needleCardBuildRecord">针卡建档</a>
                             </li>
                             <li>
                                 <a href="needleCardIQC">针卡IQC</a>
@@ -389,6 +389,12 @@
                                         <label class="col-lg-4">下一站</label>
                                         <select class="form-control"  name="nextStation" id="nextStation" style="width: 50%">
                                         </select>
+                                    </p>
+                                </div>
+                                <div class="form-group">
+                                    <p class="col-lg-12">
+                                        <label class="col-lg-3">上传文件</label>
+                                        <input id="excelFile" name="excelFile" type="file" multiple>
                                     </p>
                                 </div>
                                 <div class="form-group">

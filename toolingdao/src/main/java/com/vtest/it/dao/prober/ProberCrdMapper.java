@@ -70,4 +70,6 @@ public interface ProberCrdMapper {
     public ArrayList<ProberCardMaintainBean> getMaintainProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
 
     public ArrayList<ReleaseProberCardBean> getReleaseProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
+
+    public ArrayList<ProberCardEntityBean> getProberCardId(@Param("custNameArrays") String[] custNameArrays);
 }

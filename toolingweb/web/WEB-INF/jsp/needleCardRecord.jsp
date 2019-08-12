@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>needleCard</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/> ">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/js/vendor/bootstrap/css/bootstrap.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/metisMenu.min.css"/> ">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sb-admin-2.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/font-awesome.min.css"/> ">
@@ -26,7 +26,7 @@
     <script src="<c:url value="/js/metisMenu.min.js"/> "></script>
     <script src="<c:url value="/js/jquery.validate.min.js"/> "></script>
     <script src="<c:url value="/js/messages_zh.js"/> "></script>
-    <script src="<c:url value="/js/bootstrap/bootstrap.min.js"/> "></script>
+    <script src="<c:url value="/js/vendor/bootstrap/js/bootstrap.min.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-table.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-table-fixed-columns.js"/> "></script>
     <script src="<c:url value="/js/bootstrap-datetimepicker.min.js"/>"></script>
@@ -73,14 +73,14 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search">
-                        <span id="date"></span>
-                    </li>
                     <li>
                         <%--<a href="#"><i class="fa fa-book fa-fw"></i>档案管理<span class="fa arrow"></span></a>--%>
                         <ul class="nav">
                             <li>
                                 <a href="needleCardRecord">针卡档案</a>
+                            </li>
+                            <li>
+                                <a href="needleCardBuildRecord">针卡建档</a>
                             </li>
                             <li>
                                 <a href="needleCardIQC">针卡IQC</a>
@@ -208,15 +208,17 @@
             </div>
         </div>
     </nav>
-    <div class="modal fade" id="uploadFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="previewFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="uploadFileLabel">上传文件</h4>
+                    <h4 class="modal-title" id="previewFileLabel">下载文件</h4>
                 </div>
-                <div class="modal-body" id="fileBody">
-                    <input id="excelFile" name="file" type="file" multiple>
+                <div class="modal-body">
+                    <table id="previewTable">
+
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -230,7 +232,7 @@
                 <div class="panel-default panel">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">针卡建档</h4>
+                        <h4 class="modal-title" id="myModalLabel">针卡档案修改</h4>
                     </div>
                     <div class="panel-body">
                         <form role="form" id="needCardModifyForm">
@@ -384,7 +386,7 @@
                                 </p>
                             </div>
                             <div class="form-group">
-                                <p class="col-lg-12" style="display: none">
+                                <p class="col-lg-12">
                                     <label class="col-lg-3">Release/Unrelease</label>
                                     <select  class="form-control" name="releaseFlag" id="releaseFlag" style="width: 35%;">
                                         <option value="Release">Release</option>
@@ -405,7 +407,7 @@
                                 </p>
                             </div>
                             <input class="button  button-primary button-pill  button-3d pull-right" type="submit"
-                                   value="提交" id="submit">
+                                   value="修改" id="submit">
                         </form>
                     </div>
                 </div>
@@ -416,20 +418,8 @@
     <div id='page-wrapper'>
         <div class="row" id="needleCardSearchPage">
             <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        针卡档案搜寻
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div id="toolbar" class="btn-group" style="float: left;">
-                        <button id="btnAdd" type="button" class="btn btn-default">
-                            <span class="fa fa-plus" aria-hidden="true"></span>针卡建档
-                        </button>
-                    </div>
                     <table id="needleCardTable">
                     </table>
-                </div>
             </div>
         </div>
     </div>

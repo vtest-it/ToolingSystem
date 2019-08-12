@@ -139,4 +139,8 @@ public class ProberCardService {
     public ArrayList<ReleaseProberCardBean> getReleaseProberCard(String[] proberCardIdArrays){
         return  mapper.getReleaseProberCard(proberCardIdArrays);
     }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public ArrayList<ProberCardEntityBean> getProberCardId(String[] custNameArrays){
+        return  mapper.getProberCardId(custNameArrays);
+    }
 }
