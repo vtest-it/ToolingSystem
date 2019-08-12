@@ -1,9 +1,13 @@
 package com.vtest.it.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 @Controller
@@ -29,6 +33,17 @@ public class fileUploadController {
             return null;
         }
 
+    }
+    @RequestMapping("/download/{proberCard}/{SourceName:.+}")
+    @ResponseBody
+    public void getSource(@PathVariable("SourceName") String sourceName, @PathVariable("proberCard") String proberCard,OutputStream outputStream) {
+        try {
+            File source = new File("D:/upload/"+proberCard+"/"+ sourceName);
+            FileInputStream fileInputStream = new FileInputStream(source);
+            FileCopyUtils.copy(fileInputStream, outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

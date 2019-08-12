@@ -196,9 +196,9 @@ $(document).ready(function() {
                             url:"/toolingweb/proberCard/"+proberCardId,
                             success:function (data) {
                                     for(var file of data){
-                                        var fileName=file.split("\\")[3];
-                                        var fileLink="../"+file.split("\\")[1]+"/"+file.split("\\")[2]+"/"+file.split("\\")[3]
-                                        var link="<a href='"+fileLink+"' download=''>"+fileName+"</a>"
+                                        var fileName=file.split("\\")[3]
+                                        var fileLink=proberCardId+"/"+fileName;
+                                        var link='<a href="/toolingweb/download/'+fileLink+'">'+fileName+'</a>'
                                         $("#previewTable").append("<tr><td>"+link+"</td></tr>");
                                     }
                                 }
