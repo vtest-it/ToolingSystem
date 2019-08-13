@@ -112,7 +112,7 @@ public class NeedleCardController {
     }
     @RequestMapping("/iqcRelease")
     @ResponseBody
-    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus,@RequestParam(value = "excelFile") CommonsMultipartFile file){
+    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus,@RequestParam(required=false) CommonsMultipartFile file){
         try {
             IqcRecordBean bean=new IqcRecordBean();
             bean.setProberCardId(proberCardId);
@@ -130,8 +130,10 @@ public class NeedleCardController {
             if(!descFile.exists()){
                 descFile.mkdir();
             }
-            File newFile=new File(descFile,"/"+file.getOriginalFilename());
-            file.transferTo(newFile);
+            if(!file.isEmpty()){
+                File newFile=new File(descFile,"/"+file.getOriginalFilename());
+                file.transferTo(newFile);
+            }
             service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
             service.addNewIqcRecord(bean);
             return true;
