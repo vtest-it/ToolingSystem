@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
@@ -112,7 +113,7 @@ public class NeedleCardController {
     }
     @RequestMapping("/iqcRelease")
     @ResponseBody
-    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus,@RequestParam(required=false) CommonsMultipartFile file){
+    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus,@RequestParam(value = "excelFile",required=false) MultipartFile file){
         try {
             IqcRecordBean bean=new IqcRecordBean();
             bean.setProberCardId(proberCardId);
@@ -130,7 +131,7 @@ public class NeedleCardController {
             if(!descFile.exists()){
                 descFile.mkdir();
             }
-            if(!file.isEmpty()){
+            if(file!=null){
                 File newFile=new File(descFile,"/"+file.getOriginalFilename());
                 file.transferTo(newFile);
             }
