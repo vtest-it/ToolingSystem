@@ -308,6 +308,10 @@ $(document).ready(function () {
             updateOperator:{
                 required:true,
                 isOperator:true
+            },
+            confirmer:{
+                required:true,
+                isOperator:true
             }
 
         },submitHandler:function (form) {

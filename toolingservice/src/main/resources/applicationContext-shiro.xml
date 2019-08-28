@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    <property name="realm" ref="myShiro" />
+</bean>
+    <bean id="myShiro" class="com.vtest.it.service.MyShiro">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!-- 加密算法 -->
+        <property name="hashAlgorithmName" value="md5"></property>
+        <!-- 迭代次数 -->
+        <property name="hashIterations" value="1"></property>
+    </bean>
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+<property name="securityManager" ref="securityManager"/>
+<property name="loginUrl" value="/index"/>
+<property name="successUrl" value="/WEB-INF/jsp/needleCard" />
+<property name="unauthorizedUrl" value="/errorPage/404"/>
+<property name="filterChainDefinitions">
+    <value>
+        /css/**=anon
+        /image/**=anon
+        /js/**=anon
+        /** =authc
+        /navigation/needleCardRecord.jsp=user
+        /navigation/**=roles[admin]
+        /navigation/needleCardBuildRecord.jsp=roles[PCR]
+        /navigation/needleCardIQC.jsp=roles[PCR]
+        /navigation/needleCardLend.jsp=roles[PCR]
+        /navigation/needleCardReturn.jsp=roles[PCR]
+        /navigation/needleCardMaintain.jsp=roles[PCR]
+        /navigation/needleCardAllRecord.jsp=roles[PCR]
+        /navigation/needleCardRelease.jsp=roles[PTE]
+        /navigation/needleCardCheck.jsp=roles[PTE]
+        /needleCard/addNewNeedleCard/**=authc,perms[admin:addNewNeedleCard:]
+    </value>
+</property>
+</bean>
+</beans>

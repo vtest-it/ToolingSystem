@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: user
+  Date: 2019/8/15
+  Time: 14:47
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -40,7 +47,7 @@
                             <label for="loginkeeping">下次自动登录</label>
                         </p>
                         <p class="login button">
-                            <input type="submit" value="登录"/>
+                            <input type="submit" value="登录" onclick="javascript:location.href='needleCard'"/>
                         </p>
                         <p class="change_link">
                             没有账号？
@@ -57,15 +64,8 @@
                             <input id="usernamesignup" name="userName" required="required" type="text" placeholder="工号（比如：V200）" />
                         </p>
                         <p>
-                            <label for="mail" class="youmail" data-icon="e" > 你的邮箱</label>
-                            <input id="mail" name="mail" required="required" type="email" placeholder="个人公司邮箱"/>
-                        </p>
-                        <p>
-                            <label for="group" class="label">组别</label>
-                            <select id="group" name="vGroup">
-                                <option value="PEE">PEE</option>
-                                <option value="PTE">PTE</option>
-                            </select>
+                            <label for="email" class="youmail" data-icon="e" > 你的邮箱</label>
+                            <input id="email" name="email" required="required" type="email" placeholder="个人公司邮箱"/>
                         </p>
                         <p>
                             <label for="password" class="youpasswd" data-icon="p">你的密码 </label>

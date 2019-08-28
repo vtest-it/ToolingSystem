@@ -377,24 +377,28 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <p class="col-lg-4">
+                                    <p class="col-lg-3">
                                         <label class="col-lg-4">作业人员</label>
                                         <input class="form-control" name="updateOperator" id="updateOperator" style="width: 35%" type="text">
                                     </p>
-                                    <p class="col-lg-4">
-                                        <label class="col-lg-4">上一站</label>
-                                        <input class="form-control" name="lastStation" id="lastStation" style="width: 50%" type="text" disabled>
+                                    <p class="col-lg-3">
+                                        <label class="col-lg-4">确认人</label>
+                                        <input class="form-control" name="confirmer" id="confirmer" style="width: 35%"type="text">
                                     </p>
-                                    <p class="col-lg-4">
+                                    <p class="col-lg-3">
+                                        <label class="col-lg-4">上一站</label>
+                                        <input class="form-control" name="lastStation" id="lastStation" style="width: 35%" type="text" disabled>
+                                    </p>
+                                    <p class="col-lg-3">
                                         <label class="col-lg-4">下一站</label>
-                                        <select class="form-control"  name="nextStation" id="nextStation" style="width: 50%">
+                                        <select class="form-control"  name="nextStation" id="nextStation" style="width: 35%">
                                         </select>
                                     </p>
                                 </div>
                                 <div class="form-group">
                                     <p class="col-lg-12">
-                                        <label class="col-lg-3">上传文件</label>
-                                        <input id="excelFile" name="excelFile" type="file" multiple>
+                                        <label class="col-lg-1">上传文件</label>
+                                        <input id="excelFile"  name="excelFile" type="file" multiple>
                                     </p>
                                 </div>
                                 <div class="form-group">

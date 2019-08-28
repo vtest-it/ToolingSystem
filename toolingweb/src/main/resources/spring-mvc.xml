@@ -26,10 +26,11 @@
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/**"/>-->
-            <!--<mvc:exclude-mapping path="/image/**"/>-->
-            <!--<mvc:exclude-mapping path="/css/**"/>-->
-            <!--<mvc:exclude-mapping path="/js/**"/>-->
-            <!--<mvc:exclude-mapping path="/errorPage/**"/>-->
+            <!--<mvc:exclude-mapping path="/system/login"/>-->
+            <!--<mvc:exclude-mapping path="/system/register"/>-->
+            <!--<mvc:exclude-mapping path="/system/validate"/>-->
+            <!--<mvc:exclude-mapping path="/system/registerUser"/>-->
+            <!--<mvc:exclude-mapping path="/resources/system/**"/>-->
             <!--<bean class="com.vtest.it.intercepters.LoginIntercepter"/>-->
         <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->

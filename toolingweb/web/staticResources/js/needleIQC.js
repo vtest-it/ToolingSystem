@@ -315,7 +315,11 @@ $(document).ready(function () {
                 required:true,
                 isOperator:true
             }
-
+            ,
+            confirmer:{
+                required:true,
+                isOperator:true
+            }
         },submitHandler:function (form) {
             if(flag){
                 var confirmFlag=confirm("请再次确认");

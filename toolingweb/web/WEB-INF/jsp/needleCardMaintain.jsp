@@ -495,9 +495,13 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <p class="col-lg-12">
-                                        <label class="col-lg-1">备注</label>
-                                        <textarea class="form-control" name="note"  id="note"  style="width: 90%" rows="3"></textarea>
+                                    <p class="col-lg-4">
+                                        <label class="col-lg-3">确认人</label>
+                                        <input class="form-control" name="confirmer" id="confirmer" style="width: 35%"type="text">
+                                    </p>
+                                    <p class="col-lg-8">
+                                        <label class="col-lg-2">备注</label>
+                                        <textarea class="form-control" name="note"  id="note"  style="width: 70%" rows="3"></textarea>
                                     </p>
                                 </div>
                                 <div class="form-group" style="display: none">
