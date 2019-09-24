@@ -39,7 +39,7 @@ public class MyShiro extends AuthorizingRealm {
         UsernamePasswordToken token =(UsernamePasswordToken)authenticationToken;
         UserBean userBean=userService.findByName(token.getUsername());
         if(userBean!=null){
-            return  new SimpleAuthenticationInfo(userBean.getUserName(),userBean.getPassword(),getName());
+            return  new SimpleAuthenticationInfo(userBean.getUsername(),userBean.getPassword(),getName());
         }
         return null;
     }

@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="")
 public class UserBean {
     private Integer id;
     @NotEmpty(message = "用户名不能为空")
-    private String userName;
+    private String username;
     @NotEmpty(message = "密码不能为空")
     private String password;
     private String email;
@@ -28,12 +27,12 @@ public class UserBean {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -60,6 +59,7 @@ public class UserBean {
         this.registerTime = registerTime;
     }
     @ManyToMany
+    @JoinTable(name="vt_user_role",joinColumns={@JoinColumn(name="user_id")},inverseJoinColumns={@JoinColumn(name="role_id")})
     public List<RoleBean> getRoleBeanList() {
         return roleBeanList;
     }
@@ -72,7 +72,7 @@ public class UserBean {
         List<RoleBean> roleList=getRoleBeanList();
         Set<String> set=new HashSet<String>();
         for (RoleBean roleBean:roleList) {
-            set.add(roleBean.getRoleName());
+            set.add(roleBean.getName());
         }
         return set;
     }

@@ -7,7 +7,8 @@ import java.util.List;
 @Entity
 public class RoleBean {
     private Integer id;
-    private String roleName;
+    private String name;
+    private String description;
     private List<PermissionBean> permissionBeanList;
     private List<UserBean> userBeanList;
 
@@ -21,12 +22,20 @@ public class RoleBean {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @OneToMany(mappedBy = "role")
@@ -50,7 +59,7 @@ public class RoleBean {
         List<String> list=new ArrayList<String>();
         List<PermissionBean> perlist=getPermissionBeanList();
         for (PermissionBean per: perlist) {
-            list.add(per.getPermissionName());
+            list.add(per.getName());
         }
         return  list;
     }

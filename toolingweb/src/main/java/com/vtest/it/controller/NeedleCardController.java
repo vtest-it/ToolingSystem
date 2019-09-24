@@ -14,6 +14,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @Controller
@@ -313,7 +314,8 @@ public class NeedleCardController {
     @RequestMapping("/getProberCardReleaseFlag")
     @ResponseBody
     public boolean getProberCardReleaseFlag(String proberCardId ){
-        return  service.getProberCardReleaseFlag(proberCardId);
+            return  service.getProberCardReleaseFlag(proberCardId);
+
     }
     @ResponseBody
     @RequestMapping(value = "/checkProbercard")
@@ -456,8 +458,55 @@ public class NeedleCardController {
         return JSON.toJSONString(service.getReleaseProberCard(proberCardIdArrays));
     }
     @ResponseBody
+    @RequestMapping(value = "/getEXRecord", produces = "text/html;charset=UTF-8")
+    public String getEXRecord(String[] proberCardIdArrays){
+        return JSON.toJSONString(service.getEXRecord(proberCardIdArrays));
+    }
+    @ResponseBody
     @RequestMapping(value = "/getProberCardId", produces = "text/html;charset=UTF-8")
     public String getProberCardId(String[] custNameArrays){
         return JSON.toJSONString(service.getProberCardId(custNameArrays));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/addProberCardEX")
+    public boolean addProberCardEX(String proberCardId,String useEquipment,Integer dutCount,Integer pinCount,String currTd,String tdTotal,String cardType,String pinLen,String pinDiam,String pinLevel,Integer extenCount,String lastProcess,boolean marksFlag,double cardYield,String currentProcess,boolean extenFlag,String creator,String note){
+        try {
+            ProberCardExtensionBean bean=new ProberCardExtensionBean();
+            bean.setProberCardId(proberCardId);
+            bean.setUseEquipment(useEquipment);
+            bean.setPinCount(pinCount);
+            bean.setCurrTd(currTd);
+            bean.setTdTotal(tdTotal);
+            bean.setPinLen(pinLen);
+            bean.setPinDiam(pinDiam);
+            bean.setPinLevel(pinLevel);
+            bean.setCardType(cardType);
+            bean.setCardYield(cardYield);
+            bean.setCreator(creator);
+            bean.setDutCount(dutCount);
+            bean.setExtenFlag(extenFlag);
+            extenCount++;
+            bean.setExtenCount(extenCount);
+            bean.setLastProcess(lastProcess);
+            bean.setMarksFlag(marksFlag);
+            bean.setNote(note);
+            bean.setLoadTime(new Date());
+            bean.setCurrentProcess(currentProcess);
+            service.addProberCardEX(bean);
+            service.updateProberCardStatus(proberCardId,currentProcess,lastProcess,creator);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getProberCardEX", produces = "text/html;charset=UTF-8")
+    public String getProberCardEX(){
+        return JSON.toJSONString(service.getProberCardEX());
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getEXInfoSingle", produces = "text/html;charset=UTF-8")
+    public String getEXInfoSingle(String proberCardId){
+        return JSON.toJSONString(service.getEXInfoSingle(proberCardId));
     }
 }

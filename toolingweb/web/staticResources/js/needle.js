@@ -397,7 +397,8 @@ $(document).ready(function() {
                             '<option value="Re_Build">重新制作</option>'+
                             '<option value="ReBuild_Back">重新制作返回IQC</option>'+
                             '<option value="Card_Check">针卡验收</option>'+
-                            '<option value="Card_Release">针卡Release</option>');
+                            '<option value="Card_Release">针卡Release</option>'+
+                            '<option value="Extension">展延</option>');
                         var rows=JSON.stringify(row).replace("{","").replace("}","").trim().split(",");
                         for(var k=0;k<rows.length;k++){
                             var rowIndex=rows[k].indexOf(":");

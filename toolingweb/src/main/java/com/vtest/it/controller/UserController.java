@@ -27,7 +27,7 @@ public class UserController {
             if(bindingResult.hasErrors()){
                 return "/login";
             }
-            SecurityUtils.getSubject().login(new UsernamePasswordToken(user.getUserName(), user.getPassword()));
+            SecurityUtils.getSubject().login(new UsernamePasswordToken(user.getUsername(), user.getPassword()));
             return "redirect:/user";
         } catch (AuthenticationException e) {
             redirectAttributes.addFlashAttribute("message","用户名或密码错误");

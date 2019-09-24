@@ -174,7 +174,8 @@ function selectChange(value){
             if(releaseFlag){
                 $("#nextStation").append('<option value="Card_Idle">针卡待料</option>'+
                     '<option value="ReIQC_PASS">维修后IQC PASS</option>'+
-                    '<option value="IQC_PASS">IQC PASS</option>');
+                    '<option value="IQC_PASS">IQC PASS</option>'+
+                    '<option value="Extension">展延</option>');
             }else {
                 $("#nextStation").append('<option value="IQC_PASS">IQC PASS</option>');
                 alert("此卡尚未release");

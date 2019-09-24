@@ -143,4 +143,18 @@ public class ProberCardService {
     public ArrayList<ProberCardEntityBean> getProberCardId(String[] custNameArrays){
         return  mapper.getProberCardId(custNameArrays);
     }
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+    public ArrayList<ProberCardExtensionBean> getEXRecord(String[] proberCardIdArrays){
+        return  mapper.getEXRecord(proberCardIdArrays);
+    }
+    public void addProberCardEX(ProberCardExtensionBean bean) {
+        mapper.addProberCardEX(bean);
+    }
+    public ArrayList<String> getProberCardEX(){
+        return  mapper.getProberCardEX();
+    }
+
+    public ArrayList<ProberCardExtensionBean> getEXInfoSingle(String proberCardId){
+        return  mapper.getEXInfoSingle(proberCardId);
+    }
 }

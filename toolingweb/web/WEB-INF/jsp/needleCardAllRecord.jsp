@@ -107,6 +107,9 @@
                                 <a href="needleCardMaintain">针卡保养</a>
                             </li>
                             <li>
+                                <a href="needleCardExtension">针卡展延</a>
+                            </li>
+                            <li>
                                 <a href="needleCardAllRecord">针卡全记录</a>
                             </li>
                             <%--<li>--%>
@@ -228,6 +231,7 @@
             <option value="back">归还</option>
             <option value="maintain">保养</option>
             <option value="release">Release</option>
+            <option value="extension">展延</option>
         </select>
         <button class="button button-3d button-primary" id="confirm">确认</button>
         <div class="row" id="needleCardSearchPage">
@@ -245,7 +249,8 @@
                     </table>
                     <table id="needleCardReleaseTable">
                     </table>
-
+                    <table id="needleCardExtensionTable">
+                    </table>
                 </div>
             </div>
 

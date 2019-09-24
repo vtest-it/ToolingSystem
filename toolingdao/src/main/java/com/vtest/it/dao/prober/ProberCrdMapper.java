@@ -72,4 +72,12 @@ public interface ProberCrdMapper {
     public ArrayList<ReleaseProberCardBean> getReleaseProberCard(@Param("proberCardIdArrays") String[] proberCardIdArrays);
 
     public ArrayList<ProberCardEntityBean> getProberCardId(@Param("custNameArrays") String[] custNameArrays);
+
+    public ArrayList<ProberCardExtensionBean> getEXRecord(@Param("proberCardIdArrays") String[] proberCardIdArrays);
+
+    public boolean addProberCardEX(ProberCardExtensionBean bean);
+
+    public ArrayList<String> getProberCardEX();
+
+    public ArrayList<ProberCardExtensionBean> getEXInfoSingle(@Param("proberCardId") String proberCardId);
 }

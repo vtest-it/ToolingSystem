@@ -173,6 +173,16 @@
         </trim>
         )
     </select>
+    <select id="getEXRecord" resultType="com.vtest.it.pojo.ProberCardExtensionBean">
+        select  prober_card_id, use_equipment, dut_count, pin_count, curr_td, td_total, card_type, pin_len, pin_diam, pin_level, exten_count, last_process, marks_flag, card_yield, exten_flag, note, current_process, creator, load_time FROM VTProberCard.Probercard_Extension_Info where prober_card_id in
+        (
+        <trim suffix="" suffixOverrides=",">
+            <foreach item="prober_card_id" index="index" collection="proberCardIdArrays">
+                #{prober_card_id},
+            </foreach>
+        </trim>
+        )
+    </select>
     <select id="getProberCardId" resultType="com.vtest.it.pojo.ProberCardEntityBean">
         select  prober_card_id FROM VTProberCard.Probercard_Info  where cust_name in
         (
@@ -182,5 +192,15 @@
             </foreach>
         </trim>
         )
+    </select>
+    <insert id="addProberCardEX" parameterType="com.vtest.it.pojo.ProberCardExtensionBean">
+      insert into VTProberCard.Probercard_Extension_Info(prober_card_id, use_equipment, dut_count, pin_count, curr_td, td_total, card_type, pin_len, pin_diam, pin_level, exten_count, last_process, marks_flag, card_yield, exten_flag, note, current_process, creator, load_time)
+      value (#{proberCardId},#{useEquipment},#{dutCount},#{pinCount},#{currTd},#{tdTotal},#{cardType},#{pinLen},#{pinDiam},#{pinLevel},#{extenCount},#{lastProcess},#{marksFlag},#{cardYield},#{extenFlag},#{note},#{currentProcess},#{creator},#{loadTime});
+    </insert>
+    <select id="getProberCardEX" statementType="CALLABLE" resultType="String">
+         {call pro_GetCardExten()}
+    </select>
+    <select id="getEXInfoSingle" statementType="CALLABLE" resultType="com.vtest.it.pojo.ProberCardExtensionBean">
+         {call pro_GetCardExtenSingle(#{proberCardId,mode=IN,jdbcType=VARCHAR})}
     </select>
 </mapper>

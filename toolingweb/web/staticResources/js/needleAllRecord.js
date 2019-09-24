@@ -91,7 +91,7 @@ $(document).ready(function() {
         var backFlag=false;
         var maintainFlag=false;
         var releaseFlag=false;
-
+        var extensionFlag=false;
         $("#typeSelect option:selected").each(function () {
             if($(this).val()=="info"){
                 infoFlag=true;
@@ -111,145 +111,11 @@ $(document).ready(function() {
             if($(this).val()=="release"){
                 releaseFlag=true;
             }
+            if($(this).val()=="extension"){
+                extensionFlag=true;
+            }
         })
-        if(backFlag){
-            $("#tableBody").append('<table id="needleCardBackTable"></table>');
-            var backProberCardRecord=[];
-            $.ajax({
-                type:"get",
-                async: false,
-                dataType:"json",
-                url:"/toolingweb/needleCard/getBackProberCard?proberCardIdArrays="+dataList.toString(),
-                success:function (data) {
-                    $.each(data,function (i,item) {
-                         item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
-                    })
-                    backProberCardRecord=data;
-                }
-            })
-            $('#needleCardBackTable').bootstrapTable({
-                data:backProberCardRecord,
-                toolbar: '.scroll',                //工具按钮用哪个容器
-                striped: true,                      //是否显示行间隔色
-                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-                pagination: true,                   //是否显示分页（*）
-                sortable: false,                     //是否启用排序
-                sortOrder: "asc",                   //排序方式
-                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
-                pageNumber: 1,                       //初始化加载第一页，默认第一页
-                pageSize: 25,                       //每页的记录行数（*）
-                pageList: [25, 50, 100],        //可供选择的每页的行数（*）
-                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-                strictSearch: true,
-                minimumCountColumns: 2,             //最少允许的列数
-                clickToSelect: true,                //是否启用点击选中行
-                height:420,
-                uniqueId: "proberCardId",
-                showExport: true,  //是否显示导出按钮
-                buttonsAlign:"right",  //按钮位置
-                exportDataType: 'all',   //导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
-                Icons:'glyphicon glyphicon-export', //导出图标
-                exportTypes:[ 'excel','doc','xlsx'],  //导出文件类型 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf'
-                exportOptions:{
-                    // ignoreColumn: [0,1],  //忽略某一列的索引
-                    fileName: 'backProberCardRecord',  //文件名称设置
-                    worksheetName: 'backProberCardRecord',  //表格工作区名称
-                    tableName: 'backProberCardRecord',
-                    // excelstyles: ['background-color', 'color', 'font-size', 'font-weight'], 设置格式
-                },
-                columns:[
-                    {
-                        title:"针卡编号",field:"proberCardId"
-                    },
-                    {
-                        title:"归还机台",field:"backuseEquipment"
-                    }, {
-                        title:"归还人员",field:"backOperator"
-                    },
-                    {
-                        title:"是否异常",field:"issueFlag"
-                    },
-                    {
-                        title:"异常描述",field:"issueDesc"
-                    }
-                    ,
-                    {
-                        title:"归还状态",field:"nextStation"
-                    }
-                    ,
-                    {
-                        title:"备注",field:"note"
-                    },
-                    {
-                        title:"建档时间",field:"loadTime"
-                    }]
-            })
-        }
-        if(outFlag){
-            $("#tableBody").append('<table id="needleCardOutTable"></table>');
-            var outProberCardRecord=[];
-            $.ajax({
-                type:"get",
-                async: false,
-                dataType:"json",
-                url:"/toolingweb/needleCard/getOutProberCard?proberCardIdArrays="+dataList.toString(),
-                success:function (data) {
-                    $.each(data,function (i,item) {
-                        item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
-                    })
-                    outProberCardRecord=data;
-                }
-            })
-            $('#needleCardOutTable').bootstrapTable({
-                data:outProberCardRecord,
-                toolbar: '.scroll',                //工具按钮用哪个容器
-                striped: true,                      //是否显示行间隔色
-                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-                pagination: true,                   //是否显示分页（*）
-                sortable: false,                     //是否启用排序
-                sortOrder: "asc",                   //排序方式
-                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
-                pageNumber: 1,                       //初始化加载第一页，默认第一页
-                pageSize: 25,                       //每页的记录行数（*）
-                pageList: [25, 50, 100],        //可供选择的每页的行数（*）
-                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-                strictSearch: true,
-                minimumCountColumns: 2,             //最少允许的列数
-                clickToSelect: true,                //是否启用点击选中行
-                height:420,
-                uniqueId: "proberCardId",
-                showExport: true,  //是否显示导出按钮
-                buttonsAlign:"right",  //按钮位置
-                exportDataType: 'all',   //导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
-                Icons:'glyphicon glyphicon-export', //导出图标
-                exportTypes:[ 'excel','doc','xlsx'],  //导出文件类型 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf'
-                exportOptions:{
-                    // ignoreColumn: [0,1],  //忽略某一列的索引
-                    fileName: 'outProberCardRecord',  //文件名称设置
-                    worksheetName: 'outProberCardRecord',  //表格工作区名称
-                    tableName: 'outProberCardRecord',
-                    // excelstyles: ['background-color', 'color', 'font-size', 'font-weight'], 设置格式
-                },
-                columns:[
-                    {
-                        title:"针卡编号",field:"proberCardId"
-                    },
-                    {
-                        title:"借出机台",field:"outUseEquipment"
-                    },{
-                        title:"借出人员",field:"outOperator"
-                    },
-                    {
-                        title:"借出用途",field:"nextStation"
-                    },
-                    {
-                        title:"备注",field:"note"
-                    },
-                    {
-                        title:"建档时间",field:"loadTime"
-                    }]
-            })
-        }
+
         if(infoFlag){
             $("#tableBody").append('<table id="needleCardInfoTable"></table>');
             var proberCardInfos=[];
@@ -261,6 +127,12 @@ $(document).ready(function() {
                 success:function (data) {
                     $.each(data,function (i,item) {
                         item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
+                        var releaseFlag=item.releaseFlag;
+                        if(releaseFlag){
+                            item.releaseFlag="是";
+                        }else {
+                            item.releaseFlag="否";
+                        }
                     })
                     proberCardInfos=data;
                 }
@@ -453,6 +325,150 @@ $(document).ready(function() {
             }]
     })
 }
+        if(backFlag){
+            $("#tableBody").append('<table id="needleCardBackTable"></table>');
+            var backProberCardRecord=[];
+            $.ajax({
+                type:"get",
+                async: false,
+                dataType:"json",
+                url:"/toolingweb/needleCard/getBackProberCard?proberCardIdArrays="+dataList.toString(),
+                success:function (data) {
+                    $.each(data,function (i,item) {
+                        item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
+                        var issueFlag=item.issueFlag;
+                        if(issueFlag){
+                            item.issueFlag="是";
+                        }else {
+                            item.issueFlag="否";
+                        }
+                    })
+                    backProberCardRecord=data;
+                }
+            })
+            $('#needleCardBackTable').bootstrapTable({
+                data:backProberCardRecord,
+                toolbar: '.scroll',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 25,                       //每页的记录行数（*）
+                pageList: [25, 50, 100],        //可供选择的每页的行数（*）
+                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height:420,
+                uniqueId: "proberCardId",
+                showExport: true,  //是否显示导出按钮
+                buttonsAlign:"right",  //按钮位置
+                exportDataType: 'all',   //导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
+                Icons:'glyphicon glyphicon-export', //导出图标
+                exportTypes:[ 'excel','doc','xlsx'],  //导出文件类型 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf'
+                exportOptions:{
+                    // ignoreColumn: [0,1],  //忽略某一列的索引
+                    fileName: 'backProberCardRecord',  //文件名称设置
+                    worksheetName: 'backProberCardRecord',  //表格工作区名称
+                    tableName: 'backProberCardRecord',
+                    // excelstyles: ['background-color', 'color', 'font-size', 'font-weight'], 设置格式
+                },
+                columns:[
+                    {
+                        title:"针卡编号",field:"proberCardId"
+                    },
+                    {
+                        title:"归还机台",field:"backuseEquipment"
+                    }, {
+                        title:"归还人员",field:"backOperator"
+                    },
+                    {
+                        title:"是否异常",field:"issueFlag"
+                    },
+                    {
+                        title:"异常描述",field:"issueDesc"
+                    }
+                    ,
+                    {
+                        title:"归还状态",field:"nextStation"
+                    }
+                    ,
+                    {
+                        title:"备注",field:"note"
+                    },
+                    {
+                        title:"建档时间",field:"loadTime"
+                    }]
+            })
+        }
+        if(outFlag){
+            $("#tableBody").append('<table id="needleCardOutTable"></table>');
+            var outProberCardRecord=[];
+            $.ajax({
+                type:"get",
+                async: false,
+                dataType:"json",
+                url:"/toolingweb/needleCard/getOutProberCard?proberCardIdArrays="+dataList.toString(),
+                success:function (data) {
+                    $.each(data,function (i,item) {
+                        item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
+                    })
+                    outProberCardRecord=data;
+                }
+            })
+            $('#needleCardOutTable').bootstrapTable({
+                data:outProberCardRecord,
+                toolbar: '.scroll',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 25,                       //每页的记录行数（*）
+                pageList: [25, 50, 100],        //可供选择的每页的行数（*）
+                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height:420,
+                uniqueId: "proberCardId",
+                showExport: true,  //是否显示导出按钮
+                buttonsAlign:"right",  //按钮位置
+                exportDataType: 'all',   //导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
+                Icons:'glyphicon glyphicon-export', //导出图标
+                exportTypes:[ 'excel','doc','xlsx'],  //导出文件类型 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf'
+                exportOptions:{
+                    // ignoreColumn: [0,1],  //忽略某一列的索引
+                    fileName: 'outProberCardRecord',  //文件名称设置
+                    worksheetName: 'outProberCardRecord',  //表格工作区名称
+                    tableName: 'outProberCardRecord',
+                    // excelstyles: ['background-color', 'color', 'font-size', 'font-weight'], 设置格式
+                },
+                columns:[
+                    {
+                        title:"针卡编号",field:"proberCardId"
+                    },
+                    {
+                        title:"借出机台",field:"outUseEquipment"
+                    },{
+                        title:"借出人员",field:"outOperator"
+                    },
+                    {
+                        title:"借出用途",field:"nextStation"
+                    },
+                    {
+                        title:"备注",field:"note"
+                    },
+                    {
+                        title:"建档时间",field:"loadTime"
+                    }]
+            })
+        }
 if(maintainFlag){
     $("#tableBody").append('<table id="needleCardMaintainTable"></table>');
     var maintainRecord=[];
@@ -464,6 +480,72 @@ if(maintainFlag){
         success:function (data) {
             $.each(data,function (i,item) {
                 item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
+                var cleanFlag=item.cleanFlag;
+                var grindingFlag=item.grindingFlag;
+                var corrosionFlag=item.corrosionFlag;
+                var adjustmentFlag=item.adjustmentFlag;
+                var bakeFlag=item.bakeFlag;
+                var handgrindFlag=item.handgrindFlag;
+                var checksolderFlag=item.checksolderFlag;
+                var maintsolderFlag=item.maintsolderFlag;
+                var checkpartsFlag=item.checkpartsFlag;
+                var changepartsFlag=item.changepartsFlag;
+                var jumperFlag=item.jumperFlag;
+                if(jumperFlag){
+                    item.jumperFlag="是";
+                }else {
+                    item.jumperFlag="否";
+                }
+                if(changepartsFlag){
+                    item.changepartsFlag="是";
+                }else {
+                    item.changepartsFlag="否";
+                }
+                if(checkpartsFlag){
+                    item.checkpartsFlag="是";
+                }else {
+                    item.checkpartsFlag="否";
+                }
+                if(maintsolderFlag){
+                    item.maintsolderFlag="是";
+                }else {
+                    item.maintsolderFlag="否";
+                }
+                if(checksolderFlag){
+                    item.checksolderFlag="是";
+                }else {
+                    item.checksolderFlag="否";
+                }
+                if(handgrindFlag){
+                    item.handgrindFlag="是";
+                }else {
+                    item.handgrindFlag="否";
+                }
+                if(cleanFlag){
+                    item.cleanFlag="是";
+                }else {
+                    item.cleanFlag="否";
+                }
+                if(grindingFlag){
+                    item.grindingFlag="是";
+                }else {
+                    item.grindingFlag="否";
+                }
+                if(corrosionFlag){
+                    item.corrosionFlag="是";
+                }else {
+                    item.corrosionFlag="否";
+                }
+                if(adjustmentFlag){
+                    item.adjustmentFlag="是";
+                }else {
+                    item.adjustmentFlag="否";
+                }
+                if(bakeFlag){
+                    item.bakeFlag="是";
+                }else {
+                    item.bakeFlag="否";
+                }
             })
             maintainRecord=data;
         }
@@ -541,21 +623,21 @@ if(maintainFlag){
             }
             ,
             {
-                title:"检查焊点",field:"handgrindFlag"
+                title:"检查焊点",field:"checksolderFlag"
             },
             {
-                title:"整理焊点",field:"handgrindFlag"
+                title:"整理焊点",field:"maintsolderFlag"
             }
             ,
             {
-                title:"检查零件",field:"handgrindFlag"
+                title:"检查零件",field:"checkpartsFlag"
             },
             {
-                title:"零件更换",field:"handgrindFlag"
+                title:"零件更换",field:"changepartsFlag"
             }
             ,
             {
-                title:"是否跳线",field:"handgrindFlag"
+                title:"是否跳线",field:"jumperFlag"
             } ,
             {
                 title:"更新人员",field:"updateOperator"
@@ -587,6 +669,12 @@ if(releaseFlag){
         success:function (data) {
             $.each(data,function (i,item) {
                 item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
+                var releaseFlag=item.releaseFlag;
+                if(releaseFlag){
+                    item.releaseFlag="是";
+                }else {
+                    item.releaseFlag='否';
+                }
             })
             releaseRecord=data;
         }
@@ -651,7 +739,118 @@ if(releaseFlag){
             }]
     })
 }
-
+        if(extensionFlag){
+            $("#tableBody").append('<table id="needleCardExtensionTable"></table>');
+            var extensionRecord=[];
+            $.ajax({
+                type:"get",
+                async: false,
+                dataType:"json",
+                url:"/toolingweb/needleCard/getEXRecord?proberCardIdArrays="+dataList.toString(),
+                success:function (data) {
+                    $.each(data,function (i,item) {
+                        item.loadTime=getSmpFormatDateByLong(item.loadTime,true);
+                        var marksFlag=item.marksFlag;
+                        var extenFlag=item.extenFlag;
+                        if(marksFlag){
+                            item.marksFlag="PASS";
+                        }else {
+                            item.marksFlag="FAIL";
+                        }
+                        if(extenFlag){
+                            item.extenFlag="YES";
+                        }else {
+                            item.extenFlag="NO";
+                        }
+                    })
+                    extensionRecord=data;
+                }
+            })
+            $('#needleCardExtensionTable').bootstrapTable({
+                data:extensionRecord,
+                toolbar: '.scroll',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 25,                       //每页的记录行数（*）
+                pageList: [25, 50, 100],        //可供选择的每页的行数（*）
+                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height:420,
+                uniqueId: "proberCardId",
+                showExport: true,  //是否显示导出按钮
+                buttonsAlign:"right",  //按钮位置
+                exportDataType: 'all',   //导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
+                Icons:'glyphicon glyphicon-export', //导出图标
+                exportTypes:[ 'excel','doc','xlsx'],  //导出文件类型 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf'
+                exportOptions:{
+                    // ignoreColumn: [0,1],  //忽略某一列的索引
+                    fileName: 'releaseRecord',  //文件名称设置
+                    worksheetName: 'releaseRecord',  //表格工作区名称
+                    tableName: 'releaseRecord',
+                    // excelstyles: ['background-color', 'color', 'font-size', 'font-weight'], 设置格式
+                },
+                columns:[
+                    {
+                        title:"针卡编号",field:"proberCardId"
+                    },
+                    {
+                        title:"适用机台",field:"useEquipment"
+                    },
+                    {
+                        title:"Dut数",field:"dutCount"
+                    },{
+                        title:"Pin数",field:"pinCount"
+                    },
+                    {
+                        title:"TD",field:"currTd"
+                    },
+                    {
+                        title:"TD Total",field:"tdTotal"
+                    },
+                    {
+                        title:"类型",field:"cardType"
+                    }
+                    ,
+                    {
+                        title:"已展延lot数",field:"extenCount"
+                    },
+                    {
+                        title:"上一站",field:"lastProcess"
+                    },{
+                        title:"维修前针长",field:"pinLen"
+                    },
+                    {
+                        title:"维修前针径",field:"pinDiam"
+                    },{
+                        title:"维修前水平",field:"pinLevel"
+                    },
+                    {
+                        title:"针痕检查",field:"marksFlag"
+                    },
+                    {
+                        title:"良率",field:"cardYield"
+                    },
+                    {
+                        title:"下一站",field:"currentProcess"
+                    }
+                    ,
+                    {
+                        title:"是否展延",field:"extenFlag"
+                    },
+                    {
+                        title:"作业人员",field:"creator"
+                    },{
+                        title:"备注",field:"note"
+                    }]
+            })
+        }
     })
 
 })
