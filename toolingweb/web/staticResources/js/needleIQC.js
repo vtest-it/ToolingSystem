@@ -116,8 +116,8 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
-            $("#oldStatus").val("");
-            $("#oldStatus").val(state);
+            $("#lastProcess").val("");
+            $("#lastProcess").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="IQC_PASS">IQC_PASS</option>'+
             '<option value="IQC_FAIL">IQC_FAIL</option>');
@@ -139,8 +139,8 @@ function selectChange(value){
         }
         $("#lastStation").val("");
         $("#lastStation").val(state);
-            $("#oldStatus").val("");
-        $("#oldStatus").val(state);
+            $("#lastProcess").val("");
+        $("#lastProcess").val(state);
         $("#nextStation").html("");
         $("#nextStation").append('<option value="ReIQC_PASS">维修后IQC PASS</option>'+
             '<option value="ReIQC_FAIL">维修后IQC FAIL</option>');
@@ -162,8 +162,8 @@ function selectChange(value){
         }
         $("#lastStation").val("");
         $("#lastStation").val(state);
-            $("#oldStatus").val("");
-        $("#oldStatus").val(state);
+            $("#lastProcess").val("");
+        $("#lastProcess").val(state);
         $("#nextStation").html("");
         $("#nextStation").append('<option value="IQC_PASS">IQC_PASS</option>'+
             '<option value="IQC_FAIL">IQC_FAIL</option>'+'<option value="ReIQC_PASS">维修后IQC PASS</option>'+
@@ -185,8 +185,8 @@ function selectChange(value){
             }
             $("#lastStation").val("");
             $("#lastStation").val(state);
-            $("#oldStatus").val("");
-            $("#oldStatus").val(state);
+            $("#lastProcess").val("");
+            $("#lastProcess").val(state);
             $("#nextStation").html("");
             $("#nextStation").append('<option value="IQC_PASS">IQC_PASS</option>'+
                 '<option value="IQC_FAIL">IQC_FAIL</option>');

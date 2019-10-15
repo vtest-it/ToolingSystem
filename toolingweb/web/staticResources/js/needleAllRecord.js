@@ -313,6 +313,8 @@ $(document).ready(function() {
                 title:"深度",field:"pinDepth"
             },{
                 title:"更新人员",field:"updateOperator"
+            },{
+                title:"上一站",field:"lastProcess"
             },
             {
                 title:"下一站",field:"nextStation"

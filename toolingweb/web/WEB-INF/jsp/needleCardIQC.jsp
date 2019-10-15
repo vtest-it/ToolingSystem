@@ -420,7 +420,7 @@
                                 <div class="form-group" style="display: none">
                                     <p class="col-lg-12">
                                         <label class="col-lg-2">上一站</label>
-                                        <input class="form-control" name="oldStatus" id="oldStatus" style="width: 45%" type="text">
+                                        <input class="form-control" name="lastProcess" id="lastProcess" style="width: 45%" type="text">
                                     </p>
                                 </div>
                                 <input class="button  button-primary button-pill  button-3d pull-right"  type="submit" value="提交">

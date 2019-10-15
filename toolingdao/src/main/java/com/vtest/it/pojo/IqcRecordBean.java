@@ -11,6 +11,7 @@ public class IqcRecordBean {
     private double pinLevel;
     private double pinDepth;
     private String updateOperator;
+    private String lastProcess;
     private String nextStation;
     private String note;
     private Date loadTime;
@@ -85,6 +86,14 @@ public class IqcRecordBean {
 
     public void setUpdateOperator(String updateOperator) {
         this.updateOperator = updateOperator;
+    }
+
+    public String getLastProcess() {
+        return lastProcess;
+    }
+
+    public void setLastProcess(String lastProcess) {
+        this.lastProcess = lastProcess;
     }
 
     public String getNextStation() {

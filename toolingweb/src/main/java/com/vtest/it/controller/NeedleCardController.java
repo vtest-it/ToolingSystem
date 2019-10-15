@@ -114,7 +114,7 @@ public class NeedleCardController {
     }
     @RequestMapping("/iqcRelease")
     @ResponseBody
-    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String oldStatus,@RequestParam(value = "excelFile",required=false) MultipartFile file){
+    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String lastProcess,@RequestParam(value = "excelFile",required=false) MultipartFile file){
         try {
             IqcRecordBean bean=new IqcRecordBean();
             bean.setProberCardId(proberCardId);
@@ -125,6 +125,7 @@ public class NeedleCardController {
             bean.setPinLevel(pinLevel);
             bean.setPinDepth(pinDepth);
             bean.setUpdateOperator(updateOperator);
+            bean.setLastProcess(lastProcess);
             bean.setNextStation(nextStation);
             bean.setNote(note);
             String descPath="D:/upload/"+proberCardId;
@@ -136,7 +137,7 @@ public class NeedleCardController {
                 File newFile=new File(descFile,"/"+file.getOriginalFilename());
                 file.transferTo(newFile);
             }
-            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
+            service.updateProberCardStatus(proberCardId,nextStation,lastProcess,updateOperator);
             service.addNewIqcRecord(bean);
             return true;
         } catch (Exception e) {

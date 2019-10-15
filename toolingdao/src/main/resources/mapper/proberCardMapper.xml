@@ -21,8 +21,8 @@
         insert into VTProberCard.ProberCard_Current_State(prober_card_id,last_process,current_process,update_operator) value (#{proberCardId},#{lastProcess},#{currentProcess},#{op});
     </insert>
     <insert id="addNewIqcRecord" parameterType="com.vtest.it.pojo.IqcRecordBean">
-        insert into ProberCard_IQC_Record(prober_card_id, pin_maxlen, pin_minlen, pin_maxdiam, pin_mindiam, pin_level,pin_depth,update_operator,next_station,note) value
-        (#{proberCardId},#{pinMaxlen},#{pinMinlen},#{pinMaxdiam},#{pinMindiam},#{pinLevel},#{pinDepth},#{updateOperator},#{nextStation},#{note});
+        insert into ProberCard_IQC_Record(prober_card_id, pin_maxlen, pin_minlen, pin_maxdiam, pin_mindiam, pin_level,pin_depth,update_operator,last_process,next_station,note) value
+        (#{proberCardId},#{pinMaxlen},#{pinMinlen},#{pinMaxdiam},#{pinMindiam},#{pinLevel},#{pinDepth},#{updateOperator},#{lastProcess},#{nextStation},#{note});
     </insert>
     <select id="getProberCardStatus" resultType="string">
         select current_process from ProberCard_Current_State where  prober_card_id=#{proberCardId};
@@ -92,7 +92,7 @@
         update VTProberCard.ProberCard_Current_State set  current_process=#{ currentProcess }  where  prober_card_id=#{proberCardId};
     </update>
     <select id="getAllIQCRecord" resultType="com.vtest.it.pojo.IqcRecordBean">
-        SELECT prober_card_id,pin_maxlen,pin_minlen,pin_maxdiam,pin_mindiam,pin_level,pin_depth,update_operator,note,next_station FROM VTProberCard.ProberCard_IQC_Record ;
+        SELECT prober_card_id,pin_maxlen,pin_minlen,pin_maxdiam,pin_mindiam,pin_level,pin_depth,update_operator,note,next_station,last_process FROM VTProberCard.ProberCard_IQC_Record ;
     </select>
     <select id="getAllMaintainRecord" resultType="com.vtest.it.pojo.ProberCardMaintainBean">
         SELECT prober_card_id,before_pinlen,after_pinlen,before_pindiam,after_pindiam,before_pinlevel,after_pinlevel,clean_flag,grinding_flag,corrosion_flag,adjustment_flag,adjustment_flag,bake_flag,handgrind_flag,checksolder_flag,maintsolder_flag,checkparts_flag,changeparts_flag,jumper_flag,update_operator,note,next_station,rebuild_count FROM VTProberCard.ProberCard_Maintain_Record ;
@@ -144,7 +144,7 @@
         )
     </select>
     <select id="getIQCProberCard" resultType="com.vtest.it.pojo.IqcRecordBean">
-        select  prober_card_id,pin_maxlen,pin_minlen,pin_maxdiam,pin_mindiam,pin_level,pin_depth,update_operator,note,next_station,load_time FROM VTProberCard.ProberCard_IQC_Record where prober_card_id in
+        select  prober_card_id,pin_maxlen,pin_minlen,pin_maxdiam,pin_mindiam,pin_level,pin_depth,update_operator,note,last_process,next_station,load_time FROM VTProberCard.ProberCard_IQC_Record where prober_card_id in
         (
         <trim suffix="" suffixOverrides=",">
             <foreach item="prober_card_id" index="index" collection="proberCardIdArrays">
