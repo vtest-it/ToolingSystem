@@ -157,4 +157,10 @@ public class ProberCardService {
     public ArrayList<ProberCardExtensionBean> getEXInfoSingle(String proberCardId){
         return  mapper.getEXInfoSingle(proberCardId);
     }
+    public ArrayList<IqcRecordBean> getAllIQCRecordByMinTime(){
+        return  mapper.getAllIQCRecordByMinTime();
+    }
+    public ArrayList<IqcRecordBean> getAllIQCRecordByMaxTime(){
+        return  mapper.getAllIQCRecordByMaxTime();
+    }
 }

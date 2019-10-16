@@ -55,6 +55,7 @@ $(document).ready(function() {
     var IQCRecord=[];
     var maintainRecord=[];
     var TD=[];
+    var tester=[];
     $.ajax({
         type:"get",
         async: false,
@@ -77,7 +78,7 @@ $(document).ready(function() {
         type:"get",
         async: false,
         dataType:"json",
-        url:"/toolingweb/needleCard/getAllIQCRecord",
+        url:"/toolingweb/needleCard/getAllIQCRecordByMinTime",
         success:function (data) {
             IQCRecord=data;
         }

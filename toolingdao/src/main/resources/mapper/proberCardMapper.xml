@@ -203,4 +203,11 @@
     <select id="getEXInfoSingle" statementType="CALLABLE" resultType="com.vtest.it.pojo.ProberCardExtensionBean">
          {call pro_GetCardExtenSingle(#{proberCardId,mode=IN,jdbcType=VARCHAR})}
     </select>
+    <select id="getAllIQCRecordByMaxTime" resultType="com.vtest.it.pojo.IqcRecordBean">
+        SELECT prober_card_id,any_value(pin_maxlen) as pin_maxlen,any_value(pin_minlen) as pin_minlen ,any_value(pin_maxdiam) as pin_maxdiam,any_value(pin_mindiam) as pin_mindiam,any_value(pin_level) as pin_level,any_value(pin_level) as pin_level,any_value(pin_depth) as pin_depth ,any_value(update_operator) as update_operator,any_value(note) as note,any_value(next_station) as next_station,any_value(last_process) as last_process,max(load_time) FROM VTProberCard.ProberCard_IQC_Record group by prober_card_id;
+    </select>
+
+    <select id="getAllIQCRecordByMinTime" resultType="com.vtest.it.pojo.IqcRecordBean">
+        SELECT prober_card_id,any_value(pin_maxlen) as pin_maxlen,any_value(pin_minlen) as pin_minlen ,any_value(pin_maxdiam) as pin_maxdiam,any_value(pin_mindiam) as pin_mindiam,any_value(pin_level) as pin_level,any_value(pin_level) as pin_level,any_value(pin_depth) as pin_depth ,any_value(update_operator) as update_operator,any_value(note) as note,any_value(next_station) as next_station,any_value(last_process) as last_process,min(load_time) FROM VTProberCard.ProberCard_IQC_Record group by prober_card_id;
+    </select>
 </mapper>

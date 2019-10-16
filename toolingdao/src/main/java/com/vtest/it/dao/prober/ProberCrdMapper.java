@@ -80,4 +80,8 @@ public interface ProberCrdMapper {
     public ArrayList<String> getProberCardEX();
 
     public ArrayList<ProberCardExtensionBean> getEXInfoSingle(@Param("proberCardId") String proberCardId);
+
+    public ArrayList<IqcRecordBean> getAllIQCRecordByMinTime();
+
+    public ArrayList<IqcRecordBean> getAllIQCRecordByMaxTime();
 }

@@ -510,4 +510,14 @@ public class NeedleCardController {
     public String getEXInfoSingle(String proberCardId){
         return JSON.toJSONString(service.getEXInfoSingle(proberCardId));
     }
+    @ResponseBody
+    @RequestMapping(value = "/getAllIQCRecordByMaxTime", produces = "text/html;charset=UTF-8")
+    public String getAllIQCRecordByMaxTime(){
+        return JSON.toJSONString(service.getAllIQCRecordByMaxTime());
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getAllIQCRecordByMinTime", produces = "text/html;charset=UTF-8")
+    public String getAllIQCRecordByMinTime(){
+        return JSON.toJSONString(service.getAllIQCRecordByMinTime());
+    }
 }
