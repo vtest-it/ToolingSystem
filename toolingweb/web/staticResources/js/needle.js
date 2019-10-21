@@ -586,18 +586,18 @@ $(document).ready(function() {
                                 type:'post',
                                 url:"/toolingweb/needleCard/updateSingleState?proberCardId="+proberCardId+"&currentProcess="+state
                             })
-                            if(isReleaseFlag=="Release"){
-
-                                $.ajax({
-                                    type:'post',
-                                    url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+proberCardId+"&releaseFlag=true"
-                                })
-                            }else {
-                                $.ajax({
-                                    type:'post',
-                                    url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+proberCardId+"&releaseFlag=false"
-                                })
-                            }
+                            // if(isReleaseFlag=="Release"){
+                            //
+                            //     $.ajax({
+                            //         type:'post',
+                            //         url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+proberCardId+"&releaseFlag=true"
+                            //     })
+                            // }else {
+                            //     $.ajax({
+                            //         type:'post',
+                            //         url:"/toolingweb/needleCard/updateProberCardReleaseFlag?proberCardId="+proberCardId+"&releaseFlag=false"
+                            //     })
+                            // }
                             alert("Update Success!")
                         }
                     });

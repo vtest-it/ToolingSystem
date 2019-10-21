@@ -388,7 +388,7 @@
                                     <input class="form-control" name="mylarMask" id="mylarMask" style="width: 35%"type="text">
                                 </p>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display: none">
                                 <p class="col-lg-12">
                                     <label class="col-lg-3">Release/Unrelease</label>
                                     <select  class="form-control" name="releaseFlag" id="releaseFlag" style="width: 35%;">
