@@ -121,7 +121,7 @@
                   #{prober_card_id},
               </foreach>
           </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <select id="getBackProberCard" resultType="com.vtest.it.pojo.BackProberCardBean">
         select  prober_card_id,backuse_equipment,back_status,back_operator,issue_flag,issue_desc,note,load_time,next_station FROM VTProberCard.ProberCard_Back_Record where prober_card_id in
@@ -131,7 +131,7 @@
                 #{prober_card_id},
             </foreach>
         </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <select id="getInfoProberCard" resultType="com.vtest.it.pojo.ProberCardEntityBean">
         select  prober_card_id, cust_name, cust_no, receipt_time, vendor_name, vendor_no, belong_dept, use_equipment, dut_count, pin_count, cab_position, card_source, pm_td, card_type, new_old, clean_type, pinlen_spec, pindiam_spec, pinlevel_spec, pindepth_spec, td_total, card_model, release_flag,glass_mask,mylar_mask,note,rebuild_count,creator,confirmer,load_time FROM VTProberCard.Probercard_Info_Hist where prober_card_id in
@@ -141,7 +141,7 @@
                 #{prober_card_id},
             </foreach>
         </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <select id="getIQCProberCard" resultType="com.vtest.it.pojo.IqcRecordBean">
         select  prober_card_id,pin_maxlen,pin_minlen,pin_maxdiam,pin_mindiam,pin_level,pin_depth,update_operator,note,last_process,next_station,load_time FROM VTProberCard.ProberCard_IQC_Record where prober_card_id in
@@ -151,7 +151,7 @@
                 #{prober_card_id},
             </foreach>
         </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <select id="getMaintainProberCard" resultType="com.vtest.it.pojo.ProberCardMaintainBean">
         select prober_card_id,before_pinlen,after_pinlen,before_pindiam,after_pindiam,before_pinlevel,after_pinlevel,clean_flag,grinding_flag,corrosion_flag,adjustment_flag,adjustment_flag,bake_flag,handgrind_flag,checksolder_flag,maintsolder_flag,checkparts_flag,changeparts_flag,jumper_flag,update_operator,note,next_station,rebuild_count,load_time FROM VTProberCard.ProberCard_Maintain_Record where prober_card_id in
@@ -161,7 +161,7 @@
                 #{prober_card_id},
             </foreach>
         </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <select id="getReleaseProberCard" resultType="com.vtest.it.pojo.ReleaseProberCardBean">
         select  prober_card_id,pte_operator,card_yield,card_operator,pin_marks,release_flag,update_operator,note,load_time FROM VTProberCard.ProberCard_Release_Record where prober_card_id in
@@ -171,7 +171,7 @@
                 #{prober_card_id},
             </foreach>
         </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <select id="getEXRecord" resultType="com.vtest.it.pojo.ProberCardExtensionBean">
         select  prober_card_id, use_equipment, dut_count, pin_count, curr_td, td_total, card_type, pin_len, pin_diam, pin_level, exten_count, last_process, marks_flag, card_yield, exten_flag, note, current_process, creator, load_time FROM VTProberCard.Probercard_Extension_Info where prober_card_id in
@@ -181,7 +181,7 @@
                 #{prober_card_id},
             </foreach>
         </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <select id="getProberCardId" resultType="com.vtest.it.pojo.ProberCardEntityBean">
         select  prober_card_id FROM VTProberCard.Probercard_Info  where cust_name in
@@ -191,7 +191,7 @@
                 #{cust_name},
             </foreach>
         </trim>
-        )
+        ) order by prober_card_id,load_time;
     </select>
     <insert id="addProberCardEX" parameterType="com.vtest.it.pojo.ProberCardExtensionBean">
       insert into VTProberCard.Probercard_Extension_Info(prober_card_id, use_equipment, dut_count, pin_count, curr_td, td_total, card_type, pin_len, pin_diam, pin_level, exten_count, last_process, marks_flag, card_yield, exten_flag, note, current_process, creator, load_time)
