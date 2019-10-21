@@ -124,7 +124,7 @@ function selectChange(value){
             flag=true;
 
         }
-        else if(state=="Re_IQC"&&lendFlag==true){
+        else if(state=="RE_IQC"&&lendFlag==true){
         for(var k=0;k<rows.length;k++){
             var rowIndex=rows[k].indexOf(":");
             var title=rows[k].substring(1,rowIndex-1);
@@ -192,7 +192,7 @@ function selectChange(value){
                 '<option value="IQC_FAIL">IQC_FAIL</option>');
             flag=true;
         }
-        else if(lendFlag==true&&state!="IQC"&&state!="Re_IQC"&&state!="ReBuild_Back"&&state!="Back_Fixing"){
+        else if(lendFlag==true&&state!="IQC"&&state!="RE_IQC"&&state!="ReBuild_Back"&&state!="Back_Fixing"){
             formClean();
             $("#error").html("");
             $("#error").html("存在这个针卡编号，但不在IQC,维修后IQC,重新制作返回待IQC，厂外维修返回这四种状态");

@@ -380,7 +380,7 @@ $(document).ready(function() {
                             '<option value="IQC">IQC</option>'+
                             '<option value="IQC_PASS">IQC PASS</option>'+
                             '<option value="IQC_FAIL">IQC FAIL</option>'+
-                            '<option value="Re_IQC">维修后IQC</option>'+
+                            '<option value="RE_IQC">维修后IQC</option>'+
                             '<option value="ReIQC_PASS">维修后IQC PASS</option>'+
                             '<option value="ReIQC_FAIL">维修后IQC FAIL</option>'+
                             '<option value="Production_Verify">测试/验证中</option>'+
@@ -395,7 +395,7 @@ $(document).ready(function() {
                             '<option value="Cust_Lending">客户借出返回</option>'+
                             '<option value="Card_Idle">针卡待料 </option>'+
                             '<option value="Un_Sealed">待拆版</option>'+
-                            '<option value="Re_Build">重新制作</option>'+
+                            '<option value="RE_Build">重新制作</option>'+
                             '<option value="ReBuild_Back">重新制作返回IQC</option>'+
                             '<option value="Card_Check">针卡验收</option>'+
                             '<option value="Card_Release">针卡Release</option>'+

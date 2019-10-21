@@ -299,7 +299,7 @@ function selectChange(value){
             $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+'<option value="Final">归还客户</option>');
             flag=true;
         }
-        else if(lendFlag==true&&state!="Inner_Back"&&state!="IQC_PASS"&&state!="IQC_FAIL"&&state!="Card_Idle"&&state!="Cust_Back"&&state!="Card_Scrap"&&state!="ReIQC_FAIL"&&state!="ReIQC_PASS"){
+        else if(lendFlag==true&&state!="Inner_Back"&&state!="IQC_PASS"&&state!="IQC_FAIL"&&state!="Card_Idle"&&state!="Cust_Back"&&state!="Un_Sealed"&&state!="ReIQC_FAIL"&&state!="ReIQC_PASS"){
             formClean();
             $("#error").html("");
             $("#error").html("存在这个针卡编号，但不在IQC_PASS，IQC_FAIL，针卡待料 ，客户借出返回，待拆版,内部归还,维修后IQC PASS,维修后IQC FAIL这八种状态");
