@@ -6,6 +6,15 @@ public class ProberCardTDBean {
     private Integer tdTotal;
     private Integer remainTd;
     private Integer remainTotal;
+    private Integer pmSpec;
+
+    public Integer getPmSpec() {
+        return pmSpec;
+    }
+
+    public void setPmSpec(Integer pmSpec) {
+        this.pmSpec = pmSpec;
+    }
 
     public String getProbercard() {
         return probercard;
