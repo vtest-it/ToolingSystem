@@ -46,6 +46,7 @@ function getFormatDate(date, pattern) {
     return date.format(pattern);
 }
 var flag=false;
+var TDFlag=true;
 function formClean(){
     $("#custName").val("");
     $("#custNo").val("");
@@ -68,7 +69,6 @@ function selectChange(value){
     var lendFlag=true;
     var state="";
     var releaseFlag=false;
-    var TDFlag=true;
     $.ajax({
         type:'get',
         dataType:"json",
@@ -115,7 +115,7 @@ function selectChange(value){
         }
     })
         var rows=JSON.stringify(lendingData).replace("{","").replace("}","").trim().split(",");
-      if(state=="Inner_Back"&&lendFlag==true&&TDFlag==true){
+      if(state=="Inner_Back"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -148,7 +148,7 @@ function selectChange(value){
             }
             flag=true;
         }
-        else if(state=="IQC_PASS"&&lendFlag==true&&TDFlag==true){
+        else if(state=="IQC_PASS"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -171,7 +171,7 @@ function selectChange(value){
                 '<option value="Final">归还客户 </option>');
             flag=true;
         }
-        else if(state=="IQC_FAIL"&&lendFlag==true&&TDFlag==true){
+        else if(state=="IQC_FAIL"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -193,7 +193,7 @@ function selectChange(value){
                 '<option value="Final">归还客户 </option>');
             flag=true;
         }
-        else if(state=="Card_Idle"&&lendFlag==true&&TDFlag==true){
+        else if(state=="Card_Idle"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -226,7 +226,7 @@ function selectChange(value){
             }
             flag=true;
         }
-        else if(state=="Cust_Back"&&lendFlag==true&&TDFlag==true){
+        else if(state=="Cust_Back"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -247,7 +247,7 @@ function selectChange(value){
             $("#nextStation").append('<option value="IQC">IQC</option>');
             flag=true;
         }
-        else if(state=="Un_Sealed"&&lendFlag==true&&TDFlag==true){
+        else if(state=="Un_Sealed"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -273,7 +273,7 @@ function selectChange(value){
             }
             flag=true;
         }
-        else if(state=="ReIQC_PASS"&&lendFlag==true&&TDFlag==true){
+        else if(state=="ReIQC_PASS"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -294,7 +294,7 @@ function selectChange(value){
             $("#nextStation").append('<option value="Card_Idle">针卡待料</option>');
             flag=true;
         }
-        else if(state=="ReIQC_FAIL"&&lendFlag==true&&TDFlag==true){
+        else if(state=="ReIQC_FAIL"&&lendFlag==true){
             for(var k=0;k<rows.length;k++){
                 var rowIndex=rows[k].indexOf(":");
                 var title=rows[k].substring(1,rowIndex-1);
@@ -315,7 +315,7 @@ function selectChange(value){
             $("#nextStation").append('<option value="Out_Fixing">厂外维修</option>'+'<option value="Final">归还客户</option>');
             flag=true;
         }
-        else if(lendFlag==true&&state!="Inner_Back"&&state!="IQC_PASS"&&state!="IQC_FAIL"&&state!="Card_Idle"&&state!="Cust_Back"&&state!="Un_Sealed"&&state!="ReIQC_FAIL"&&state!="ReIQC_PASS"&&TDFlag==true){
+        else if(lendFlag==true&&state!="Inner_Back"&&state!="IQC_PASS"&&state!="IQC_FAIL"&&state!="Card_Idle"&&state!="Cust_Back"&&state!="Un_Sealed"&&state!="ReIQC_FAIL"&&state!="ReIQC_PASS"){
             formClean();
             $("#error").html("");
             $("#error").html("存在这个针卡编号，但不在IQC_PASS，IQC_FAIL，针卡待料 ，客户借出返回，待拆版,内部归还,维修后IQC PASS,维修后IQC FAIL这八种状态");
@@ -329,13 +329,6 @@ function selectChange(value){
             $("#myModal").modal('show');
             flag=false;
         }
-        else if(TDFlag==false){
-        formClean();
-        $("#error").html("");
-        $("#error").html("当前TD超过PMSpec");
-        $("#myModal").modal('show');
-        flag=false;
-    }
 }
 $(document).ready(function () {
     function getTime(){
@@ -432,32 +425,42 @@ $(document).ready(function () {
 
         },submitHandler:function (form) {
             if(flag){
-                var confirmFlag=confirm("请再次确认");
-                if(confirmFlag==true){
-                    $(form).ajaxSubmit(
-                        {
-                            type:"post",
-                            url:"/toolingweb/needleCard/outProberCard",
-                            data:$(form).serialize(),
-                            error:function (XMLHttpRequest, textStatus, errorThrown) {
-                                console.log(XMLHttpRequest.status);
-                                console.log(XMLHttpRequest.readyState);
-                                console.log(textStatus);
-                                alert("add failed!,please check your information again!")
-                            },
-                            success:function () {
-                                alert("Lend success!")
-                                document.getElementById("needleCardLendForm").reset();
+                var nextStation=$("#nextStation option:selected").val();
+                if(!TDFlag&&nextStation=='Production_Verify'){
+                    $("#error").html("");
+                    $("#error").html("当前TD超过PMSpec,不允许过测试/验证中这一站");
+                    $("#myModal").modal('show');
+                    document.getElementById("needleCardLendForm").reset();
+                }else {
+                    var confirmFlag=confirm("请再次确认");
+                    if(confirmFlag==true){
+                        $(form).ajaxSubmit(
+                            {
+                                type:"post",
+                                url:"/toolingweb/needleCard/outProberCard",
+                                data:$(form).serialize(),
+                                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                                    console.log(XMLHttpRequest.status);
+                                    console.log(XMLHttpRequest.readyState);
+                                    console.log(textStatus);
+                                    alert("add failed!,please check your information again!")
+                                },
+                                success:function () {
+                                    alert("Lend success!")
+                                    document.getElementById("needleCardLendForm").reset();
+                                }
                             }
-                        }
 
-                    );
+                        );
+                    }
                 }
+
 
             }else {
                 $("#error").html("");
                 $("#error").html("不存在该针卡编号或不在IQC_PASS，IQC_FAIL，针卡待料 ，客户借出返回，待拆版,内部归还,维修后IQC PASS,维修后IQC FAIL这八种状态");
                 $("#myModal").modal('show');
+                document.getElementById("needleCardLendForm").reset();
             }
 
             return false;
