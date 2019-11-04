@@ -210,4 +210,10 @@
     <select id="getAllIQCRecordByMinTime" resultType="com.vtest.it.pojo.IqcRecordBean">
         SELECT prober_card_id,any_value(pin_maxlen) as pin_maxlen,any_value(pin_minlen) as pin_minlen ,any_value(pin_maxdiam) as pin_maxdiam,any_value(pin_mindiam) as pin_mindiam,any_value(pin_level) as pin_level,any_value(pin_level) as pin_level,any_value(pin_depth) as pin_depth ,any_value(update_operator) as update_operator,any_value(note) as note,any_value(next_station) as next_station,any_value(last_process) as last_process,min(load_time) FROM VTProberCard.ProberCard_IQC_Record group by prober_card_id;
     </select>
+    <select id="checkPMPassword" resultType="com.vtest.it.pojo.PMUserBean">
+        SELECT username,password FROM VTProberCard.vt_user where username=#{username}
+    </select>
+    <update id="cleanPM" statementType="CALLABLE">
+        {call pro_pmfunction(#{cardid,mode=IN,jdbcType=VARCHAR},#{ownerid,mode=IN,jdbcType=VARCHAR})}
+    </update>
 </mapper>

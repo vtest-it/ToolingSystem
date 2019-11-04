@@ -1,6 +1,5 @@
 package com.vtest.it.intercepters;
 
-import com.vtest.it.pojo.UserBean;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

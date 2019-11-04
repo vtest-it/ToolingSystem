@@ -199,43 +199,32 @@ function selectChange(value){
         }
 }
 $(document).ready(function () {
-    function getTime(){
-        var now=new Date();
-        var year=now.getFullYear(),
-            month=now.getMonth()+1,
-            day=now.getDate(),
-            hour=now.getHours(),
-            minute=now.getMinutes(),
-            week=now.getDay();
-        if(week==7){
-            week="日";
-        }else if(week==6){
-            week="六";
-        }else if(week==5){
-            week="五";
-        }else if(week==4){
-            week="四";
-        }else if(week==3){
-            week="三";
-        }else if(week==2){
-            week="二";
-        }else if(week==1){
-            week="一";
+    $("#password").val("");
+    $("#login").modal('show');
+    $("#loginForm").validate({
+        submitHandler:function (form) {
+            $(form).ajaxSubmit({
+                type:"post",
+                data:$(form).serialize(),
+                url:"/toolingweb/needleCard/checkPMPassword",
+                success:function (message) {
+                    console.log(message);
+                    $("#pmFlag").html("");
+                    $("#pmFlag").html('<option value="false">否</option><option value="true">是</option>')
+                    $("#login").modal('hide');
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpRequest.readyState);
+                    console.log(textStatus);
+                    $("#error").html("");
+                    $("#error").html("账号或者密码错误！");
+                    $("#myModal").modal('show');
+                }
+            })
+            return false;
         }
-        if(month>=1&&month<=9){
-            month="0"+month;
-        }
-        if(day>=1&&day<=9){
-            day="0"+day;
-        }
-        if(minute>=0&&minute<=9){
-            minute="0"+minute;
-        }
-        $("#date").html("日期："+year+"-"+month+"-"+day+"&nbsp;"+hour+":"+minute+"&nbsp;星期"+week)
-
-    }
-    getTime();
-    setInterval(getTime,1000);
+    })
     var warning='<i class="fa fa-exclamation-triangle" style="color: red"></i>';
     jQuery.validator.addMethod("isOperator",function (value,element) {
         var operator=/^[a-z||A-Z]{1}\d{3}$]*|^\d{4}$/;
@@ -316,36 +305,59 @@ $(document).ready(function () {
             }
 
         },submitHandler:function (form) {
-            if(flag){
-                var confirmFlag=confirm("请再次确认");
-                if(confirmFlag==true){
+            if (flag) {
+                var confirmFlag = confirm("请再次确认");
+                if (confirmFlag == true) {
+                    var pmFlag;
+                    var cardid;
+                    var ownerid;
+                    var data= $(form).serializeArray();
+                    $.each(data,function (i,item) {
+                        if(item.name=="pmFlag"){
+                            pmFlag=item.value;
+                        }
+                        if(item.name=="proberCardId"){
+                            cardid=item.value;
+                        }
+                        if(item.name=="confirmer"){
+                            ownerid=item.value;
+                        }
+                    })
                     $(form).ajaxSubmit(
                         {
-                            type:"post",
-                            url:"/toolingweb/needleCard/ProberCardMaintain",
-                            data:$(form).serialize(),
-                            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                            type: "post",
+                            url: "/toolingweb/needleCard/ProberCardMaintain",
+                            data: $(form).serialize(),
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 console.log(XMLHttpRequest.status);
                                 console.log(XMLHttpRequest.readyState);
                                 console.log(textStatus);
                                 alert("add failed!,please check your information again!")
                             },
-                            success:function () {
+                            success: function () {
+                                if(pmFlag){
+                                    $.ajax({
+                                        type:"post",
+                                        url:"/toolingweb/needleCard/cleanPM?cardid="+cardid+"&ownerid="+ownerid,
+                                        success:function (message) {
+                                            console.log(message)
+                                        }
+                                    })
+                                }
                                 alert("Maintain success!")
                                 document.getElementById("needleCardMaintain").reset();
                             }
                         }
-
                     );
+                } else {
+                    $("#error").html("");
+                    $("#error").html("不存在该针卡编号或不在保养中和维修清针这两种状态");
+                    $("#myModal").modal('show');
                 }
-            }else {
-                $("#error").html("");
-                $("#error").html("不存在该针卡编号或不在保养中和维修清针这两种状态");
-                $("#myModal").modal('show');
+
+                return false;
+
             }
-
-            return false;
-
         }
     });
 })

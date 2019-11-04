@@ -163,4 +163,10 @@ public class ProberCardService {
     public ArrayList<IqcRecordBean> getAllIQCRecordByMaxTime(){
         return  mapper.getAllIQCRecordByMaxTime();
     }
+    public PMUserBean checkPMPassword(String username){
+        return mapper.checkPMPassword(username);
+    }
+    public boolean cleanPM(String cardid,String ownerid){
+        return mapper.cleanPM(cardid,ownerid);
+    }
 }

@@ -280,6 +280,33 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="panel-default panel">
+                    <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">PM确认密码</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form  method="post" id="loginForm">
+                            <p>
+                                <label for="username" class="uname" data-icon="u" > 账号 </label>
+                                <input id="username" name="username" required="required" type="text"/>
+                            </p>
+                            <p>
+                                <label for="password" class="youpasswd" data-icon="p"> 密码</label>
+                                <input id="password" name="password" required="required" type="password"/>
+                            </p>
+                            <input type="submit" class="btn btn-primary" id="PMSubmit" value="Submit">
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div id='page-wrapper'>
         <div class="row" id="needleCardIQCPage">
             <div class="col-lg-12">
@@ -399,7 +426,6 @@
                                         <label class="col-lg-5">是否PM</label>
                                         <select class="form-control" name="pmFlag" id="pmFlag" style="width: 45%">
                                             <option value="false">否</option>
-                                            <option value="true">是</option>
                                         </select>
                                     </p>
                                     <p class="col-lg-2">

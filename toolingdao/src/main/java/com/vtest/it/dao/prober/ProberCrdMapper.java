@@ -84,4 +84,8 @@ public interface ProberCrdMapper {
     public ArrayList<IqcRecordBean> getAllIQCRecordByMinTime();
 
     public ArrayList<IqcRecordBean> getAllIQCRecordByMaxTime();
+
+    public PMUserBean checkPMPassword(@Param("username") String username);
+
+    public boolean cleanPM(@Param("cardid") String cardid,@Param("ownerid") String ownerid);
 }

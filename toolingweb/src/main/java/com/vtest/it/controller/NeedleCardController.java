@@ -6,6 +6,7 @@ import com.vtest.it.service.ProberCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -21,6 +23,7 @@ import java.util.Date;
 @RequestMapping("/needleCard")
 public class NeedleCardController {
     private ProberCardService service;
+
     @Autowired
     public void setService(ProberCardService service) {
         this.service = service;
@@ -29,9 +32,9 @@ public class NeedleCardController {
     @RequestMapping("/addNewNeedleCard")
     @ResponseBody
     public boolean addNewNeedleCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
-                                   String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
-                                   String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String creator, String cardModel, String belongDept,
-                                   String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note,Integer rebuildCount,String confirmer) throws ParseException {
+                                    String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
+                                    String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String creator, String cardModel, String belongDept,
+                                    String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note, Integer rebuildCount, String confirmer) throws ParseException {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             ProberCardEntityBean bean = new ProberCardEntityBean();
@@ -77,7 +80,7 @@ public class NeedleCardController {
             service.addNewProberCard(bean);
             return true;
         } catch (ParseException e) {
-            return  false;
+            return false;
         }
     }
 
@@ -112,11 +115,12 @@ public class NeedleCardController {
     public String getProberCardStatus(@RequestParam("proberCardId") String proberCardId) {
         return service.getProberCardStatus(proberCardId);
     }
+
     @RequestMapping("/iqcRelease")
     @ResponseBody
-    public boolean iqcRelease(String proberCardId,double pinMaxlen,double pinMinlen,double pinMaxdiam,double pinMindiam,double pinLevel,double pinDepth,String updateOperator,String nextStation,String note,String lastProcess,@RequestParam(value = "excelFile",required=false) MultipartFile file){
+    public boolean iqcRelease(String proberCardId, double pinMaxlen, double pinMinlen, double pinMaxdiam, double pinMindiam, double pinLevel, double pinDepth, String updateOperator, String nextStation, String note, String lastProcess, @RequestParam(value = "excelFile", required = false) MultipartFile file) {
         try {
-            IqcRecordBean bean=new IqcRecordBean();
+            IqcRecordBean bean = new IqcRecordBean();
             bean.setProberCardId(proberCardId);
             bean.setPinMaxlen(pinMaxlen);
             bean.setPinMinlen(pinMinlen);
@@ -128,27 +132,28 @@ public class NeedleCardController {
             bean.setLastProcess(lastProcess);
             bean.setNextStation(nextStation);
             bean.setNote(note);
-            String descPath="D:/upload/"+proberCardId;
-            File descFile=new File(descPath);
-            if(!descFile.exists()){
+            String descPath = "D:/upload/" + proberCardId;
+            File descFile = new File(descPath);
+            if (!descFile.exists()) {
                 descFile.mkdir();
             }
-            if(file!=null){
-                File newFile=new File(descFile,"/"+file.getOriginalFilename());
+            if (file != null) {
+                File newFile = new File(descFile, "/" + file.getOriginalFilename());
                 file.transferTo(newFile);
             }
-            service.updateProberCardStatus(proberCardId,nextStation,lastProcess,updateOperator);
+            service.updateProberCardStatus(proberCardId, nextStation, lastProcess, updateOperator);
             service.addNewIqcRecord(bean);
             return true;
         } catch (Exception e) {
-            return  false;
+            return false;
         }
     }
+
     @ResponseBody
     @RequestMapping("/outProberCard")
-    public boolean outProberCard(String proberCardId,String outuseEquipment,String outUsing,String outOperator,String nextStation,String note,String oldStatus,String operator){
+    public boolean outProberCard(String proberCardId, String outuseEquipment, String outUsing, String outOperator, String nextStation, String note, String oldStatus, String operator) {
         try {
-            OutProberCardBean outProberCardBean=new OutProberCardBean();
+            OutProberCardBean outProberCardBean = new OutProberCardBean();
             outProberCardBean.setProberCardId(proberCardId);
             outProberCardBean.setOutUseEquipment(outuseEquipment);
             outProberCardBean.setOutUsing(outUsing);
@@ -156,17 +161,18 @@ public class NeedleCardController {
             outProberCardBean.setNextStation(nextStation);
             outProberCardBean.setNote(note);
             service.addNewOutRecord(outProberCardBean);
-            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,operator);
+            service.updateProberCardStatus(proberCardId, nextStation, oldStatus, operator);
             return true;
         } catch (Exception e) {
-            return  false;
+            return false;
         }
     }
+
     @ResponseBody
     @RequestMapping("/backProberCard")
-    public boolean backProberCard(String proberCardId,String backuseEquipment,String backStatus,String backOperator,String createOperator,boolean issueFlag,String issueDesc,String nextStation,String note,String oldStatus){
+    public boolean backProberCard(String proberCardId, String backuseEquipment, String backStatus, String backOperator, String createOperator, boolean issueFlag, String issueDesc, String nextStation, String note, String oldStatus) {
         try {
-            BackProberCardBean bean=new BackProberCardBean();
+            BackProberCardBean bean = new BackProberCardBean();
             bean.setProberCardId(proberCardId);
             bean.setBackuseEquipment(backuseEquipment);
             bean.setBackStatus(backStatus);
@@ -177,22 +183,24 @@ public class NeedleCardController {
             bean.setNextStation(nextStation);
             bean.setNote(note);
             service.addNewBackRecord(bean);
-            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,createOperator);
+            service.updateProberCardStatus(proberCardId, nextStation, oldStatus, createOperator);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
-    @RequestMapping(value = "/getReleaseProberCardInfo",produces = "text/html;charset=UTF-8")
-    public String getReleaseProberCardInfo(@RequestParam("proberCardId")String proberCardId){
+    @RequestMapping(value = "/getReleaseProberCardInfo", produces = "text/html;charset=UTF-8")
+    public String getReleaseProberCardInfo(@RequestParam("proberCardId") String proberCardId) {
         return JSON.toJSONString(service.getReleaseCardInfo(proberCardId));
     }
+
     @ResponseBody
     @RequestMapping(value = "/releaseProbercard")
-    public boolean ReleaseProberCard(String proberCardId,String pteOperator,double cardYield,String cardOperator,boolean pinMarks,boolean releaseFlag,String updateOperator,String note,String oldStatus,String nextStation){
+    public boolean ReleaseProberCard(String proberCardId, String pteOperator, double cardYield, String cardOperator, boolean pinMarks, boolean releaseFlag, String updateOperator, String note, String oldStatus, String nextStation) {
         try {
-            ReleaseProberCardBean bean=new ReleaseProberCardBean();
+            ReleaseProberCardBean bean = new ReleaseProberCardBean();
             bean.setProberCardId(proberCardId);
             bean.setPteOperator(pteOperator);
             bean.setCardYield(cardYield);
@@ -202,25 +210,27 @@ public class NeedleCardController {
             bean.setUpdateOperator(updateOperator);
             bean.setNote(note);
             service.updateReleaseProberCard(bean);
-            if (releaseFlag){
-                service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
+            if (releaseFlag) {
+                service.updateProberCardStatus(proberCardId, nextStation, oldStatus, updateOperator);
             }
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping("/getAllProberCardStatus")
-    public String getAllProberCardStatus(){
-        return  JSON.toJSONString(service.getAllProberCardStatus());
+    public String getAllProberCardStatus() {
+        return JSON.toJSONString(service.getAllProberCardStatus());
     }
+
     @ResponseBody
     @RequestMapping("/ProberCardMaintain")
-    public boolean ProberCardMaintain(String proberCardId,double beforePinlen,double beforePindiam,double beforePinlevel,double afterPinlen,double afterPindiam,double afterPinlevel,boolean cleanFlag,boolean grindingFlag,boolean corrosionFlag,boolean adjustmentFlag,boolean bakeFlag,boolean handgrindFlag,boolean checksolderFlag,boolean maintsolderFlag,
-                                      boolean checkpartsFlag,boolean changepartsFlag,boolean jumperFlag,String nextStation,String testerID,String updateOperator,String note,String oldStatus,double rebuildCount){
+    public boolean ProberCardMaintain(String proberCardId, double beforePinlen, double beforePindiam, double beforePinlevel, double afterPinlen, double afterPindiam, double afterPinlevel, boolean cleanFlag, boolean grindingFlag, boolean corrosionFlag, boolean adjustmentFlag, boolean bakeFlag, boolean handgrindFlag, boolean checksolderFlag, boolean maintsolderFlag,
+                                      boolean checkpartsFlag, boolean changepartsFlag, boolean jumperFlag, String nextStation, String testerID, String updateOperator, String note, String oldStatus, double rebuildCount) {
         try {
-            ProberCardMaintainBean bean =new ProberCardMaintainBean();
+            ProberCardMaintainBean bean = new ProberCardMaintainBean();
             bean.setProberCardId(proberCardId);
             bean.setBeforePinlen(beforePinlen);
             bean.setBeforePindiam(beforePindiam);
@@ -245,23 +255,24 @@ public class NeedleCardController {
             bean.setNextStation(nextStation);
             bean.setRebuildCount(rebuildCount);
             service.addNewMaintainRecord(bean);
-            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
-            return  true;
-        }catch (Exception e) {
+            service.updateProberCardStatus(proberCardId, nextStation, oldStatus, updateOperator);
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
 
     }
+
     @RequestMapping("/updateProberCard")
     @ResponseBody
     public boolean updateProberCard(String proberCardId, String custName, String custNo, String receiptTime, String vendorName, String vendorNo,
                                     String useEquipment, Integer dutCount, Integer pinCount, String cabPosition, String cardSource, String pmTd, String cardType, String newOld, String cleanType,
                                     String pinlenSpec, String pindiamSpec, String pinlevelSpec, String state, String pindepthSpec, String creator, String cardModel, String belongDept,
-                                    String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note,String confirmer) {
+                                    String tdTotal, String releaseFlag, Integer glassMask, Integer mylarMask, String note, String confirmer) {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            ProberCardEntityBean bean= new ProberCardEntityBean();
+            ProberCardEntityBean bean = new ProberCardEntityBean();
             bean.setProberCardId(proberCardId);
             bean.setCustName(custName);
             bean.setCustNo(custNo);
@@ -296,9 +307,9 @@ public class NeedleCardController {
             bean.setCardModel(cardModel);
             bean.setCreator(creator);
             bean.setConfirmer(confirmer);
-            if(releaseFlag.equals("Release")){
+            if (releaseFlag.equals("Release")) {
                 bean.setReleaseFlag(true);
-            }else {
+            } else {
                 bean.setReleaseFlag(false);
             }
             bean.setGlassMask(glassMask);
@@ -308,21 +319,23 @@ public class NeedleCardController {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
 
         }
     }
+
     @RequestMapping("/getProberCardReleaseFlag")
     @ResponseBody
-    public boolean getProberCardReleaseFlag(String proberCardId ){
-            return  service.getProberCardReleaseFlag(proberCardId);
+    public boolean getProberCardReleaseFlag(String proberCardId) {
+        return service.getProberCardReleaseFlag(proberCardId);
 
     }
+
     @ResponseBody
     @RequestMapping(value = "/checkProbercard")
-    public boolean checkProberCard(String proberCardId,String pteOperator,double cardYield,String cardOperator,boolean pinMarks,boolean releaseFlag,String updateOperator,String note,String oldStatus,String nextStation){
+    public boolean checkProberCard(String proberCardId, String pteOperator, double cardYield, String cardOperator, boolean pinMarks, boolean releaseFlag, String updateOperator, String note, String oldStatus, String nextStation) {
         try {
-            ReleaseProberCardBean bean=new ReleaseProberCardBean();
+            ReleaseProberCardBean bean = new ReleaseProberCardBean();
             bean.setProberCardId(proberCardId);
             bean.setPteOperator(pteOperator);
             bean.setCardYield(cardYield);
@@ -332,147 +345,166 @@ public class NeedleCardController {
             bean.setUpdateOperator(updateOperator);
             bean.setNote(note);
             service.updateReleaseProberCard(bean);
-            service.updateProberCardStatus(proberCardId,nextStation,oldStatus,updateOperator);
+            service.updateProberCardStatus(proberCardId, nextStation, oldStatus, updateOperator);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping(value = "/updateProberCardReleaseFlag")
-    public boolean updateProberCardReleaseFlag(String proberCardId,boolean releaseFlag){
+    public boolean updateProberCardReleaseFlag(String proberCardId, boolean releaseFlag) {
         try {
-            service.updateProberCardReleaseFlag(proberCardId,releaseFlag);
+            service.updateProberCardReleaseFlag(proberCardId, releaseFlag);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping(value = "/updateProberCardInfoReleaseFlag")
-    public boolean updateProberCardInfoReleaseFlag(String proberCardId,boolean releaseFlag){
+    public boolean updateProberCardInfoReleaseFlag(String proberCardId, boolean releaseFlag) {
         try {
-            service.updateProberCardInfoReleaseFlag(proberCardId,releaseFlag);
+            service.updateProberCardInfoReleaseFlag(proberCardId, releaseFlag);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping(value = "/updateSingleState")
-    public boolean updateSingleState(String proberCardId,String currentProcess){
+    public boolean updateSingleState(String proberCardId, String currentProcess) {
         try {
-            service.updateSingleState(proberCardId,currentProcess);
+            service.updateSingleState(proberCardId, currentProcess);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping("/getAllIQCRecord")
-    public String getAllIQCRecord(){
-        return  JSON.toJSONString(service.getAllIQCRecord());
+    public String getAllIQCRecord() {
+        return JSON.toJSONString(service.getAllIQCRecord());
     }
+
     @ResponseBody
     @RequestMapping("/getAllMaintainRecord")
-    public String getAllMaintainRecord(){
-        return  JSON.toJSONString(service.getAllMaintainRecord());
+    public String getAllMaintainRecord() {
+        return JSON.toJSONString(service.getAllMaintainRecord());
     }
+
     @ResponseBody
     @RequestMapping(value = "/updateProberCardItem")
-    public boolean updateProberCardItem(String proberCardId,String pinlenSpec,String pindiamSpec,String pinlevelSpec,Integer rebuildCount){
+    public boolean updateProberCardItem(String proberCardId, String pinlenSpec, String pindiamSpec, String pinlevelSpec, Integer rebuildCount) {
         try {
-             pinlenSpec=String.valueOf(0);
-             pindiamSpec=String.valueOf(0);
-             pinlevelSpec=String.valueOf(0);
-             rebuildCount++;
-            service.updateProberCardItem(proberCardId,pinlenSpec,pindiamSpec,pinlevelSpec,rebuildCount);
+            pinlenSpec = String.valueOf(0);
+            pindiamSpec = String.valueOf(0);
+            pinlevelSpec = String.valueOf(0);
+            rebuildCount++;
+            service.updateProberCardItem(proberCardId, pinlenSpec, pindiamSpec, pinlevelSpec, rebuildCount);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping(value = "/updateMaintainItem")
-    public boolean updateMaintainItem(String proberCardId,double afterPinlen,double afterPindiam,double afterPinlevel){
+    public boolean updateMaintainItem(String proberCardId, double afterPinlen, double afterPindiam, double afterPinlevel) {
         try {
-            afterPinlen=0;
-            afterPindiam=0;
-            afterPinlevel=0;
-            service.updateMaintainItem(proberCardId,afterPinlen,afterPindiam,afterPinlevel);
+            afterPinlen = 0;
+            afterPindiam = 0;
+            afterPinlevel = 0;
+            service.updateMaintainItem(proberCardId, afterPinlen, afterPindiam, afterPinlevel);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping(value = "/updateIQCItem")
-    public boolean updateIQCItem(String proberCardId,double pinMinlen, double pinMaxdiam,double pinLevel){
+    public boolean updateIQCItem(String proberCardId, double pinMinlen, double pinMaxdiam, double pinLevel) {
         try {
-            pinMinlen=0;
-            pinMaxdiam=0;
-            pinLevel=0;
-            service.updateIQCItem(proberCardId,pinMinlen,pinMaxdiam,pinLevel);
+            pinMinlen = 0;
+            pinMaxdiam = 0;
+            pinLevel = 0;
+            service.updateIQCItem(proberCardId, pinMinlen, pinMaxdiam, pinLevel);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping(value = "/getInfoRebuildCount")
-    public Integer getInfoRebuildCount(String proberCardId){
-       return  service.getInfoRebuildCount(proberCardId);
+    public Integer getInfoRebuildCount(String proberCardId) {
+        return service.getInfoRebuildCount(proberCardId);
     }
+
     @ResponseBody
     @RequestMapping(value = "/getTd")
-    public String getTd(){
+    public String getTd() {
         return JSON.toJSONString(service.getTd());
     }
+
     @ResponseBody
     @RequestMapping(value = "/getOutProberCard", produces = "text/html;charset=UTF-8")
-    public String getOutProberCard(String[] proberCardIdArrays){
+    public String getOutProberCard(String[] proberCardIdArrays) {
         return JSON.toJSONString(service.getOutProberCard(proberCardIdArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getBackProberCard", produces = "text/html;charset=UTF-8")
-    public String getBackProberCard(String[] proberCardIdArrays){
+    public String getBackProberCard(String[] proberCardIdArrays) {
         return JSON.toJSONString(service.getBackProberCard(proberCardIdArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getInfoProberCard", produces = "text/html;charset=UTF-8")
-    public String getInfoProberCard(String[] proberCardIdArrays){
+    public String getInfoProberCard(String[] proberCardIdArrays) {
         return JSON.toJSONString(service.getInfoProberCard(proberCardIdArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getIQCProberCard", produces = "text/html;charset=UTF-8")
-    public String getIQCProberCard(String[] proberCardIdArrays){
+    public String getIQCProberCard(String[] proberCardIdArrays) {
         return JSON.toJSONString(service.getIQCProberCard(proberCardIdArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getMaintainProberCard", produces = "text/html;charset=UTF-8")
-    public String getMaintainProberCard(String[] proberCardIdArrays){
+    public String getMaintainProberCard(String[] proberCardIdArrays) {
         return JSON.toJSONString(service.getMaintainProberCard(proberCardIdArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getReleaseProberCard", produces = "text/html;charset=UTF-8")
-    public String getReleaseProberCard(String[] proberCardIdArrays){
+    public String getReleaseProberCard(String[] proberCardIdArrays) {
         return JSON.toJSONString(service.getReleaseProberCard(proberCardIdArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getEXRecord", produces = "text/html;charset=UTF-8")
-    public String getEXRecord(String[] proberCardIdArrays){
+    public String getEXRecord(String[] proberCardIdArrays) {
         return JSON.toJSONString(service.getEXRecord(proberCardIdArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getProberCardId", produces = "text/html;charset=UTF-8")
-    public String getProberCardId(String[] custNameArrays){
+    public String getProberCardId(String[] custNameArrays) {
         return JSON.toJSONString(service.getProberCardId(custNameArrays));
     }
+
     @ResponseBody
     @RequestMapping(value = "/addProberCardEX")
-    public boolean addProberCardEX(String proberCardId,String useEquipment,Integer dutCount,Integer pinCount,String currTd,String tdTotal,String cardType,String pinLen,String pinDiam,String pinLevel,Integer extenCount,String lastProcess,boolean marksFlag,double cardYield,String currentProcess,boolean extenFlag,String creator,String note){
+    public boolean addProberCardEX(String proberCardId, String useEquipment, Integer dutCount, Integer pinCount, String currTd, String tdTotal, String cardType, String pinLen, String pinDiam, String pinLevel, Integer extenCount, String lastProcess, boolean marksFlag, double cardYield, String currentProcess, boolean extenFlag, String creator, String note) {
         try {
-            ProberCardExtensionBean bean=new ProberCardExtensionBean();
+            ProberCardExtensionBean bean = new ProberCardExtensionBean();
             bean.setProberCardId(proberCardId);
             bean.setUseEquipment(useEquipment);
             bean.setPinCount(pinCount);
@@ -494,30 +526,55 @@ public class NeedleCardController {
             bean.setLoadTime(new Date());
             bean.setCurrentProcess(currentProcess);
             service.addProberCardEX(bean);
-            service.updateProberCardStatus(proberCardId,currentProcess,lastProcess,creator);
+            service.updateProberCardStatus(proberCardId, currentProcess, lastProcess, creator);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     @ResponseBody
     @RequestMapping(value = "/getProberCardEX", produces = "text/html;charset=UTF-8")
-    public String getProberCardEX(){
+    public String getProberCardEX() {
         return JSON.toJSONString(service.getProberCardEX());
     }
+
     @ResponseBody
     @RequestMapping(value = "/getEXInfoSingle", produces = "text/html;charset=UTF-8")
-    public String getEXInfoSingle(String proberCardId){
+    public String getEXInfoSingle(String proberCardId) {
         return JSON.toJSONString(service.getEXInfoSingle(proberCardId));
     }
+
     @ResponseBody
     @RequestMapping(value = "/getAllIQCRecordByMaxTime", produces = "text/html;charset=UTF-8")
-    public String getAllIQCRecordByMaxTime(){
+    public String getAllIQCRecordByMaxTime() {
         return JSON.toJSONString(service.getAllIQCRecordByMaxTime());
     }
+
     @ResponseBody
     @RequestMapping(value = "/getAllIQCRecordByMinTime", produces = "text/html;charset=UTF-8")
-    public String getAllIQCRecordByMinTime(){
+    public String getAllIQCRecordByMinTime() {
         return JSON.toJSONString(service.getAllIQCRecordByMinTime());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/checkPMPassword",method= RequestMethod.POST)
+    public String checkPMPassword(@RequestParam("username") String username,@RequestParam("password") String password) {
+        PMUserBean pmUserBean=service.checkPMPassword(username);
+        if(username==null){
+            return "Fail";
+        }else {
+            if(pmUserBean.getPassword().equals(password)){
+                return  "Success";
+            }else {
+                return "Fail";
+            }
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/cleanPM")
+    public boolean cleanPM(String cardid,String ownerid) {
+        return service.cleanPM(cardid,ownerid);
     }
 }
